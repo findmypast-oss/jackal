@@ -1,2 +1,3 @@
-# jackal
+# Jackal
+
 Consumer Driven Contracts Service
