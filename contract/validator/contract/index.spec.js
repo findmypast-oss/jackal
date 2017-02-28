@@ -29,21 +29,18 @@ test('validateContract', t => {
   t.same(validateContract(contract), expected)
 
   contract.request = 123
-  expected = { valid: false, error: { name: 'ValidationError', message: '\t"request" must be a string' } }
+  expected = { valid: false, error: { name: 'ValidationError', message: '\t"request" must be an object' } }
   t.same(validateContract(contract), expected)
 
-  contract.request = 'request'
+  contract.request = {}
   expected = { valid: false, error: { name: 'ValidationError', message: '\t"response" is required' } }
   t.same(validateContract(contract), expected)
 
   contract.response = 123
-  expected = { valid: false, error: { name: 'ValidationError', message: '\t"response" must be an object' } }
+  expected = { valid: false, error: { name: 'ValidationError', message: '\t"response" must be an object' }}
   t.same(validateContract(contract), expected)
 
   contract.response = {}
   expected = { valid: true, error: null }
-  t.ok(validateContract(contract), expected)
-
-  // validate request objects
-  // validate response objects
+  t.same(validateContract(contract), expected)
 })
