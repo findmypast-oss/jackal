@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('joi')
-const buildError = require('../utils')
+const validate = require('../lib')
 
 const httpStatusCodes = [
   100, 101, 102, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302,
@@ -16,13 +16,4 @@ const responseSchema = Joi.object().keys({
   body: Joi.alternatives([Joi.string(), Joi.object()]).optional()
 })
 
-const validateResponse = response => {
-  const res = Joi.validate(response, responseSchema)
-
-  return {
-    valid: res.error === null,
-    error: res.error === null ? null : buildError(res.error)
-  }
-}
-
-module.exports = validateResponse
+module.exports = validate(responseSchema)
