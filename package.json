@@ -7,7 +7,7 @@
     "dev": "node server | pino",
     "prod": "echo \"Productionise me bro!\"",
     "start": "if test \"$NODE_ENV\" = \"production\" ; then npm run prod ; else npm run dev ; fi",
-    "test": "tap \"**/*.spec.js\""
+    "test": "tap \"lib/**/*.spec.js\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "tap": "^10.2.2"
   },
   "dependencies": {
+    "body-parser": "^1.16.1",
     "consumer-contracts": "^1.4.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
