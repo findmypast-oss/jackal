@@ -2,7 +2,7 @@
 
 const express = require('express')
 
-const { cached, executor, insert, retrieve, validate } = require('../contract')
+const { cached, execute, insert, retrieve, validate } = require('../lib/contract')
 
 const logging = require('./middleware/logging')
 const bodyParser = require('body-parser')
