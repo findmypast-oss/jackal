@@ -4,6 +4,9 @@
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "scripts": {
+    "dev": "node server | pino",
+    "prod": "echo \"Productionise me bro!\"",
+    "start": "if test \"$NODE_ENV\" = \"production\" ; then npm run prod ; else npm run dev ; fi",
     "test": "tap \"**/*.spec.js\""
   },
   "repository": {
@@ -29,6 +32,9 @@
   "dependencies": {
     "consumer-contracts": "^1.4.0",
     "express": "^4.14.1",
-    "joi": "^10.2.2"
+    "express-pino-logger": "^2.0.0",
+    "joi": "^10.2.2",
+    "lokijs": "^1.4.3",
+    "pino": "^4.0.1"
   }
 }
