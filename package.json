@@ -34,6 +34,7 @@
     "consumer-contracts": "^1.4.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
+    "fast-json-stringify": "^0.10.3",
     "joi": "^10.2.2",
     "lokijs": "^1.4.3",
     "pino": "^4.0.1"

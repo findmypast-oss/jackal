@@ -2,7 +2,7 @@
 
 const express = require('express')
 
-const { cached, execute, hash, insert, retrieve, validate } = require('../lib/contract')
+const { cached, execute, hashContracts, insert, retrieve, validate } = require('../lib/contract')
 
 const logging = require('./middleware/logging')
 const bodyParser = require('body-parser')
@@ -19,7 +19,7 @@ app.get('/health', function (req, res) {
 app.post('/api/contracts', function (req, res, next) {
   const contracts = req.body
 
-  const hash = hash(contracts)
+  const hash = hashContracts(contracts)
 
   if (!cached(hash)) {
     const validations = contracts.map(validate)
@@ -29,21 +29,23 @@ app.post('/api/contracts', function (req, res, next) {
       next()
     }
 
-    if (!insert(hash, contracts)) {
-      res.status(500).send('Internal Server Error')
-      next()
-    }
+    // if (!insert(hash, contracts)) {
+    //   res.status(500).send('Internal Server Error')
+    //   next()
+    // }
   }
 
-  const validatedContracts = retrieve(hash)
+  console.log('boop')
 
-  if (execute(validatedContracts)) {
-    res.status(201).send('Contracts Executed')
-    next()
-  } else {
-    res.status(400).send('Contracts Could Not Be Executed')
-    next()
-  }
+  // const validatedContracts = retrieve(hash)
+  //
+  // if (execute(validatedContracts)) {
+  //   res.status(201).send('Contracts Executed')
+  //   next()
+  // } else {
+  //   res.status(400).send('Contracts Could Not Be Executed')
+  //   next()
+  // }
 })
 
 app.listen(25863)
