@@ -2,7 +2,7 @@
 
 const express = require('express')
 
-const { cached, execute, insert, retrieve, validate } = require('../lib/contract')
+const { cached, execute, hash, insert, retrieve, validate } = require('../lib/contract')
 
 const logging = require('./middleware/logging')
 const bodyParser = require('body-parser')
@@ -17,7 +17,9 @@ app.get('/health', function (req, res) {
 })
 
 app.post('/api/contracts', function (req, res, next) {
-  const { hash, contracts } = req.body
+  const contracts = req.body
+
+  const hash = hash(contracts)
 
   if (!cached(hash)) {
     const validations = contracts.map(validate)
