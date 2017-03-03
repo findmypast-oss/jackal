@@ -48,13 +48,15 @@ app.post('/api/contracts', function (req, res, next) {
     next()
   }
 
-  if (execute(cacheObject.contracts)) {
-    res.status(201).send('Contracts Executed')
-    next()
-  } else {
-    res.status(400).send('Contracts Could Not Be Executed')
-    next()
-  }
+  execute(cacheObject.contracts, (err, results) => {
+    if (err) {
+      res.status(400).send('Contracts could not be executed')
+      next()
+    } else {
+      res.status(201).send('Contracts executed')
+      next()
+    }
+  })
 })
 
 app.listen(25863)
