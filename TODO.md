@@ -4,8 +4,8 @@ Task List
 Codebase
 --------
 - [ ] Write contract execution logic
-  - [ ] Include `consumer-contracts` and use `validateContracts` function and specify callback
-  - [ ] Duplicate logic from `lib/validator.js` file of `consumer-contracts` if necessary
+  - [ ] Include `consumer-contracts` and use `validateContracts` function and remove duplicated logic
+  - [x] Duplicate logic from `lib/validator.js` file of `consumer-contracts` if necessary
 - [ ] Make filename for cache/db an arg when running the service
 - [ ] Add endpoint to dump db in order to retrieve file to recopy it in when deploying
 
