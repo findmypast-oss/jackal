@@ -19,7 +19,13 @@ app.get('/health', function (req, res) {
 app.post('/api/contracts', function (req, res, next) {
   const contracts = req.body
 
-  const hash = hashContracts(contracts)
+  if (contracts.length === 0) {
+    res.status(400).send('No contracts received')
+    next()
+  }
+
+  const json = JSON.stringify(contracts)
+  const hash = hashContracts(json)
 
   if (!cached(hash)) {
     const validations = contracts.map(validate)
@@ -29,23 +35,26 @@ app.post('/api/contracts', function (req, res, next) {
       next()
     }
 
-    // if (!insert(hash, contracts)) {
-    //   res.status(500).send('Internal Server Error')
-    //   next()
-    // }
+    if (!insert(hash, contracts)) {
+      res.status(500).send('Cache failed on contracts insertion')
+      next()
+    }
   }
 
-  console.log('boop')
+  const cacheObject = retrieve(hash)
 
-  // const validatedContracts = retrieve(hash)
-  //
-  // if (execute(validatedContracts)) {
-  //   res.status(201).send('Contracts Executed')
-  //   next()
-  // } else {
-  //   res.status(400).send('Contracts Could Not Be Executed')
-  //   next()
-  // }
+  if (cacheObject.hash !== hash) {
+    res.status(500).send('Cache failed on contracts retrieval')
+    next()
+  }
+
+  if (execute(cacheObject.contracts)) {
+    res.status(201).send('Contracts Executed')
+    next()
+  } else {
+    res.status(400).send('Contracts Could Not Be Executed')
+    next()
+  }
 })
 
 app.listen(25863)
