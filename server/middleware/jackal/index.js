@@ -35,11 +35,11 @@ const jackal = (req, res, next) => {
   }
 
   execute(cacheObject.contracts, (err, results) => {
-    if (err) {
-      res.status(400).send('Contracts could not be executed')
+    if (results.every(r => r.err === null)) {
+      res.status(201).send('Contracts executed successfully')
       next()
     } else {
-      res.status(201).send('Contracts executed')
+      res.status(400).send('Contracts failed to execute')
       next()
     }
   })
