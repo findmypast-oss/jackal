@@ -38,6 +38,7 @@
     "fast-json-stringify": "^0.10.3",
     "joi": "^10.2.2",
     "lokijs": "^1.4.3",
+    "nearley": "^2.8.0",
     "pino": "^4.0.1"
   }
 }
