@@ -1,1 +1,1 @@
-consumer -> [a-zA-Z0-9-_]:+
+consumer -> [a-z0-9_]:+
