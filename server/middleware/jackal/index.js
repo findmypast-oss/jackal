@@ -1,6 +1,7 @@
 'use strict'
 
-const { cached, execute, hashContracts, insert, retrieve, validate } = require('../../../lib/contract')
+const coll = 'contracts'
+const { cached, execute, hashData, insert, retrieve, validate } = require('../../../lib/contract')
 
 const jackal = (req, res, next) => {
   const contracts = req.body
@@ -11,9 +12,9 @@ const jackal = (req, res, next) => {
   }
 
   const json = JSON.stringify(contracts)
-  const hash = hashContracts(json)
+  const hash = hashData(json)
 
-  if (!cached(hash)) {
+  if (!cached(coll, hash)) {
     const validations = contracts.map(validate)
 
     if (!validations.every(v => v.valid)) {
@@ -21,13 +22,13 @@ const jackal = (req, res, next) => {
       next()
     }
 
-    if (!insert(hash, contracts)) {
+    if (!insert(coll, hash, contracts)) {
       res.status(500).send('Cache failed on contracts insertion')
       next()
     }
   }
 
-  const cacheObject = retrieve(hash)
+  const cacheObject = retrieve(coll, hash)
 
   if (cacheObject.hash !== hash) {
     res.status(500).send('Cache failed on contracts retrieval')

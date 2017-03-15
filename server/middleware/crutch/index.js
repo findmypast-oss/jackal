@@ -3,8 +3,9 @@
 const { dump } = require('../../../lib/contract')
 
 const crutch = (req, res, next) => {
-  const contracts = dump()
-  res.send(contracts)
+  const cache = dump()
+
+  res.send(cache)
   next()
 }
 
