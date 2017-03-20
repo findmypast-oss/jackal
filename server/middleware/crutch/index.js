@@ -4,10 +4,9 @@ const { dump } = require('../../../lib/contract')
 
 const crutch = (req, res, next) => {
   const cache = dump()
+  res.set({ 'Content-Type': 'application/json' }).status(200).send(cache)
 
-  res.setHeader('Content-Type', 'application/json');
-  res.send(cache)
-  next()
+  return next()
 }
 
 module.exports = crutch

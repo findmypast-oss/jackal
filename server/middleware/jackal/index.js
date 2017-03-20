@@ -8,7 +8,8 @@ const jackal = (req, res, next) => {
 
   if (contracts.length === 0) {
     res.status(400).send('No contracts received')
-    next()
+    
+    return next()
   }
 
   const json = JSON.stringify(contracts)
@@ -18,13 +19,16 @@ const jackal = (req, res, next) => {
     const validations = contracts.map(validate)
 
     if (!validations.every(v => v.valid)) {
-      res.status(400).send(validations)
-      next()
+      const validationHeader = { 'Content-Type': 'application/json' }
+      res.set(validationHeader).status(400).send(validations)
+
+      return next()
     }
 
     if (!insert(coll, hash, contracts)) {
       res.status(500).send('Cache failed on contracts insertion')
-      next()
+
+      return next()
     }
   }
 
@@ -32,18 +36,19 @@ const jackal = (req, res, next) => {
 
   if (cacheObject.hash !== hash) {
     res.status(500).send('Cache failed on contracts retrieval')
-    next()
+
+    return next()
   }
 
   execute(cacheObject.contracts, (err, results) => {
     if (results.every(r => r.err === null)) {
       res.status(201).send('Contracts executed successfully')
-      next()
     } else {
       res.status(400).send('Contracts failed to execute')
-      next()
     }
   })
+
+  return next()
 }
 
 module.exports = jackal
