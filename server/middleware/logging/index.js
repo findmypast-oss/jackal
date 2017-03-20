@@ -1,7 +1,7 @@
 'use strict'
 
-const expressPino = require('express-pino-logger')
 const logger = require('../../../lib/logger')
+const expressPino = require('express-pino-logger')
 
 module.exports = expressPino({
   logger: logger

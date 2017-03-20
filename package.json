@@ -66,8 +66,9 @@
       "**/*.spec.js",
       "**/*.json",
       "**/*.ne",
-      "coverage/**/*",
       "**/grammar/*.js",
+      "coverage/**/*",
+      "lib/logger/index.js",
       "server/**/*.js"
     ],
     "reporter": [
