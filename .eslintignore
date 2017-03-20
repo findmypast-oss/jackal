@@ -1,0 +1,7 @@
+**/*.spec.js
+**/*.json
+**/*.ne
+
+coverage/**/*
+**/grammar/*.js
+server/**/*.js
