@@ -1,14 +1,14 @@
 'use strict'
 
 const coll = 'contracts'
-const { cached, execute, hashData, insert, retrieve, validate } = require('../../../lib/contract')
+const { cached, execute, hashData, insert, mapResult, retrieve, validate } = require('../../../lib/contract')
 
 const jackal = (req, res, next) => {
   const contracts = req.body
 
-  if (contracts.length === 0) {
-    res.status(400).send('No contracts received')
-    
+  if (contracts.length === undefined || contracts.length === 0) {
+    res.status(400).send({ message: 'No contracts received' })
+
     return next()
   }
 
@@ -19,14 +19,24 @@ const jackal = (req, res, next) => {
     const validations = contracts.map(validate)
 
     if (!validations.every(v => v.valid)) {
-      const validationHeader = { 'Content-Type': 'application/json' }
-      res.set(validationHeader).status(400).send(validations)
+      res.status(400).send({
+        message: "One or more contracts are invalid",
+        validations: validations.map((v, i) => {
+          const contract = contracts[i]
+
+          return {
+            contract: `${contract.name} <- ${contract.consumer}`,
+            valid: v.valid,
+            errors: v.errors
+          }
+        })
+      })
 
       return next()
     }
 
     if (!insert(coll, hash, contracts)) {
-      res.status(500).send('Cache failed on contracts insertion')
+      res.status(500).send({ message: 'Cache failed on contracts insertion' })
 
       return next()
     }
@@ -35,20 +45,16 @@ const jackal = (req, res, next) => {
   const cacheObject = retrieve(coll, hash)
 
   if (cacheObject.hash !== hash) {
-    res.status(500).send('Cache failed on contracts retrieval')
+    res.status(500).send({ message: 'Cache failed on contracts retrieval' })
 
     return next()
   }
 
   execute(cacheObject.contracts, (err, results) => {
-    if (results.every(r => r.err === null)) {
-      res.status(201).send('Contracts executed successfully')
-    } else {
-      res.status(400).send('Contracts failed to execute')
-    }
-  })
+    res.status(201).send(results.map(mapResult))
 
-  return next()
+    return next()
+  })
 }
 
 module.exports = jackal
