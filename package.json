@@ -1,13 +1,15 @@
 {
   "name": "jackal",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "scripts": {
     "dev": "node server | pino",
     "prod": "echo \"Productionise me bro!\"",
     "start": "if test \"$NODE_ENV\" = \"production\" ; then npm run prod ; else npm run dev ; fi",
-    "test": "tap \"lib/**/*.spec.js\""
+    "pretest": "eslint .",
+    "test": "nyc tap \"lib/**/*.spec.js\"",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -27,12 +29,14 @@
   },
   "homepage": "https://github.com/findmypast/jackal#readme",
   "devDependencies": {
+    "coveralls": "^2.12.0",
+    "eslint": "^3.18.0",
+    "nyc": "^10.1.2",
     "tap": "^10.2.2"
   },
   "dependencies": {
-    "async": "^2.1.5",
     "body-parser": "^1.16.1",
-    "consumer-contracts": "^1.4.0",
+    "consumer-contracts": "^1.5.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
     "fast-json-stringify": "^0.10.3",
@@ -40,5 +44,38 @@
     "lokijs": "^1.4.3",
     "nearley": "^2.8.0",
     "pino": "^4.0.1"
+  },
+  "nyc": {
+    "lines": [
+      80,
+      95
+    ],
+    "statements": [
+      80,
+      95
+    ],
+    "functions": [
+      80,
+      95
+    ],
+    "branches": [
+      80,
+      95
+    ],
+    "exclude": [
+      "**/*.spec.js",
+      "**/*.json",
+      "**/*.ne",
+      "coverage/**/*",
+      "**/grammar/*.js",
+      "server/**/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "cache": true,
+    "all": true,
+    "check-coverage": true
   }
 }
