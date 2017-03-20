@@ -10,12 +10,18 @@ const crutch = require('./middleware/crutch')
 
 const app = express()
 
-app.use(logging)
-app.use(bodyParser.json())
+const startServer = logger => {
+  const loggingMiddleware = logging(logger)
 
-app.get('/health', function (req, res) { res.send('😊') })
-app.post('/api/contracts', jackal)
-app.get('/api/contracts/:provider', claude)
-app.get('/api/contracts', crutch)
+  app.use(loggingMiddleware)
+  app.use(bodyParser.json())
 
-app.listen(25863)
+  app.get('/health', function (req, res) { res.send('😊') })
+  app.post('/api/contracts', jackal)
+  app.get('/api/contracts/:provider', claude)
+  app.get('/api/contracts', crutch)
+
+  app.listen(25863)
+}
+
+module.exports = startServer
