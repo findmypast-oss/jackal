@@ -23,7 +23,12 @@
     "Jackal"
   ],
   "author": "Donald Robertson <drobertson@findmypast.com>",
-  "license": "UNLICENSED",
+  "contributors": [
+    { "name": "Donald Robertson", "email": "drobertson@findmypast.com" },
+    { "name": "Oleksandr Stasyk", "email": "ostasyk@findmypast.com" },
+    { "name": "Neil Crawford", "email": "ncrawford@findmypast.com" }
+  ],
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/findmypast/jackal/issues"
   },
