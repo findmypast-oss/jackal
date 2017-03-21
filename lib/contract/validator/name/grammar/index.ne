@@ -1,4 +1,4 @@
-name      -> api " | " provider
+name      -> provider "/" api
 
-api       -> [a-z0-9-_]:+
-provider  -> [a-z0-9-_]:+
+api       -> [a-z0-9_]:+
+provider  -> [a-z0-9_]:+
