@@ -1,0 +1,17 @@
+[
+  {
+    "name": "itunes/search_by_term_and_country",
+    "consumer": "itunes_search_app",
+    "request": {
+      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+      "method": "get"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "resultCount": "Joi.number.integer()",
+        "results": "Joi.array()"
+      }
+    }
+  }
+]

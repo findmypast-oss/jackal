@@ -1,7 +1,7 @@
 'use strict'
 
 const coll = 'contracts'
-const { cached, execute, hashData, insert, mapResult, retrieve, validate } = require('../../../lib/contract')
+const { cached, execute, hashData, insert, mapResult, parseResponse, retrieve, validate } = require('../../../lib/contract')
 
 const jackal = (req, res, next) => {
   const contracts = req.body
@@ -35,7 +35,16 @@ const jackal = (req, res, next) => {
       return next()
     }
 
-    if (!insert(coll, hash, contracts)) {
+    const parsedContracts = contracts.map(contract => {
+      return {
+        name: contract.name,
+        consumer: contract.consumer,
+        request: contract.request,
+        response: parseResponse(contract.response)
+      }
+    })
+
+    if (!insert(coll, hash, parsedContracts)) {
       res.status(500).send({ message: 'Cache failed on contracts insertion' })
 
       return next()
