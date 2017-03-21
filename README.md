@@ -1,5 +1,6 @@
 # Jackal
 
+[![npm](https://img.shields.io/npm/v/npm.svg)]()
 [![Build](https://img.shields.io/travis/findmypast-oss/jackal.svg)](https://travis-ci.org/findmypast-oss/jackal)
 [![Coveralls](https://img.shields.io/coveralls/findmypast-oss/jackal.svg)](https://coveralls.io/github/findmypast-oss/jackal)
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
