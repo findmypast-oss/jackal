@@ -20,3 +20,17 @@ To start the jackal service running on port `25863`:
 Jackal uses [Node TAP](http://www.node-tap.org/basics/) for unit tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
 
 Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors __and__ warnings should be fixed prior to pushing changes. HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
+
+## Releasing
+
+Every push results in an updated `latest` image in [Dockerhub](https://hub.docker.com/r/findmypast/jackal/). Once you decided to create a new release based on [semver](http://semver.org/) run the following to create a tag and bump the `package.json` version:
+
+```
+npm version [ patch | minor | major ]
+```
+
+Then to push the changes and trigger a deploy:
+
+```
+git push && git push --tags
+```
