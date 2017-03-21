@@ -7,6 +7,14 @@
 
 Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
 
+## Running
+
+### Docker
+
+To start the jackal service running on port `25863`:
+
+`docker run -p 25863:25863 findmypast/jackal`
+
 ## Testing
 
 Jackal uses [Node TAP](http://www.node-tap.org/basics/) for unit tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
