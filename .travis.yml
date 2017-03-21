@@ -1,5 +1,13 @@
 language: node_js
 node_js:
-  - "node"
-  - "6"
+- node
+- '6'
 after_success: npm run coverage
+deploy:
+  provider: npm
+  email: spanners@findmypast.com
+  api_key:
+    secure: g+hsKfFwtFh2zuGTE8l/tS9BVk1SOPC9gfAfKPd9qHCQLG7tvVqN2FaHAzRK9zdUFBrBH8HqtiPu37iWEeygt7N1CGtRGGBYCkZsrfoAI00Q55SFDpWMoSqBbpiAjqlIT54z/MgAt3OnwxPJ5CID5rvaUUiMITB2XcSOQ7+BkNE/sPiYvAeZogdCFFFpNr//cT5k5NqeeCPmq282twGhEwroHl4Iv/fJdN+R0EgY9luccpQjgSzmX2fEmJeUz1AghJ9riCq6Z0YIuUo7IoyMvxia9IvSJ4skRxnRLE0dpKpBZIcJhjBCJSi0ior252bm0dJWQCTBIDc7ZcEWZZhQ5QgscQHDC4reUQvU111dyPbp+XyIldUt45Bdyqtp9YgKqC+mGn7HOyJkAlYBDlFRxWCH3lIyAoNsdnytUSaNyDv0A3iTtzEqd69SXjFBlzm4Bf2i14qP/jZq+3XGkJAdzhW/KVf6syzaCKWnc/++mj6rNxXEFDkhngV8fubzkttDvk+4rDg6gFAe+yCKFLELECH0F2btEfFnQDSNLut1TWHLh/4fw414lt1B/2pTsXZRLA8jNzR+wXH9KQqI8AYbbMvPliVrPqDmZAdF3uhK7gKYmKLKzwkAOZwld6wjy57+AGKhHHqkj5RkU3IWIJtWuu59b16ZoccGOGitp1tDtSs=
+  on:
+    tags: true
+    repo: findmypast-oss/jackal
