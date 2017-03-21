@@ -37,4 +37,5 @@ jspm_packages
 .node_repl_history
 
 # Contracts.json file for local development
-./contracts.json
+!examples/contracts.json
+contracts.json
