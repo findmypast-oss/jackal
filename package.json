@@ -7,9 +7,7 @@
     "jackal": "index.js"
   },
   "scripts": {
-    "dev": "node index start ./examples/config.json | pino",
-    "prod": "echo \"Productionise me bro!\"",
-    "start": "if test \"$NODE_ENV\" = \"production\" ; then npm run prod ; else npm run dev ; fi",
+    "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc tap \"lib/**/*.spec.js\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls"

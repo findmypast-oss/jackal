@@ -9,11 +9,19 @@ program
   .version(pkg.version)
 
 program
-  .command('start <configPath>')
+  .command('start [configPath]')
   .description('Start the Jackal microservice using the specified config file')
   .action(configPath => {
-    const buffer = fs.readFileSync(configPath)
-    const config = JSON.parse(buffer.toString())
+    let config
+
+    if (configPath) {
+      const buffer = fs.readFileSync(configPath)
+      config = JSON.parse(buffer.toString())
+    } else {
+      config = {
+        logger: { environment: 'production' }
+      }
+    }
 
     startJackal(config)
   })
