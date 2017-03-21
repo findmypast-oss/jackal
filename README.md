@@ -34,3 +34,5 @@ Then to push the changes and trigger a deploy:
 ```
 git push && git push --tags
 ```
+
+This will result in a new [github release](https://github.com/findmypast-oss/jackal/releases), new [npm release](https://www.npmjs.com/package/jackal) and a new [Dockerhub tagged image](https://hub.docker.com/r/findmypast/jackal/tags/).
