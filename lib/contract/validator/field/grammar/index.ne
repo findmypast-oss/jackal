@@ -47,7 +47,7 @@ numPositive -> "positive()"
 numNegative -> "negative()"
 
 # unordered string modifiers not supported yet
-stringType -> "string()" ( dot strInsensitive ):? ( ( ( dot strMin ):? ( dot strMax ( dot strTruncate ):? ):? ) | ( dot strLength ):? ):? ( dot ( strCreditCard | strAlphaNum | strToken | strEmail | strIp | strUri | strGuid | strHex | strBase64 | strHostname | strLowerCase | strUpperCase | strIsoDate ) ):? ( dot strRegex ):? ( dot strReplace ):? ( dot strTrim ):?
+stringType -> "string()" ( dot strInsensitive ):? ( ( ( dot strMin ):? ( dot strMax ( dot strTruncate ):? ):? ) | ( dot strLength ):? ):? ( dot ( strCreditCard | strAlphaNum | strToken | strEmail | strIp | strUri | strGuid | strHex | strBase64 | strHostname | strLowerCase | strUpperCase | strIsoDate ) ):? ( dot strTrim ):?
 
 strInsensitive -> "insensitive()"
 strMin -> "min(" integer ( ", " strEncoding ):? ")"
@@ -55,8 +55,6 @@ strMax -> "max(" integer ( ", " strEncoding ):? ")"
 strTruncate -> "truncate(" ( "true" | "false" ):? ")"
 strCreditCard -> "creditCard()"
 strLength -> "length(" integer ( ", " strEncoding ):? ")"
-strRegex -> "regex(" strRegexPattern ( ", " strRegexParam ):? ")"
-strReplace -> "replace(" strRegexPattern ", " string ")"
 strAlphaNum -> "alphanum()"
 strToken -> "token()"
 # email options not suuported yet
@@ -74,13 +72,7 @@ strUpperCase -> "uppercase()"
 strTrim -> "trim()"
 strIsoDate -> "isoDate()"
 
-strEncoding -> "ascii" | "utf8" | "utf16le" | "ucs2" | "base64" | "latin1" | "binary" | "hex"
-
-strRegexPattern -> "/" [\x00-\x7f] "/" ( strRegexFlags ):*
-strRegexFlags -> "i" | "g" | "m"
-strRegexParam -> strRegexName | strRegexOptions
-strRegexName -> string
-strRegexOptions -> "{ name: " string ", invert: " ( "true" | "false" ) " }"
+strEncoding -> "'ascii'" | "'utf8'" | "'utf16le'" | "'ucs2'" | "'base64'" | "'latin1'" | "'binary'" | "'hex'"
 
 strIpOptions -> "{ " ( strIpVersionParam | ( strIpVersionParam ", " strIpCidrParam ) | strIpCidrParam ) " }"
 strIpVersionParam -> "version: [ " strIpVersion ( ", " strIpVersion ):* " ]"
