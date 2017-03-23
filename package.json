@@ -84,6 +84,7 @@
       "**/*.ne",
       "index.js",
       "**/grammar/*.js",
+      "**/parser/*.js",
       "coverage/**/*",
       "lib/logger/index.js",
       "lib/contract/index.js",
