@@ -4,9 +4,9 @@ array           -> "[" _ ( expr ( "," _ expr ):* ):? _ "]"
 object          -> "{" _ ( kvp ( "," _ kvp ):* ):? _ "}"
 
 kvp             -> key _ ":" _ expr
-key             -> "\"" printableAscii:* "\""
+key             -> "'" printableAscii:* "'"
 
-statement       -> "\"" ( mod ):? ( boolean | date | number | string ) ( allow ):? "\""
+statement       -> "'" ( mod ):? ( boolean | date | number | string ) ( allow ):? "'"
 
 mod             -> "!" | "?"
 
