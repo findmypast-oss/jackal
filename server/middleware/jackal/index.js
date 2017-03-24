@@ -46,7 +46,7 @@ const jackal = (req, res, next) => {
       }
     })
 
-    const invalidContract = parsedContracts.find(pc => isCompilationError(pc.response))
+    const invalidContract = parsedContracts.find(pc => isCompilationError(pc.response.body))
     if (invalidContract) {
       res.status(400).send(invalidContract.response)
 
