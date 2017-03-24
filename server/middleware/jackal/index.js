@@ -78,8 +78,12 @@ const jackal = (req, res, next) => {
 module.exports = jackal
 
 const isCompilationError = value => {
-  const name = value.name && value.name === 'DSL Error'
-  const msg = value.message && value.message === 'Response could not be compiled. Please see the DSL documentation: https://github.com/findmypast-oss/jackal/blob/master/dsl.md'
+  if (value) {
+    const name = value.name && value.name === 'DSL Error'
+    const msg = value.message && value.message === 'Response could not be compiled. Please see the DSL documentation: https://github.com/findmypast-oss/jackal/blob/master/dsl.md'
 
-  return name && msg
+    return name && msg
+  }
+
+  return false
 }
