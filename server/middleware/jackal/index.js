@@ -36,13 +36,22 @@ const jackal = (req, res, next) => {
     }
 
     const parsedContracts = contracts.map(contract => {
+      const parsedResponse = parseResponse(contract.response)
+
       return {
         name: contract.name,
         consumer: contract.consumer,
         request: contract.request,
-        response: parseResponse(contract.response)
+        response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
       }
     })
+
+    const invalidContract = parsedContracts.find(pc => isCompilationError(pc.response))
+    if (invalidContract) {
+      res.status(400).send(invalidContract.response)
+
+      return next()
+    }
 
     if (!insert(coll, hash, parsedContracts)) {
       res.status(500).send({ message: 'Cache failed on contracts insertion' })
@@ -67,3 +76,10 @@ const jackal = (req, res, next) => {
 }
 
 module.exports = jackal
+
+const isCompilationError = value => {
+  const name = value.name && value.name === 'DSL Error'
+  const msg = value.message && value.message === 'Response could not be compiled. Please see the DSL documentation: https://github.com/findmypast-oss/jackal/blob/master/dsl.md'
+
+  return name && msg
+}
