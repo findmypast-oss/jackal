@@ -41,6 +41,7 @@ const jackal = (req, res, next) => {
       return {
         name: contract.name,
         consumer: contract.consumer,
+        before: contract.before,
         request: contract.request,
         response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
       }
