@@ -2,6 +2,7 @@
 
 const coll = 'contracts'
 const { cached, execute, hashData, insert, mapResult, parseResponse, retrieve, validate } = require('../../../lib/contract')
+const { isMalformed, isUnsupported } = require('../../../lib/contract/responseParser/joiParser/errors')
 
 const jackal = (req, res, next) => {
   const contracts = req.body
@@ -46,9 +47,16 @@ const jackal = (req, res, next) => {
       }
     })
 
-    const invalidContract = parsedContracts.find(pc => isCompilationError(pc.response.body))
-    if (invalidContract) {
-      res.status(400).send(invalidContract.response)
+    const malformedContract = parsedContracts.find(pc => isMalformed(pc.response.body))
+    if (malformedContract) {
+      res.status(400).send(malformedContract.response)
+
+      return next()
+    }
+
+    const unsupportedContract = parsedContracts.find(pc => isUnsupported(pc.response.body))
+    if (unsupportedContract) {
+      res.status(400).send(unsupportedContract.response)
 
       return next()
     }
@@ -76,14 +84,3 @@ const jackal = (req, res, next) => {
 }
 
 module.exports = jackal
-
-const isCompilationError = value => {
-  if (value) {
-    const name = value.name && value.name === 'DSL Error'
-    const msg = value.message && value.message === 'Response could not be compiled. Please see the DSL documentation: https://github.com/findmypast-oss/jackal/blob/master/dsl.md'
-
-    return name && msg
-  }
-
-  return false
-}
