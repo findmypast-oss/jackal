@@ -59,7 +59,9 @@
     "joi": "^10.2.2",
     "lokijs": "^1.4.3",
     "nearley": "^2.8.0",
-    "pino": "^4.0.1"
+    "pino": "^4.0.1",
+    "prettyjson": "^1.2.1",
+    "request": "^2.81.0"
   },
   "nyc": {
     "lines": [
