@@ -9,8 +9,8 @@
     "response": {
       "statusCode": 200,
       "body": {
-        "resultCount": "'integer'",
-        "results": "[{'wrapperType':'string','kind':'string','artistId':'integer','artistName':'?string','collectionName':'string','trackName':'string'}]"
+        "resultCount": "Joi.number().integer()",
+        "results": "Joi.array().items([Joi.object({\"trackName\":\"Joi.string()\",\"collectionName\":\"Joi.string()\"}).unknown(true)])"
       }
     }
   }
