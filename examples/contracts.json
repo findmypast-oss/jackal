@@ -10,7 +10,7 @@
       "statusCode": 200,
       "body": {
         "resultCount": "Joi.number().integer()",
-        "results": "Joi.array().items([Joi.object({\"trackName\":\"Joi.string()\",\"collectionName\":\"Joi.string()\"}).unknown(true)])"
+        "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
       }
     }
   }
