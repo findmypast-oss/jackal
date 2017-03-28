@@ -20,7 +20,8 @@ program
       config = JSON.parse(buffer.toString())
     } else {
       config = {
-        logger: { environment: 'production' }
+        logger: { environment: 'production' },
+        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
       }
     }
 
