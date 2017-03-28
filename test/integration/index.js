@@ -1,6 +1,5 @@
 'use strict'
 
-const Promise = require('bluebird')
 const tap = require('tap')
 const test = tap.test
 
@@ -31,10 +30,10 @@ test('End to end tests', t => {
     //   consumer.testContracts()
     // })
     .then(() => {
-      return Promise.promisify(jackalServer.close)()
+      return jackalServer.stop()
     })
     .then(() => {
       return provider.stop()
-      t.end()
     })
+    .then(() => t.end())
 })
