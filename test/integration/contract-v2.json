@@ -1,0 +1,16 @@
+[
+  {
+    "name": "provider/contract",
+    "consumer": "consumer",
+    "request": {
+      "url": "http://localhost:3000/contract",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "version": "Joi.string()"
+      }
+    }
+  }
+]

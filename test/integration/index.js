@@ -7,7 +7,7 @@ const provider = require('./test-provider')
 const jackal = require('./test-jackal')
 const contract_v1 = require('./contract-v1')
 const contract_v2 = require('./contract-v2')
-const consumer = require('.')
+const consumer = require('./../../client')
 
 test('End to end tests', t => {
   t.plan(1)
@@ -16,13 +16,13 @@ test('End to end tests', t => {
     .then(()=> {
       return provider.start()
     })
+    .then(() => {
+      provider.setContractResponse({ version: '1' })
+      consumer.send(contract_v1)
+      consumer.testContracts()
+    })
     // .then(() => {
-    //   provider.setContractResponse({ api: 'version 1' })
-    //   consumer.send(contract_v1)
-    //   consumer.testContracts()
-    // })
-    // .then(() => {
-    //   provider.setContractResponse({ api: 'version 2' })
+    //   provider.setContractResponse({ version: 'abc' })
     //   consumer.testContracts()
     // })
     // .then(() => {
