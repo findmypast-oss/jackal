@@ -11,7 +11,7 @@ const json = require('./middleware/json')
 
 const app = express()
 
-const startServer = logger => {
+const startServer = (logger, done) => {
   const loggingMiddleware = logging(logger)
 
   app.use(loggingMiddleware)
@@ -22,7 +22,7 @@ const startServer = logger => {
   app.get('/api/contracts/:provider', json, claude)
   app.get('/api/contracts', json, crutch)
 
-  app.listen(25863)
+  return app.listen(25863, done)
 }
 
 module.exports = startServer
