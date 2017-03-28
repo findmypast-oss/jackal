@@ -4,6 +4,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const logging = require('./middleware/logging')
+const graphing = require('./middleware/graphing')
+
 const jackal = require('./middleware/jackal')
 const claude = require('./middleware/claude')
 const crutch = require('./middleware/crutch')
@@ -11,10 +13,12 @@ const json = require('./middleware/json')
 
 const app = express()
 
-const startServer = (logger, done) => {
+const startServer = (logger, grapher, done) => {
   const loggingMiddleware = logging(logger)
+  const graphingMiddleware = graphing(grapher)
 
   app.use(loggingMiddleware)
+  app.use(graphingMiddleware)
   app.use(bodyParser.json())
 
   app.get('/health', function (req, res) { res.send('😊') })
