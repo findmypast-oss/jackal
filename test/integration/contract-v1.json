@@ -1,9 +1,9 @@
 [
   {
-    "name": "provider/contract",
+    "name": "integration/contract",
     "consumer": "consumer",
     "request": {
-      "url": "http://localhost:3000/contract",
+      "url": "http://localhost:5000/contract",
       "method": "GET"
     },
     "response": {

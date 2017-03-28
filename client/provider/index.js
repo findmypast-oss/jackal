@@ -3,7 +3,7 @@
 const prettyjson = require('prettyjson')
 const request = require('request')
 
-const run = jackalUrl => {
+const run = (jackalUrl, done) => {
   request(jackalUrl, (error, response, body) => {
     const parsed = JSON.parse(body)
     const prettified = prettyjson.render(parsed)
@@ -14,11 +14,11 @@ const run = jackalUrl => {
 
     if (response.statusCode === 200) {
       if (parsed.every(result => result.status === 'Pass')) {
-        process.exit(0)
+        return done()
       }
     }
 
-    process.exit(1)
+    return done(new Error('Some contracts failed'))
   })
 }
 

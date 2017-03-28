@@ -1,16 +1,17 @@
 const Promise = require('bluebird')
 const express = require('express')
 const app = express()
-var testData = null
+var mockContract = null
 var server = null
 
 app.get('/contract', function(req, res) {
   res.status(200)
-    .json(testData)
+    .json(mockContract)
 })
 
-const start = (done) => {
-  server = app.listen(5000, done)
+const start = ({port, contract}, done) => {
+  mockContract = contract
+  server = app.listen(port, done)
 }
 
 const stop = (done) => {
@@ -19,6 +20,5 @@ const stop = (done) => {
 
 module.exports = {
   start: Promise.promisify(start),
-  stop: Promise.promisify(stop),
-  setContractResponse: data => testData = data
+  stop: Promise.promisify(stop)
 }

@@ -6,6 +6,18 @@ const program = require('commander')
 const { run, send } = require('./client')
 const startJackal = require('./lib')
 
+const exitCodeWrapper = (fn) => (...args) => {
+  fn(...args, (err) => {
+    if(err){
+      /* eslint-disable no-console */
+      console.error(err)
+      /* eslint-enable no-console */
+      return process.exit(1)
+    }
+    return process.exit(0)
+  })
+}
+
 program
   .version(pkg.version)
 
@@ -31,12 +43,12 @@ program
 program
   .command('send <contractsPath> <jackalUrl>')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
-  .action(send)
+  .action(exitCodeWrapper(send))
 
 program
   .command('run <jackalUrl>')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
-  .action(run)
+  .action(exitCodeWrapper(run))
 
 program
   .parse(process.argv)

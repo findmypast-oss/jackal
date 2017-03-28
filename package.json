@@ -10,6 +10,7 @@
     "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc tap \"lib/**/*.spec.js\"",
+    "integration-test": "nyc tap \"test/integration/**/*.spec.js\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

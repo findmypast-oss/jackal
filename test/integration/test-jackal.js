@@ -1,8 +1,10 @@
-const jackal = Promise.promisify(require('./../../lib'))
-
 const Promise = require('bluebird')
+const jackal = require('./../../lib')
 var server = null
-var config = {}
+var config = {
+  logger: { environment: 'production' },
+  statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
+}
 
 const start = (done) => {
   server = jackal(config, done)
