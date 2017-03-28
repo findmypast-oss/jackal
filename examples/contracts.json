@@ -4,13 +4,13 @@
     "consumer": "itunes_search_app",
     "request": {
       "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
-      "method": "get"
+      "method": "GET"
     },
     "response": {
       "statusCode": 200,
       "body": {
-        "resultCount": "Joi.number.integer()",
-        "results": "Joi.array()"
+        "resultCount": "Joi.number().integer()",
+        "results": "Joi.array().items([Joi.object({\"trackName\":\"Joi.string()\",\"collectionName\":\"Joi.string()\"}).unknown(true)])"
       }
     }
   }
