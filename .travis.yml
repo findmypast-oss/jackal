@@ -12,7 +12,7 @@ node_js:
 before_install:
   - docker-compose build
 
-# script: docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json http://jackal:25863/api/contracts"
+script: docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json http://jackal:25863/api/contracts"
 
 after_success:
   - npm run coverage
