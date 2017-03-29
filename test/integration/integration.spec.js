@@ -2,14 +2,15 @@
 
 const t = require('tap')
 const tapromise = require('tapromise')
+const Promise = require('bluebird')
 
 const provider = require('./test-provider')
 const jackal = require('./test-jackal')
 const consumer = require('./test-client')
 
-jackal
-  .start()
-  .then(()=> {
+Promise.resolve()
+  .then(() => jackal.start())
+  .then(() => {
     return provider.start({
       port: 5000,
       contract: { version: '1' }
@@ -31,7 +32,8 @@ jackal
         ]
       ))
     })
-  })
+
+  }).then(() => t.end())
   // .finally(() => {
   //   jackal.stop()
   //   provider.stop()

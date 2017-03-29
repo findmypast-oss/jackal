@@ -13,14 +13,15 @@ const json = require('./middleware/json')
 
 const app = express()
 
-const startServer = (logger, grapher, done) => {
-  const loggingMiddleware = logging(logger)
-  const graphingMiddleware = graphing(grapher)
-
+const startServer = function (logger, grapher, done) {
   if (process.env.NODE_ENV === 'production') {
+    const loggingMiddleware = logging(logger)
+    const graphingMiddleware = graphing(grapher)
+
     app.use(loggingMiddleware)
     app.use(graphingMiddleware)
   }
+
   app.use(bodyParser.json())
 
   app.get('/health', function (req, res) { res.send('😊') })

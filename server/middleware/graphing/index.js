@@ -1,6 +1,6 @@
 'use strict'
 
-const hotShotsGrapher = (grapher) => {
+const hotShotsGrapher = function (grapher) {
   const genReqId = reqIdGenFactory()
 
   graphingMiddleware.grapher = grapher
@@ -50,11 +50,11 @@ const hotShotsGrapher = (grapher) => {
 
 module.exports = hotShotsGrapher
 
-const reqIdGenFactory = () => {
+const reqIdGenFactory = function () {
   const maxInt = 2147483647
   let nextReqId = 0
 
-  return (req) => {
+  return function (req) {
     return req.id || (nextReqId = (nextReqId + 1) & maxInt)
   }
 }

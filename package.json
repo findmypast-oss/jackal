@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "0.13.1",
+  "version": "0.15.0",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {
@@ -10,7 +10,7 @@
     "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc tap \"lib/**/*.spec.js\"",
-    "integration-test": "nyc tap \"test/integration/**/*.spec.js\"",
+    "test:integration": "tap \"test/integration/**/*.spec.js\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -45,12 +45,16 @@
   },
   "homepage": "https://github.com/findmypast/jackal#readme",
   "devDependencies": {
-    "bluebird": "^3.5.0",
+    "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "eslint": "^3.18.0",
+    "mocha": "^3.2.0",
+    "mockery": "^2.0.0",
     "nyc": "^10.1.2",
-    "tap": "^10.2.2",
-    "tapromise": "^1.1.0"
+    "rewire": "^2.5.2",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0",
+    "tap": "^10.2.2"
   },
   "dependencies": {
     "body-parser": "^1.16.1",

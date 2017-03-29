@@ -1,6 +1,6 @@
 'use strict'
 
-const json = (req, res, next) => {
+const json = function (req, res, next) {
   res.set({ 'Content-Type': 'application/json' })
 
   next()

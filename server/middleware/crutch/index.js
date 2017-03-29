@@ -1,8 +1,8 @@
 'use strict'
 
-const { dump } = require('../../../lib/contract')
+const dump = require('../../../lib/contract').dump
 
-const crutch = (req, res, next) => {
+const crutch = function (req, res, next) {
   const cache = dump()
   res.status(200).send(cache)
 

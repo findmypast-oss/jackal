@@ -1,10 +1,22 @@
 'use strict'
 
 const coll = 'contracts'
-const { cached, execute, hashData, insert, mapResult, parseResponse, retrieve, validate } = require('../../../lib/contract')
-const { isMalformed, isUnsupported } = require('../../../lib/contract/responseParser/joiParser/errors')
+const contract = require('../../../lib/contract')
+const errors = require('../../../lib/contract/responseParser/joiParser/errors')
 
-const jackal = (req, res, next) => {
+const cached = contract.cached
+const execute = contract.execute
+const hashData = contract.hashData
+const insert = contract.insert
+const mapResult = contract.mapResult
+const parseResponse = contract.parseResponse
+const retrieve = contract.retrieve
+const validate = contract.validate
+
+const isMalformed = errors.isMalformed
+const isUnsupported = errors.isUnsupported
+
+const jackal = function (req, res, next) {
   const contracts = req.body
 
   if (contracts.length === undefined || contracts.length === 0) {
@@ -19,10 +31,10 @@ const jackal = (req, res, next) => {
   if (!cached(coll, hash)) {
     const validations = contracts.map(validate)
 
-    if (!validations.every(v => v.valid)) {
+    if (!validations.every(function (v) { return v.valid })) {
       res.status(400).send({
         message: "One or more contracts are invalid",
-        validations: validations.map((v, i) => {
+        validations: validations.map(function (v, i) {
           const contract = contracts[i]
 
           return {
@@ -36,25 +48,26 @@ const jackal = (req, res, next) => {
       return next()
     }
 
-    const parsedContracts = contracts.map(contract => {
+    const parsedContracts = contracts.map(function (contract) {
       const parsedResponse = parseResponse(contract.response)
 
       return {
         name: contract.name,
         consumer: contract.consumer,
+        before: contract.before,
         request: contract.request,
         response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
       }
     })
 
-    const malformedContract = parsedContracts.find(pc => isMalformed(pc.response.body))
+    const malformedContract = parsedContracts.find(findMalformed)
     if (malformedContract) {
       res.status(400).send(malformedContract.response)
 
       return next()
     }
 
-    const unsupportedContract = parsedContracts.find(pc => isUnsupported(pc.response.body))
+    const unsupportedContract = parsedContracts.find(findUnsupported)
     if (unsupportedContract) {
       res.status(400).send(unsupportedContract.response)
 
@@ -76,7 +89,7 @@ const jackal = (req, res, next) => {
     return next()
   }
 
-  execute(cacheObject.contracts, (err, results) => {
+  execute(cacheObject.contracts, function (err, results) {
     res.status(201).send(results.map(mapResult))
 
     return next()
@@ -84,3 +97,11 @@ const jackal = (req, res, next) => {
 }
 
 module.exports = jackal
+
+const findMalformed = function (contract) {
+  return isMalformed(contract.response.body)
+}
+
+const findUnsupported = function (contract) {
+  return isUnsupported(contract.response.body)
+}

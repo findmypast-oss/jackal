@@ -1,6 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
 language: node_js
 node_js:
 - node
+- '7'
 - '6'
 after_success: npm run coverage
 deploy:
