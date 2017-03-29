@@ -2,8 +2,8 @@
 
 const prettyjson = require('prettyjson')
 
-const run = require('./provider')
-const send = require('./consumer')
+const run = require('./run')
+const send = require('./send')
 
 const generateCallback = function (statusCode) {
   return function (error, response, body) {

@@ -13,7 +13,7 @@ const json = require('./middleware/json')
 
 const app = express()
 
-const startServer = function (logger, grapher) {
+const startServer = function (logger, grapher, done) {
   if (process.env.NODE_ENV === 'production') {
     const loggingMiddleware = logging(logger)
     const graphingMiddleware = graphing(grapher)
@@ -29,7 +29,7 @@ const startServer = function (logger, grapher) {
   app.get('/api/contracts/:provider', json, claude)
   app.get('/api/contracts', json, crutch)
 
-  return app.listen(25863)
+  return app.listen(25863, done)
 }
 
 module.exports = startServer
