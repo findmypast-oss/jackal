@@ -1,5 +1,10 @@
 {
   "logger": {
     "environment": "development"
+  },
+  "statsD": {
+    "host": "localhost",
+    "port": 8125,
+    "prefix": "jackal"
   }
 }

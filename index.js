@@ -1,9 +1,10 @@
 'use strict'
 
 const fs = require('fs')
-const program = require('commander')
-const startJackal = require('./lib')
 const pkg = require('./package.json')
+const program = require('commander')
+const { run, send } = require('./client')
+const startJackal = require('./lib')
 
 program
   .version(pkg.version)
@@ -19,12 +20,23 @@ program
       config = JSON.parse(buffer.toString())
     } else {
       config = {
-        logger: { environment: 'production' }
+        logger: { environment: 'production' },
+        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
       }
     }
 
     startJackal(config)
   })
+
+program
+  .command('send <contractsPath> <jackalUrl>')
+  .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
+  .action(send)
+
+program
+  .command('run <jackalUrl>')
+  .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
+  .action(run)
 
 program
   .parse(process.argv)
