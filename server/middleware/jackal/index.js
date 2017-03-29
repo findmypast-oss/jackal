@@ -36,7 +36,7 @@ const jackal = (req, res, next) => {
       return next()
     }
 
-    const parsedContracts = contracts.map(contract => {
+    const parsedContracts = contracts.map(function (contract) {
       const parsedResponse = parseResponse(contract.response)
 
       return {
@@ -47,14 +47,14 @@ const jackal = (req, res, next) => {
       }
     })
 
-    const malformedContract = parsedContracts.find(pc => isMalformed(pc.response.body))
+    const malformedContract = parsedContracts.find(findMalformed)
     if (malformedContract) {
       res.status(400).send(malformedContract.response)
 
       return next()
     }
 
-    const unsupportedContract = parsedContracts.find(pc => isUnsupported(pc.response.body))
+    const unsupportedContract = parsedContracts.find(findUnsupported)
     if (unsupportedContract) {
       res.status(400).send(unsupportedContract.response)
 
@@ -76,7 +76,7 @@ const jackal = (req, res, next) => {
     return next()
   }
 
-  execute(cacheObject.contracts, (err, results) => {
+  execute(cacheObject.contracts, function (err, results) {
     res.status(201).send(results.map(mapResult))
 
     return next()
@@ -84,3 +84,11 @@ const jackal = (req, res, next) => {
 }
 
 module.exports = jackal
+
+const findMalformed = function (contract) {
+  return isMalformed(contract.response.body)
+}
+
+const findUnsupported = function (contract) {
+  return isUnsupported(contract.response.body)
+}
