@@ -38,14 +38,14 @@ program
   .command('send <contractsPath> <jackalUrl>')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
   .action(function (contractsPath, jackalUrl) {
-    send(contractsPath, jackalUrl, generateCallback(200))
+    send(contractsPath, jackalUrl, generateCallback(201))
   })
 
 program
   .command('run <jackalUrl>')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
   .action(function (jackalUrl) {
-    run(jackalUrl, generateCallback(201))
+    run(jackalUrl, generateCallback(200))
   })
 
 program
