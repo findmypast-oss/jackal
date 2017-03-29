@@ -15,7 +15,7 @@ const generateCallback = function (statusCode) {
     /* eslint-enable no-console */
 
     if (response.statusCode === statusCode) {
-      if (parsed.every(result => result.status === 'Pass')) {
+      if (parsed.every(contractPassed)) {
         process.exit(0)
       }
     }
@@ -25,3 +25,7 @@ const generateCallback = function (statusCode) {
 }
 
 module.exports = { generateCallback, run, send }
+
+const contractPassed = function (result) {
+  return result.status === 'Pass'
+}

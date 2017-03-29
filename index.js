@@ -1,10 +1,14 @@
 'use strict'
 
+const client = require('./client')
 const fs = require('fs')
 const pkg = require('./package.json')
 const program = require('commander')
-const { generateCallback, run, send } = require('./client')
 const startJackal = require('./lib')
+
+const generateCallback = client.generateCallback
+const run = client.run
+const send = client.send
 
 program
   .version(pkg.version)
@@ -12,7 +16,7 @@ program
 program
   .command('start [configPath]')
   .description('Start the Jackal microservice using the specified config file')
-  .action(configPath => {
+  .action(function (configPath) {
     let config
 
     if (configPath) {
@@ -31,12 +35,16 @@ program
 program
   .command('send <contractsPath> <jackalUrl>')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
-  .action((contractsPath, jackalUrl) => send(contractsPath, jackalUrl, generateCallback(200)))
+  .action(function (contractsPath, jackalUrl) {
+    send(contractsPath, jackalUrl, generateCallback(200))
+  })
 
 program
   .command('run <jackalUrl>')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
-  .action(jackalUrl => run(jackalUrl, generateCallback(201)))
+  .action(function (jackalUrl) {
+    run(jackalUrl, generateCallback(201))
+  })
 
 program
   .parse(process.argv)
