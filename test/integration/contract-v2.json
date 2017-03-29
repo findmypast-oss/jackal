@@ -1,0 +1,16 @@
+[
+  {
+    "name": "integration/contract",
+    "consumer": "consumer",
+    "request": {
+      "url": "http://localhost:5000/contract",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "version": "Joi.string()"
+      }
+    }
+  }
+]
