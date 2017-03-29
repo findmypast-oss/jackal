@@ -5,3 +5,8 @@ services:
     build: .
     ports:
       - "25863:25863"
+
+  jackal_client:
+    build: .
+    depends_on:
+      - jackal

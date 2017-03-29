@@ -8,7 +8,15 @@ node_js:
 - node
 - '7'
 - '6'
-after_success: npm run coverage
+
+before_install:
+  - docker-compose build
+
+script: docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json http://jackal:25863/api/contracts"
+
+after_success:
+  - npm run coverage
+
 deploy:
   provider: npm
   email: spanners@findmypast.com
