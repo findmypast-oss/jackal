@@ -1,0 +1,15 @@
+[
+  {
+    "name": "provider/version",
+    "consumer": "consumer",
+    "request": {
+      "url": "http://localhost:12345"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "version": "Joi.number().valid(1)"
+      }
+    }
+  }
+]
