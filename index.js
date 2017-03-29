@@ -12,9 +12,9 @@ const exitCodeWrapper = (fn) => (...args) => {
       /* eslint-disable no-console */
       console.error(err)
       /* eslint-enable no-console */
-      return process.exit(1)
+      process.exit(1)
     }
-    return process.exit(0)
+    process.exit(0)
   })
 }
 

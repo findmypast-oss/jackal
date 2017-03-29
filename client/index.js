@@ -1,6 +1,6 @@
 'use strict'
 
-const run = require('./provider')
-const send = require('./consumer')
+const run = require('./run')
+const send = require('./send')
 
 module.exports = { run, send }

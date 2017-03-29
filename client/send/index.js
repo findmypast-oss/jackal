@@ -21,11 +21,11 @@ const send = (contractsPath, jackalUrl, done) => {
 
     if (response.statusCode === 201) {
       if (parsed.every(result => result.status === 'Pass')) {
-        return done()
+        return done(null, parsed)
       }
     }
 
-    return done(new Error('Some contracts failed'))
+    return done(new Error('Some contracts failed'), parsed)
   })
 }
 

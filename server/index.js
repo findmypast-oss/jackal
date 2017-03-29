@@ -17,8 +17,10 @@ const startServer = (logger, grapher, done) => {
   const loggingMiddleware = logging(logger)
   const graphingMiddleware = graphing(grapher)
 
-  app.use(loggingMiddleware)
-  app.use(graphingMiddleware)
+  if (process.env.NODE_ENV === 'production') {
+    app.use(loggingMiddleware)
+    app.use(graphingMiddleware)
+  }
   app.use(bodyParser.json())
 
   app.get('/health', function (req, res) { res.send('😊') })

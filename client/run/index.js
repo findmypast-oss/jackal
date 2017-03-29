@@ -4,7 +4,9 @@ const prettyjson = require('prettyjson')
 const request = require('request')
 
 const run = (jackalUrl, done) => {
-  request(jackalUrl, (error, response, body) => {
+  request(jackalUrl, (err, response, body) => {
+    if(err) return done(err)
+
     const parsed = JSON.parse(body)
     const prettified = prettyjson.render(parsed)
 
@@ -14,11 +16,11 @@ const run = (jackalUrl, done) => {
 
     if (response.statusCode === 200) {
       if (parsed.every(result => result.status === 'Pass')) {
-        return done()
+        return done(null, parsed)
       }
     }
 
-    return done(new Error('Some contracts failed'))
+    return done(new Error('Some contracts failed'), parsed)
   })
 }
 
