@@ -1,82 +1,81 @@
-'use strict'
-
-const t = require('tap')
-const tapromise = require('tapromise')
-const Promise = require('bluebird')
-
+const async = require('async')
 const provider = require('./test-provider')
 const jackal = require('./test-jackal')
-const consumer = require('./test-client')
+const consumer = require('./../../client')
 
-Promise.resolve()
-  .then(() => jackal.start())
-  .then(() => {
-    return provider.start({
+describe('Given a jackal and a provider', function() {
+  var server = null
+
+  before(function(done) {
+    jackal.start(done)
+  })
+
+  after(function(done) {
+    async.parallel([jackal.stop, provider.stop], done)
+  })
+
+  it('The provider should start successfully', function(done){
+    provider.start({
       port: 5000,
       contract: { version: '1' }
-    })
+    }, done)
   })
-  .then(() => {
-    t.test("Version 1 of contract passes", (t) => {
-      t = tapromise(t)
 
-      return Promise.resolve(t.match(
-        consumer.send('test/integration/contract-v1.json','http://localhost:25863/api/contracts'),
-        [
-          {
-            name: 'integration/contract',
-            consumer: 'consumer',
-            status: 'Pass',
-            error: null
-          }
-        ]
-      ))
-    })
+  it('The first contract should pass', function(done) {
+    consumer.send(
+      'test/integration/contract-v1.json',
+      'http://localhost:25863/api/contracts',
+      function (err, response, body) {
+        expect(err).to.not.exist
+        expect(response.statusCode).to.equal(201)
 
-  }).then(() => t.end())
-  // .finally(() => {
-  //   jackal.stop()
-  //   provider.stop()
-  //   console.log("FINALLY")
-  //   // process.exit(0)
-  // })
+        const parsed = JSON.parse(body)
+        expect(parsed[0].status).to.equal('Pass')
 
-    // .then(() => {
-    //   return provider.stop()
-    // })
-    // .then(() => {
-    //   return provider.start({
-    //     port: 5000,
-    //     contract: { version: 'abc' }
-    //   })
-    // })
-    // .then(() => {
-    //   return consumer
-    //     .run('http://localhost:25863/api/contracts/integration')
-    //     .catch((res, err) => {
-    //       console.log('catch result', res);
-    //       console.log('catch err', err);
-    //       return t.test("Provider has made a breaking change", (t) => {
-    //         console.log('status', res[0].status);
-    //         t.match(res[0].status, 'Fail')
-    //         t.end()
-    //       })
-    //     })
-    // })
-    // .then(() => {
-    //   return consumer.send(
-    //     'test/integration/contract-v2.json',
-    //     'http://localhost:25863/api/contracts'
-    //   ).then((res, err) => {
-    //     console.log(err);
-    //     console.log(res);
-    //     return t.test("Version 2 of contract passes", (t) => {
-    //       t.plan(1)
-    //       t.match(res[0].status, 'Pass')
-    //     })
-    //   })
-    //   .catch((err) => {
-    //     console.log("here!!");
-    //     console.log(err);
-    //   })
-    // })
+        done()
+      }
+    )
+  })
+
+  it('The provider should stop successfully', function(done) {
+    provider.stop(done)
+  })
+
+  it('The provider should start successfully with contract v2', function(done){
+    provider.start({
+      port: 5000,
+      contract: { version: 'abc' }
+    }, done)
+  })
+
+  it('The contract should fail for the new provider', function(done){
+    consumer.run(
+      'http://localhost:25863/api/contracts/integration',
+      function (err, response, body) {
+        expect(response.statusCode).to.equal(200)
+
+        const parsed = JSON.parse(body)
+        expect(parsed[0].status).to.equal('Fail')
+        expect(parsed[0].error).to.exist
+
+        done()
+      }
+    )
+  })
+
+  it('Should pass if one passing build', function(done) {
+    consumer.send(
+        'test/integration/contract-v2.json',
+        'http://localhost:25863/api/contracts',
+        function (err, response, body) {
+          expect(err).to.not.exist
+          expect(response.statusCode).to.equal(201)
+
+          const parsed = JSON.parse(body)
+          expect(parsed[0].status).to.equal('Pass')
+
+          done()
+        }
+      )
+  })
+})

@@ -1,4 +1,3 @@
-const Promise = require('bluebird')
 const jackal = require('./../../lib')
 var server = null
 var config = {
@@ -6,15 +5,12 @@ var config = {
   statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
 }
 
-const start = (done) => {
+const start = function (done) {
   server = jackal(config, done)
 }
 
-const stop = (done) => {
+const stop = function (done) {
   server.close(done)
 }
 
-module.exports = {
-  start: Promise.promisify(start),
-  stop: Promise.promisify(stop)
-}
+module.exports = { start: start, stop: stop }
