@@ -3,7 +3,7 @@
 const fs = require('fs')
 const pkg = require('./package.json')
 const program = require('commander')
-const { run, send } = require('./client')
+const { generateCallback, run, send } = require('./client')
 const startJackal = require('./lib')
 
 program
@@ -31,12 +31,12 @@ program
 program
   .command('send <contractsPath> <jackalUrl>')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
-  .action(send)
+  .action((contractsPath, jackalUrl) => send(contractsPath, jackalUrl, generateCallback(200)))
 
 program
   .command('run <jackalUrl>')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
-  .action(run)
+  .action(jackalUrl => run(jackalUrl, generateCallback(201)))
 
 program
   .parse(process.argv)
