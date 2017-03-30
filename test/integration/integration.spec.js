@@ -75,7 +75,7 @@ describe('Given a jackal and a provider', function() {
     }, done)
   })
 
-  it('The existing contract-v1 should fail for the provider-v2', function(done){
+  it('The existing contract-v1 should fail for the provider with contract-v2', function(done){
     consumer.run(
       'http://localhost:25863/api/contracts/integration',
       function (err, response, body) {
