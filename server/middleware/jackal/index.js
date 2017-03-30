@@ -62,14 +62,14 @@ const jackal = function (req, res, next) {
 
     const malformedContract = parsedContracts.find(findMalformed)
     if (malformedContract) {
-      res.status(400).send(malformedContract.response)
+      res.status(400).send(malformedContract.response.body)
 
       return next()
     }
 
     const unsupportedContract = parsedContracts.find(findUnsupported)
     if (unsupportedContract) {
-      res.status(400).send(unsupportedContract.response)
+      res.status(400).send(unsupportedContract.response.body)
 
       return next()
     }

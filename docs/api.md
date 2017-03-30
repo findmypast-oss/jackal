@@ -17,7 +17,47 @@ The contract array should follow the guidelines laid out in the [Jackal Contract
 
 #### Responses
 
+##### Contracts Executed
 
+```
+STATUS:   201
+HEADERS:  Content-Type: application/json
+BODY:     <result_array>
+```
+
+The result array will follow the guidelines laid out in the [Jackal Result Guide](./result.md)
+
+##### No Contracts Received
+
+```
+STATUS:   400
+HEADERS:  Content-Type: application/json
+BODY:     { message: 'No contracts received' }
+```
+
+##### Invalid Contracts
+
+```
+STATUS:   400
+HEADERS:  Content-Type: application/json
+BODY:     { message: 'One or more contracts are invalid', validations: <validation_array> }
+  or
+BODY:     { name: 'JoiError', message: 'Joi string not well formed' }
+  or
+BODY:     { name: 'JoiError', message: 'Joi type not supported' }
+```
+
+The validation array will follow the guidelines laid out in the [Jackal Validation Guide](./validation.md)
+
+##### Cache Error
+
+```
+STATUS:   500
+HEADERS:  Content-Type: application/json
+BODY:     { message: 'Cache failed on contracts insertion' }
+  or
+BODY:     { message: 'Cache failed on contracts retrieval' }
+```
 
 ## Provider Endpoint
 
@@ -28,8 +68,19 @@ METHOD:   GET
 URL:      http://path.to.your.jackal.server:25863/api/contracts/<provider>
 ```
 
-
 #### Responses
+
+##### Contracts Executed
+
+```
+STATUS:   200
+HEADERS:  Content-Type: application/json
+BODY:     <result_array>
+  or
+BODY:     { message: 'No contracts exist for provider: <provider>' }
+```
+
+The result array will follow the guidelines laid out in the [Jackal Result Guide](./result.md)
 
 ## Dump Endpoint
 
@@ -42,6 +93,13 @@ URL:      http://path.to.your.jackal.server:25863/api/contracts
 
 #### Responses
 
+```
+STATUS:   200
+HEADERS:  Content-Type: application/json
+BODY:     <database>
+```
+
+The `<database>` is the raw JSON saved by LokiJS to disk every sixty seconds and represents the state of the contracts cache at the time the endpoint is hit.
 
 ## Health Endpoint
 
@@ -52,4 +110,9 @@ METHOD:   GET
 URL:      http://path.to.your.jackal.server:25863/health
 ```
 
-#### Responses
+#### Response
+
+```
+STATUS:   200
+BODY:     😊
+```

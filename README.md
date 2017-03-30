@@ -15,7 +15,7 @@ Please see the [Jackal Development Guide](./docs/development.md)
 
 Please see the [Jackal API Guide](./docs/api.md)
 
-## Usage
+## Quickstart Guide
 
 #### Local
 
