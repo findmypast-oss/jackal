@@ -106,4 +106,8 @@ describe('Given a jackal and a provider', function() {
   it('Running contract-v2 a third time should pass', function(done) {
     runContract(done)
   })
+
+  it('Jackal should have hit /contract 8 times', function() {
+    expect(provider.contractHitCount()).to.equal(8)
+  })
 })
