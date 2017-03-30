@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 var mockContract = null
 var server = null
+var hitCount = 0
 
 app.get('/contract', function(req, res) {
   res.status(200).json(mockContract)
+  hitCount++
 })
 
 const start = function(options, done) {
@@ -16,4 +18,8 @@ const stop = function(done) {
   server.close(done)
 }
 
-module.exports = { start, stop }
+const contractHitCount = function() {
+  return hitCount
+}
+
+module.exports = { start, stop, contractHitCount }
