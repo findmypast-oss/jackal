@@ -1,7 +1,7 @@
 const async = require('async')
-const provider = require('./test-provider')
-const jackal = require('./test-jackal')
-const consumer = require('./client')
+const provider = require('./support/provider')
+const jackal = require('./support/jackal')
+const consumer = require('./support/client')
 
 describe('Jackal database dump and recovery', function() {
   var server = null

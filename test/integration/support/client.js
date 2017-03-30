@@ -1,4 +1,4 @@
-const consumer = require('../../client')
+const consumer = require('../../../client')
 
 function send(filepath, expectPass, done) {
   consumer.send(

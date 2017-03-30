@@ -1,4 +1,4 @@
-const jackal = require('./../../lib')
+const jackal = require('../../../lib')
 var server = null
 var config = {
   logger: { environment: 'production' },
