@@ -13,4 +13,4 @@ const stop = function (done) {
   server.close(done)
 }
 
-module.exports = { start: start, stop: stop }
+module.exports = { start, stop }

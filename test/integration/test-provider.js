@@ -10,6 +10,7 @@ app.get('/contract', function(req, res) {
 })
 
 const start = function(options, done) {
+  hitCount = 0
   mockContract = options.contract
   server = app.listen(options.port, done)
 }
@@ -22,4 +23,8 @@ const contractHitCount = function() {
   return hitCount
 }
 
-module.exports = { start, stop, contractHitCount }
+module.exports = {
+  start,
+  stop,
+  contractHitCount
+}

@@ -33,6 +33,10 @@ describe('Given a jackal and a provider', function() {
     consumer.send('test/integration/contract-v1.json', true, done)
   })
 
+  it('Jackal should have hit "/contract" 3 times', function() {
+    expect(provider.contractHitCount()).to.equal(3)
+  })
+
   it('The provider should stop successfully', function(done) {
     provider.stop(done)
   })
@@ -64,7 +68,7 @@ describe('Given a jackal and a provider', function() {
     consumer.run('integration', true, done)
   })
 
-  it('Jackal should have hit /contract 8 times', function() {
-    expect(provider.contractHitCount()).to.equal(8)
+  it('Jackal should have hit "/contract" 5 times', function() {
+    expect(provider.contractHitCount()).to.equal(5)
   })
 })
