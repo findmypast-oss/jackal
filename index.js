@@ -33,12 +33,16 @@ program
 program
   .command('send <contractsPath> <jackalUrl>')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service at the specified URL')
-  .action(exitCodeWrapper(client.send))
+  .action(function(contractsPath, jackalUrl){
+    client.send(contractsPath, jackalUrl, false, exitCodeHandler)
+  })
 
 program
   .command('run <jackalUrl>')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
-  .action(exitCodeWrapper(client.run))
+  .action(function(jackalUrl){
+    client.run(jackalUrl, false, exitCodeHandler)
+  })
 
 // program
 //   .command('stats <jackalUrl>')
@@ -48,10 +52,6 @@ program
 program
   .parse(process.argv)
 
-function exitCodeWrapper(fn) {
-  function exitCodeHandler(err) {
-    err ? process.exit(1) : process.exit(0)
-  }
-
-  return fn.apply(null, arguments.concat(false, exitCodeHandler))
+function exitCodeHandler(err) {
+  err ? process.exit(1) : process.exit(0)
 }

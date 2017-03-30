@@ -20,7 +20,7 @@ function parserCallback (statusCode, quiet, done) {
       console.log(prettified)
       /* eslint-enable no-console */
     }
-    
+
     if (response.statusCode !== statusCode) {
       return done(
         'Failure - expected response code ' + statusCode + ' got ' + response.statusCode,
