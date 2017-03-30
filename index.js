@@ -40,10 +40,10 @@ program
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
   .action(exitCodeWrapper(client.run))
 
-program
-  .command('stats <jackalUrl>')
-  .description('Gets usage stats from the running Jackal service at the specified URL')
-  .action(exitCodeWrapper(client.getStats))
+// program
+//   .command('stats <jackalUrl>')
+//   .description('Gets usage stats from the running Jackal service at the specified URL')
+//   .action(exitCodeWrapper(client.getStats))
 
 program
   .parse(process.argv)
