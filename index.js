@@ -49,12 +49,12 @@ program
     run(jackalUrl, generateCallback(200))
   })
 
-program
-  .command('stats <jackalUrl>')
-  .description('Gets usage stats from the running Jackal service at the specified URL')
-  .action(function (jackalUrl) {
-    getStats(jackalUrl)
-  })
+// program
+//   .command('stats <jackalUrl>')
+//   .description('Gets usage stats from the running Jackal service at the specified URL')
+//   .action(function (jackalUrl) {
+//     getStats(jackalUrl)
+//   })
 
 program
   .parse(process.argv)
