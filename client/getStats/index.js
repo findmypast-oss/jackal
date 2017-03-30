@@ -3,30 +3,23 @@
 const request = require('request')
 const prettyjson = require('prettyjson')
 
-const renderStats = function (error, response, body) {
-  if (error) {
-    /* eslint-disable no-console */
-    console.error(error)
-    /* eslint-enable no-console */
-    process.exit(1)
-  }
+const getStats = function (jackalUrl, quiet, done) {
+  request(jackalUrl, function (err, response, body) {
+    if (err) {
+      return done(err)
+    }
 
-  const parsed = JSON.parse(body)
-  const prettified = prettyjson.render(parsed)
+    const parsed = JSON.parse(body)
+    const prettified = prettyjson.render(parsed)
 
-  /* eslint-disable no-console */
-  console.log(prettified)
-  /* eslint-enable no-console */
+    if (!quiet) {
+      /* eslint-disable no-console */
+      console.log(prettified)
+      /* eslint-enable no-console */
+    }
 
-  process.exit(0)
-}
-
-const getStats = function (jackalUrl, cb) {
-  if (cb === undefined || cb === null) {
-    request(jackalUrl, renderStats)
-  }
-
-  request(jackalUrl, cb)
+    return done(null, parsed)
+  })
 }
 
 module.exports = getStats

@@ -7,13 +7,10 @@ function sendContractV1(done) {
   consumer.send(
     'test/integration/contract-v1.json',
     'http://localhost:25863/api/contracts',
-    function (err, response, body) {
+    true,
+    function (err, results) {
       expect(err).to.not.exist
-      expect(response.statusCode).to.equal(201)
-
-      const parsed = JSON.parse(body)
-      expect(parsed[0].status).to.equal('Pass')
-
+      expect(results[0].status).to.equal('Pass')
       done()
     }
   )
@@ -22,13 +19,10 @@ function sendContractV1(done) {
 function runContract(done) {
   consumer.run(
     'http://localhost:25863/api/contracts/integration',
-    function (err, response, body) {
-      expect(response.statusCode).to.equal(200)
-
-      const parsed = JSON.parse(body)
-      expect(parsed[0].status).to.equal('Pass')
-      expect(parsed[0].error).to.not.exist
-
+    true,
+    function (err, results) {
+      expect(err).to.not.exist
+      expect(results[0].status).to.equal('Pass')
       done()
     }
   )
@@ -78,13 +72,11 @@ describe('Given a jackal and a provider', function() {
   it('The existing contract-v1 should fail for the provider with contract-v2', function(done){
     consumer.run(
       'http://localhost:25863/api/contracts/integration',
-      function (err, response, body) {
-        expect(response.statusCode).to.equal(200)
-
-        const parsed = JSON.parse(body)
-        expect(parsed[0].status).to.equal('Fail')
-        expect(parsed[0].error).to.exist
-
+      true,
+      function (err, results) {
+        expect(err).to.exist
+        expect(results[0].status).to.equal('Fail')
+        expect(results[0].error).to.exist
         done()
       }
     )
@@ -94,13 +86,10 @@ describe('Given a jackal and a provider', function() {
     consumer.send(
         'test/integration/contract-v2.json',
         'http://localhost:25863/api/contracts',
-        function (err, response, body) {
+        true,
+        function (err, results) {
           expect(err).to.not.exist
-          expect(response.statusCode).to.equal(201)
-
-          const parsed = JSON.parse(body)
-          expect(parsed[0].status).to.equal('Pass')
-
+          expect(results[0].status).to.equal('Pass')
           done()
         }
       )
