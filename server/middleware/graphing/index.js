@@ -16,7 +16,7 @@ const hotShotsGrapher = function (grapher) {
     graph['timing']('response_time', responseTime)
 
     if (this.statusCode > 199 && this.statusCode < 300) {
-      graph['increment']('errors.2XX')
+      graph['increment']('hits.2XX')
     }
 
     if (this.statusCode > 399 && this.statusCode < 500) {
