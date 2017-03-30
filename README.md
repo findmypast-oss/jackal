@@ -7,32 +7,38 @@
 
 Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
 
-## Running
+## Development
+
+Please see the [Jackal Development Guide](./docs/development.md)
+
+## API
+
+Please see the [Jackal API Guide](./docs/api.md)
+
+## Usage
+
+#### Local
+
+To start a local instance of Jackal with the [default config](./examples/config.json):
+
+```
+npm start
+```
+
+Alternatively, to use a custom configuration file:
+
+```
+npm start /path/to/custom/config.json
+```
+
+Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
 
 ### Docker
 
-To start the jackal service running on port `25863`:
-
-`docker run -p 25863:25863 findmypast/jackal`
-
-## Testing
-
-Jackal uses [Node TAP](http://www.node-tap.org/basics/) for unit tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
-
-Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors __and__ warnings should be fixed prior to pushing changes. HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
-
-## Releasing
-
-Every push results in an updated `latest` image in [Dockerhub](https://hub.docker.com/r/findmypast/jackal/). Once you decided to create a new release based on [semver](http://semver.org/) run the following to create a tag and bump the `package.json` version:
+To start a dockerised instance of Jackal with the [default config](./examples/config.json):
 
 ```
-npm version [ patch | minor | major ]
+docker run -p 25863:25863 findmypast/jackal
 ```
 
-Then to push the changes and trigger a deploy:
-
-```
-git push && git push --tags
-```
-
-This will result in a new [github release](https://github.com/findmypast-oss/jackal/releases), new [npm release](https://www.npmjs.com/package/jackal) and a new [Dockerhub tagged image](https://hub.docker.com/r/findmypast/jackal/tags/).
+Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
