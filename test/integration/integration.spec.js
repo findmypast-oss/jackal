@@ -1,11 +1,9 @@
 const async = require('async')
 const provider = require('./support/provider')
 const jackal = require('./support/jackal')
-const consumer = require('./support/client')
+const client = require('./support/client')
 
 describe('Given a jackal and a provider', function() {
-  var server = null
-
   before(function(done) {
     jackal.start(done)
   })
@@ -22,15 +20,24 @@ describe('Given a jackal and a provider', function() {
   })
 
   it('Sending contract-v1 the first time should pass', function(done) {
-    consumer.send('test/integration/contract-v1.json', true, done)
+    client.send({
+      filePath: 'test/integration/contract-v1.json',
+      isPass: true
+    }, done)
   })
 
   it('Sending contract-v1 a second time should pass', function(done) {
-    consumer.send('test/integration/contract-v1.json', true, done)
+    client.send({
+      filePath: 'test/integration/contract-v1.json',
+      isPass: true
+    }, done)
   })
 
   it('Sending contract-v1 a third time should pass', function(done) {
-    consumer.send('test/integration/contract-v1.json', true, done)
+    client.send({
+      filePath: 'test/integration/contract-v1.json',
+      isPass: true
+    }, done)
   })
 
   it('Jackal should have hit "/contract" 3 times', function() {
@@ -49,23 +56,38 @@ describe('Given a jackal and a provider', function() {
   })
 
   it('The existing contract-v1 should fail for the provider with contract-v2', function(done){
-    consumer.run('integration', false, done)
+    client.run({
+      provider: 'integration',
+      isPass: false
+    }, done)
   })
 
   it('Sending contract-v2 should pass', function(done) {
-    consumer.send('test/integration/contract-v2.json', true, done)
+    client.send({
+      filePath: 'test/integration/contract-v2.json',
+      isPass: true
+    }, done)
   })
 
   it('Running contract-v2 the first time should pass', function(done) {
-    consumer.run('integration', true, done)
+    client.run({
+      provider: 'integration',
+      isPass: true
+    }, done)
   })
 
   it('Running contract-v2 a second time should pass', function(done) {
-    consumer.run('integration', true, done)
+    client.run({
+      provider: 'integration',
+      isPass: true
+    }, done)
   })
 
   it('Running contract-v2 a third time should pass', function(done) {
-    consumer.run('integration', true, done)
+    client.run({
+      provider: 'integration',
+      isPass: true
+    }, done)
   })
 
   it('Jackal should have hit "/contract" 5 times', function() {
