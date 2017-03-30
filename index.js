@@ -11,7 +11,7 @@ const startJackal = require('./lib')
 const generateCallback = client.generateCallback
 const run = client.run
 const send = client.send
-const getStats = client.getStats
+// const getStats = client.getStats
 
 program
   .version(pkg.version)
