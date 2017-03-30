@@ -2,6 +2,7 @@
 
 const prettyjson = require('prettyjson')
 
+const getStats = require('./getStats')
 const run = require('./run')
 const send = require('./send')
 
@@ -24,7 +25,7 @@ const generateCallback = function (statusCode) {
   }
 }
 
-module.exports = { generateCallback, run, send }
+module.exports = { generateCallback, getStats, run, send }
 
 const contractPassed = function (result) {
   return result.status === 'Pass'

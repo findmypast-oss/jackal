@@ -6,10 +6,12 @@ const bodyParser = require('body-parser')
 const logging = require('./middleware/logging')
 const graphing = require('./middleware/graphing')
 
+const json = require('./middleware/json')
+
 const jackal = require('./middleware/jackal')
 const claude = require('./middleware/claude')
 const crutch = require('./middleware/crutch')
-const json = require('./middleware/json')
+const stats = require('./middleware/stats')
 
 const app = express()
 
@@ -28,6 +30,7 @@ const startServer = function (logger, grapher, done) {
   app.post('/api/contracts', json, jackal)
   app.get('/api/contracts/:provider', json, claude)
   app.get('/api/contracts', json, crutch)
+  app.get('/api/stats', json, stats)
 
   return app.listen(25863, done)
 }
