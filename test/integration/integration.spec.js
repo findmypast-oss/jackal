@@ -4,11 +4,13 @@ const jackal = require('./support/jackal')
 const client = require('./support/client')
 
 describe('Testing jackal and a provider', function() {
+  before(jackal.start)
+  after(jackal.stop)
 
   describe('Happy path tests', function(){
 
-    before(jackal.start)
-    after(jackal.stop)
+    // before(jackal.start)
+    // after(jackal.stop)
     after(provider.stop)
 
     it('The provider should start successfully', function(done){
@@ -62,5 +64,19 @@ describe('Testing jackal and a provider', function() {
     it('Jackal should have hit "/contract" 5 times', function() {
       expect(provider.contractHitCount()).to.equal(5)
     })
+  }) // END HAPPY PATH TESTS
+
+  describe('Database tests', function(){
+
+    after(provider.stop)
+
+    it('The provider should start successfully', function(done){
+      provider.start({ port: 5000, contract: { version: '1' } }, done)
+    })
+
+    it('Sending contract-v1 the first time should pass', function(done) {
+      client.send({ filePath: 'test/integration/contract-v1.json', isPass: true }, done)
+    })
+
   })
 })
