@@ -1,31 +1,33 @@
 const consumer = require('../../../client')
 
-function send(filepath, expectPass, done) {
+function send(options, done) {
   consumer.send(
-    filepath,
+    options.filePath,
     'http://localhost:25863/api/contracts',
     true,
-    assert.bind(null, expectPass, done)
+    assert(options.isPass, done)
   )
 }
 
-function run(providerName, expectPass, done) {
+function run(options, done) {
   consumer.run(
-    'http://localhost:25863/api/contracts/' + providerName,
+    'http://localhost:25863/api/contracts/' + options.provider,
     true,
-    assert.bind(null, expectPass, done)
+    assert(options.isPass, done)
   )
 }
 
-function assert(expectPass, done, err, results){
-  if(expectPass) {
-    expect(err).to.not.exist
-    expect(results[0].status).to.equal('Pass')
-  } else {
-    expect(err).to.exist
-    expect(results[0].status).to.equal('Fail')
+function assert(isPass, done) {
+  return function(err, results) {
+    if(isPass) {
+      expect(err).to.not.exist
+      expect(results[0].status).to.equal('Pass')
+    } else {
+      expect(err).to.exist
+      expect(results[0].status).to.equal('Fail')
+    }
+    done()
   }
-  done()
 }
 
 module.exports = { run, send }

@@ -7,24 +7,27 @@ const hotShotsGrapher = function (grapher) {
   return graphingMiddleware
 
   function onResFinished (err) {
+
     this.removeListener('finish', onResFinished)
     this.removeListener('error', onResFinished)
 
     const graph = this.graph
 
+
     const responseTime = Date.now() - this.startTime
-    graph['timing']('response_time', responseTime)
+    graph['timing']('.response_time', responseTime)
 
     if (this.statusCode > 199 && this.statusCode < 300) {
-      graph['increment']('hits.2XX')
+      console.log('LOGGING 200S')
+      graph['increment']('.hits.2XX')
     }
 
     if (this.statusCode > 399 && this.statusCode < 500) {
-      graph['increment']('errors.4XX')
+      graph['increment']('.errors.4XX')
     }
 
     if (this.statusCode > 499 && this.statusCode < 600) {
-      graph['increment']('errors.5XX')
+      graph['increment']('.errors.5XX')
     }
 
     graph['close']
@@ -38,8 +41,8 @@ const hotShotsGrapher = function (grapher) {
 
   function graphingMiddleware (req, res, next) {
     req.id = genReqId(req)
-    req.graph = res.graph = grapher
 
+    req.graph = res.graph = grapher
     res.on('finish', onResFinished)
     res.on('error', onResFinished)
     req.on('aborted', onReqAborted)

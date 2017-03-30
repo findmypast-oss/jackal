@@ -16,13 +16,12 @@ const stats = require('./middleware/stats')
 const app = express()
 
 const startServer = function (logger, grapher, done) {
-  if (process.env.NODE_ENV === 'production') {
-    const loggingMiddleware = logging(logger)
-    const graphingMiddleware = graphing(grapher)
 
-    app.use(loggingMiddleware)
-    app.use(graphingMiddleware)
-  }
+  const loggingMiddleware = logging(logger)
+  const graphingMiddleware = graphing(grapher)
+
+  app.use(loggingMiddleware)
+  app.use(graphingMiddleware)
 
   app.use(bodyParser.json())
 
