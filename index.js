@@ -11,6 +11,7 @@ const startJackal = require('./lib')
 const generateCallback = client.generateCallback
 const run = client.run
 const send = client.send
+const getStats = client.getStats
 
 program
   .version(pkg.version)
@@ -46,6 +47,13 @@ program
   .description('Runs the provider\'s contracts stored in the database of the Jackal service at the specified URL')
   .action(function (jackalUrl) {
     run(jackalUrl, generateCallback(200))
+  })
+
+program
+  .command('stats <jackalUrl>')
+  .description('Gets usage stats from the running Jackal service at the specified URL')
+  .action(function (jackalUrl) {
+    getStats(jackalUrl)
   })
 
 program
