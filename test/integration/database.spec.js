@@ -4,7 +4,9 @@ const client = require('./support/client')
 
 describe('Database tests', function() {
 
-  before(jackal.start)
+  before((done) => {
+    jackal.start({}, done)
+  })
   after(jackal.stop)
   after(provider.stop)
 
@@ -32,18 +34,20 @@ describe('Database tests', function() {
   })
 
   xit('Running the v1 contract fails because it does not exist', function(done) {
-    done("Not implemented")
+    client.run({ provider: 'integration', isPass: false }, done)
   })
 
   xit('Jackal stops successfully', function(done) {
-    done("Not implemented")
+    jackal.stop(done)
   })
 
   xit('Jackal starts with the saved database', function(done) {
-    done("Not implemented")
+    jackal.start({
+      dbPath: 'test/integration/db.json'
+    }, done)
   })
 
   xit('Running the v1 contract passes because it now exists', function(done) {
-    done("Not implemented")
+    client.run({ provider: 'integration', isPass: true }, done)
   })
 })

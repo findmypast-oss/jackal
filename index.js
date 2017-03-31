@@ -23,7 +23,8 @@ program
     } else {
       config = {
         logger: { environment: 'production' },
-        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
+        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
+        db:     { path: 'db.json' }
       }
     }
 
