@@ -44,6 +44,16 @@ program
     client.run(jackalUrl, false, exitCodeHandler)
   })
 
+program
+  .command('dump <jackalUrl>')
+  .description('Dumps the database of the Jackal service at the specified URL')
+  .action(function(jackalUrl){
+    client.dump({
+      jackalUrl: jackalUrl,
+      quiet: false
+    }, exitCodeHandler)
+  })
+
 // program
 //   .command('stats <jackalUrl>')
 //   .description('Gets usage stats from the running Jackal service at the specified URL')
