@@ -18,7 +18,6 @@ const hotShotsGrapher = function (grapher) {
     graph['timing']('.response_time', responseTime)
 
     if (this.statusCode > 199 && this.statusCode < 300) {
-      console.log('LOGGING 200S')
       graph['increment']('.hits.2XX')
     }
 

@@ -13,9 +13,9 @@ const claude = require('./middleware/claude')
 const crutch = require('./middleware/crutch')
 const stats = require('./middleware/stats')
 
-const app = express()
 
 const startServer = function (logger, grapher, done) {
+  const app = express()
 
   const loggingMiddleware = logging(logger)
   const graphingMiddleware = graphing(grapher)
