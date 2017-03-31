@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
+const DB = require('../lib/db')
 const createLogger = require('../lib/logger')
 const createGrapher = require('../lib/grapher')
 
@@ -16,21 +17,27 @@ const createClaude = require('./middleware/claude')
 const createCrutch = require('./middleware/crutch')
 const stats = require('./middleware/stats')
 
-const startServer = function (config, db, done) {
+let db
+
+const startServer = function (config, done) {
   const app = express()
 
-  const logger = createLogger(config.logger)
-  const grapher = createGrapher(config.statsD)
+  db = new DB(config.db)
 
-  const loggingMiddleware = logging(logger)
-  const graphingMiddleware = graphing(grapher)
+  if (!config.quiet) {
+    const logger = createLogger(config.logger)
+    const grapher = createGrapher(config.statsD)
+
+    const loggingMiddleware = logging(logger)
+    const graphingMiddleware = graphing(grapher)
+
+    app.use(loggingMiddleware)
+    app.use(graphingMiddleware)
+  }
 
   const claude = createClaude(db)
   const crutch = createCrutch(db)
   const jackal = createJackal(db)
-
-  app.use(loggingMiddleware)
-  app.use(graphingMiddleware)
 
   app.use(bodyParser.json())
 

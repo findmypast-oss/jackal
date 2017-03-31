@@ -3,7 +3,6 @@
 'use strict'
 
 const client = require('./client')
-const DB = require('./lib/db')
 const fs = require('fs')
 const pkg = require('./package.json')
 const program = require('commander')
@@ -28,8 +27,6 @@ program
         db:     { path: 'db.json' }
       }
     }
-
-    const db = new DB(config.db)
 
     startServer(config, db)
   })
