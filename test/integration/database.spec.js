@@ -30,10 +30,10 @@ describe('Database tests', function() {
   })
 
   it('Jackal starts with no contracts', function(done) {
-    jackal.start(done)
+    jackal.start({}, done)
   })
 
-  xit('Running the v1 contract fails because it does not exist', function(done) {
+  it('Running the v1 contract fails because it does not exist', function(done) {
     client.run({ provider: 'integration', isPass: false }, done)
   })
 
