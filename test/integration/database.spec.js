@@ -34,10 +34,11 @@ describe('Database tests', function() {
   })
 
   it('Running the v1 contract fails because it does not exist', function(done) {
+    console.error('\n======================================\n')
     client.run({ provider: 'integration', isPass: false }, done)
   })
 
-  xit('Jackal stops successfully', function(done) {
+  it('Jackal stops successfully', function(done) {
     jackal.stop(done)
   })
 

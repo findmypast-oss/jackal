@@ -38,7 +38,11 @@ function assert(isPass, done) {
       expect(results[0].status).to.equal('Pass')
     } else {
       expect(err).to.exist
-      expect(results[0].status).to.equal('Fail')
+      if (Array.isArray(results)) {
+        expect(results[0].status).to.equal('Fail')
+      } else {
+        expect(results.message).to.exist
+      }
     }
     done()
   }
