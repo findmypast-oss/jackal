@@ -45,7 +45,6 @@
   },
   "homepage": "https://github.com/findmypast/jackal#readme",
   "devDependencies": {
-    "async": "^2.2.0",
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "eslint": "^3.18.0",

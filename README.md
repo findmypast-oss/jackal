@@ -15,9 +15,13 @@ Please see the [Jackal Development Guide](./docs/development.md)
 
 Please see the [Jackal API Guide](./docs/api.md)
 
+## Configuration
+
+Please see the [Jackal Config Guide](./docs/config.md)
+
 ## Quickstart Guide
 
-#### Local
+### Local
 
 To start a local instance of Jackal with the [default config](./examples/config.json):
 
