@@ -1,10 +1,10 @@
 'use strict'
 
 const request = require('request')
-const parser = require('./response-parser')
+const parser = require('./contract-results-parser')
 
-const run = function (jackalUrl, quiet, done) {
-  request(jackalUrl, parser(200, quiet, done))
+function run(options, done) {
+  request(options.jackalUrl, parser(done))
 }
 
 module.exports = run

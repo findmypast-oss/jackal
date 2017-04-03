@@ -3,6 +3,7 @@
 'use strict'
 
 const fs = require('fs')
+const prettyjson = require('prettyjson')
 const client = require('../client')
 const startServer = require('../server')
 
@@ -24,23 +25,55 @@ function start(configPath) {
 }
 
 function send(contractsPath, jackalUrl) {
-  client.send(contractsPath, jackalUrl, false, exitCodeHandler)
+  client.send(
+    { contractsPath, jackalUrl },
+    prettyprint(exitCodeHandler)
+  )
 }
 
 function run(jackalUrl) {
-  client.run(jackalUrl, false, exitCodeHandler)
+  client.run(
+    { jackalUrl },
+    prettyprint(exitCodeHandler)
+  )
 }
 
 function dump(jackalUrl) {
-  client.dump({
-    jackalUrl: jackalUrl,
-    quiet: false
-  }, exitCodeHandler)
+  client.dump(
+    { jackalUrl },
+    exitCodeHandler
+  )
 }
 
 // function stats (jackalUrl){
 //
 // }
+
+function print(fn) {
+  var args = Array.prototype.slice.apply(arguments)
+
+  return function (err, data) {
+    /* eslint-disable no-console */
+    console.log(data)
+    /* eslint-enable no-console */
+
+    return fn(args)
+  }
+}
+
+function prettyprint(fn) {
+  var args = Array.prototype.slice.apply(arguments)
+
+  return function (err, data) {
+    const prettified = prettyjson.render(data)
+
+    /* eslint-disable no-console */
+    console.log(prettified)
+    /* eslint-enable no-console */
+
+    return fn(args)
+  }
+}
 
 function exitCodeHandler(err) {
   err ? process.exit(1) : process.exit(0)
