@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const request = require('request')
-const parser = require('../response-parser')
+const parser = require('./response-parser')
 
 const send = function (contractsPath, jackalUrl, quiet, done) {
   const buffer = fs.readFileSync(contractsPath)
