@@ -41,7 +41,7 @@ function run(jackalUrl) {
 function dump(jackalUrl) {
   client.dump(
     { jackalUrl },
-    exitCodeHandler
+    print(exitCodeHandler)
   )
 }
 
@@ -50,14 +50,14 @@ function dump(jackalUrl) {
 // }
 
 function print(fn) {
-  var args = Array.prototype.slice.apply(arguments)
+  var args =
 
   return function (err, data) {
     /* eslint-disable no-console */
     console.log(data)
     /* eslint-enable no-console */
 
-    return fn(args)
+    return fn(Array.prototype.slice.apply(arguments))
   }
 }
 
