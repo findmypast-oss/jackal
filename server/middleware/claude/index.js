@@ -1,10 +1,8 @@
 'use strict'
 
-const contract = require('../../../lib/contract')
-
-const execute = contract.execute
-const mapResult = contract.mapResult
-const parseResponse = contract.parseResponse
+const execute = require('../../../lib/contract/executor')
+const mapResult = require('../../../lib/contract/map-result')
+const parseResponse = require('../../../lib/contract/responseParser')
 
 const mapContractObject = function (contractObject) {
   return contractObject.contract
