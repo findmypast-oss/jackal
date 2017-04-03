@@ -15,9 +15,13 @@ Please see the [Jackal Development Guide](./docs/development.md)
 
 Please see the [Jackal API Guide](./docs/api.md)
 
+## Configuration
+
+Please see the [Jackal Config Guide](./docs/config.md)
+
 ## Quickstart Guide
 
-#### Local
+### Local
 
 To start a local instance of Jackal with the [default config](./examples/config.json):
 
@@ -42,3 +46,47 @@ docker run -p 25863:25863 findmypast/jackal
 ```
 
 Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
+
+### Testing a contract
+
+Make sure to define a contract file, e.g:
+
+```
+// contracts.json
+[
+  {
+    "name": "itunes/search_by_term_and_country",
+    "consumer": "itunes_search_app",
+    "before": [{
+      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+      "method": "GET"
+    }],
+    "request": {
+      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+      "method": "GET"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "resultCount": "Joi.number().integer()",
+        "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
+      }
+    }
+  }
+]
+```
+
+To test the contract as a consumer you can `POST` it to the running server, e.g:
+
+```
+$ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
+[
+  {
+    "name": "itunes/search_by_term_and_country",
+    "consumer": "itunes_search_app",
+    "status": "Pass",
+    "error": null
+  }
+]
+
+```

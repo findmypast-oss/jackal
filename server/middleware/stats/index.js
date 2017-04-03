@@ -1,6 +1,6 @@
 'use strict'
 
-const stats = function (req, res, next) {
+const stats = (req, res, next) => {
   res.send({ stats: 'aaah' })
 }
 

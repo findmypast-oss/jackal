@@ -1,3 +1,6 @@
+'use strict'
+
+const fs = require('fs')
 const consumer = require('../../../client')
 
 function send(options, done) {
@@ -17,6 +20,17 @@ function run(options, done) {
   )
 }
 
+function dump(options, done) {
+  consumer.dump({
+    jackalUrl: 'http://localhost:25863',
+    quiet: true
+  }, (err, json) => {
+    if(err) return done(err)
+    fs.writeFileSync(options.filePath, json)
+    done()
+  })
+}
+
 function assert(isPass, done) {
   return function(err, results) {
     if(isPass) {
@@ -24,10 +38,14 @@ function assert(isPass, done) {
       expect(results[0].status).to.equal('Pass')
     } else {
       expect(err).to.exist
-      expect(results[0].status).to.equal('Fail')
+      if (Array.isArray(results)) {
+        expect(results[0].status).to.equal('Fail')
+      } else {
+        expect(results.message).to.exist
+      }
     }
     done()
   }
 }
 
-module.exports = { run, send }
+module.exports = { run, send, dump }
