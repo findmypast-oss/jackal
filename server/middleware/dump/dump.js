@@ -1,6 +1,6 @@
 'use strict'
 
-const createCrutch = function (db) {
+const createDump = function (db) {
   return function (req, res, next) {
     res.status(200).send(db.dump())
 
@@ -8,4 +8,4 @@ const createCrutch = function (db) {
   }
 }
 
-module.exports = createCrutch
+module.exports = createDump
