@@ -15,7 +15,7 @@ const buildProviderMiddleware = require('./middleware/provider/build')
 
 let db
 
-const startServer = function (config, done) {
+const startServer = (config, done) => {
   const app = express()
 
   db = new DB(config.db)
@@ -31,7 +31,7 @@ const startServer = function (config, done) {
 
   app.use(bodyParser.json())
 
-  app.get('/health', function (req, res) { res.send('😊') })
+  app.get('/health', (req, res) => { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)
   app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/contracts', dumpMiddleware)

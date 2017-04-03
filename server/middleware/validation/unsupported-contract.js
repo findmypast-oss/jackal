@@ -18,6 +18,4 @@ const validateUnsupportedContract = (req, res, next) => {
 
 module.exports = validateUnsupportedContract
 
-const findUnsupported = function (contract) {
-  return isUnsupported(contract.response.body)
-}
+const findUnsupported = (contract) => isUnsupported(contract.response.body)

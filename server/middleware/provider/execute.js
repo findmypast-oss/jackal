@@ -9,7 +9,7 @@ const createExecuteProvider = (db) => (req, res, next) => {
   const contracts = db.retrieveCollection(provider).map(dbo => dbo.contract)
   const parsedContracts = contracts.map(parseContract)
 
-  execute(parsedContracts, function (err, results) {
+  execute(parsedContracts, (err, results) => {
     res.status(200).send(results.map(mapResult))
 
     next()

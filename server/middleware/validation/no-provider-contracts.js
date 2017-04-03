@@ -13,6 +13,6 @@ const createValidateNoProviderContracts = (db) => (req, res, next) => {
 
 module.exports = createValidateNoProviderContracts
 
-const buildMessage = function (provider) {
+const buildMessage = (provider) => {
   return { message: `No contracts exist for provider: ${provider}` }
 }

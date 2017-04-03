@@ -1,6 +1,6 @@
 'use strict'
 
-const createDump = function (db) {
+const createDump = (db) => {
   return function (req, res, next) {
     res.status(200).send(db.dump())
 

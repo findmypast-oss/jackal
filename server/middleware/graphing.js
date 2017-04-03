@@ -1,18 +1,16 @@
 'use strict'
 
-const hotShotsGrapher = function (grapher) {
+const hotShotsGrapher = (grapher) => {
   const genReqId = reqIdGenFactory()
 
   graphingMiddleware.grapher = grapher
   return graphingMiddleware
 
   function onResFinished (err) {
-
     this.removeListener('finish', onResFinished)
     this.removeListener('error', onResFinished)
 
     const graph = this.graph
-
 
     const responseTime = Date.now() - this.startTime
     graph['timing']('.response_time', responseTime)
@@ -52,11 +50,9 @@ const hotShotsGrapher = function (grapher) {
 
 module.exports = hotShotsGrapher
 
-const reqIdGenFactory = function () {
+const reqIdGenFactory = () => {
   const maxInt = 2147483647
   let nextReqId = 0
 
-  return function (req) {
-    return req.id || (nextReqId = (nextReqId + 1) & maxInt)
-  }
+  return (req) => req.id || (nextReqId = (nextReqId + 1) & maxInt)
 }

@@ -18,6 +18,4 @@ const validateMalformedContract = (req, res, next) => {
 
 module.exports = validateMalformedContract
 
-const findMalformed = function (contract) {
-  return isMalformed(contract.response.body)
-}
+const findMalformed = (contract) => isMalformed(contract.response.body)
