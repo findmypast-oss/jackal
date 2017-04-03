@@ -6,5 +6,6 @@
     "host": "localhost",
     "port": 8125,
     "prefix": "jackal"
-  }
+  },
+  "quiet": false
 }

@@ -6,7 +6,7 @@ const client = require('./client')
 const fs = require('fs')
 const pkg = require('./package.json')
 const program = require('commander')
-const startJackal = require('./lib')
+const startServer = require('./server')
 
 program
   .version(pkg.version)
@@ -23,11 +23,12 @@ program
     } else {
       config = {
         logger: { environment: 'production' },
-        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' }
+        statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
+        db:     { path: 'db.json' }
       }
     }
 
-    startJackal(config)
+    startServer(config)
   })
 
 program
