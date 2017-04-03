@@ -1,7 +1,7 @@
 'use strict'
 
-const validate = require('../../../lib/contract/validator')
-const mapValidation = require('../../../lib/contract/map-validations')
+const validate = require('../../../lib/validate')
+const mapValidation = require('../../../lib/validation/map-validations')
 
 const validateContracts = (req, res, next) => {
   const contracts = req.body
