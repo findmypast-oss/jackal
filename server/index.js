@@ -2,8 +2,8 @@
 
 const DB = require('../lib/db')
 const express = require('express')
-const createLogger = require('../lib/logger')
-const createGrapher = require('../lib/grapher')
+const createLogger = require('../lib/create-logger')
+const createGrapher = require('../lib/create-grapher')
 
 const json = require('./middleware/json')
 const logging = require('./middleware/logging')
