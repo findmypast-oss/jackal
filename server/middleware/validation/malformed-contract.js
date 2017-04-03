@@ -1,7 +1,7 @@
 'use strict'
 
-const parseContract = require('../../../lib/contract/parse-contract')
-const isMalformed = require('../../../lib/contract/responseParser/joiParser/errors').isMalformed
+const parseContract = require('../../../lib/parse-contract')
+const isMalformed = require('../../../lib/is-malformed')
 
 const validateMalformedContract = (req, res, next) => {
   const contracts = req.body

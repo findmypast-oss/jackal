@@ -9,8 +9,7 @@
   "scripts": {
     "start": "node index start",
     "pretest": "eslint .",
-    "test": "nyc mocha **/*.spec.js",
-    "test:integration": "nyc mocha --opts test/local.opts test/integration/**/*spec.js",
+    "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {

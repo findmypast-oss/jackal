@@ -1,8 +1,8 @@
 'use strict'
 
 const execute = require('../../../lib/contract/executor')
-const mapResult = require('../../../lib/contract/map-result')
-const parseContract = require('../../../lib/contract/parse-contract')
+const mapResult = require('../../../lib/map-result')
+const parseContract = require('../../../lib/parse-contract')
 
 const createExecuteProvider = (db) => (req, res, next) => {
   const provider = req.params.provider
