@@ -6,7 +6,7 @@ const fs = require('fs')
 const client = require('../client')
 const startServer = require('../server')
 
-function start (configPath) {
+function start(configPath) {
   let config
 
   if (configPath) {
@@ -23,15 +23,15 @@ function start (configPath) {
   startServer(config)
 }
 
-function send (contractsPath, jackalUrl){
+function send(contractsPath, jackalUrl) {
   client.send(contractsPath, jackalUrl, false, exitCodeHandler)
 }
 
-function run (jackalUrl){
+function run(jackalUrl) {
   client.run(jackalUrl, false, exitCodeHandler)
 }
 
-function dump (jackalUrl){
+function dump(jackalUrl) {
   client.dump({
     jackalUrl: jackalUrl,
     quiet: false
