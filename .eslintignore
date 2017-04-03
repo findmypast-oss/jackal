@@ -3,6 +3,6 @@
 **/*.ne
 
 coverage/**/*
-**/grammar/*.js
+**/*-grammar/*.js
 **/parser/*.js
 server/**/*.js

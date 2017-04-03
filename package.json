@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index start",
     "pretest": "eslint .",
-    "test": "nyc tap \"lib/**/*.spec.js\"",
+    "test": "nyc mocha **/*.spec.js",
     "test:integration": "nyc mocha --opts test/local.opts test/integration/**/*spec.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },

@@ -1,10 +1,11 @@
+'use strict'
+
 const provider = require('./support/provider')
 const jackal = require('./support/jackal')
 const client = require('./support/client')
 
 describe('Happy path tests', function() {
-
-  before(jackal.start)
+  before((done) => jackal.start({}, done))
   after(jackal.stop)
   after(provider.stop)
 

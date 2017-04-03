@@ -1,5 +1,8 @@
+'use strict'
+
 const express = require('express')
 const app = express()
+
 var mockContract = null
 var server = null
 var hitCount = 0
