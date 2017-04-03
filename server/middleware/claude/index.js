@@ -4,6 +4,7 @@ const contract = require('../../../lib/contract')
 
 const execute = contract.execute
 const mapResult = contract.mapResult
+const parseResponse = contract.parseResponse
 
 const mapContractObject = function (contractObject) {
   return contractObject.contract
@@ -24,7 +25,19 @@ const createClaude = function (db) {
 
       return next()
     } else {
-      execute(contracts, function (err, results) {
+      const parsedContracts = contracts.map(function (contract) {
+        const parsedResponse = parseResponse(contract.response)
+
+        return {
+          name: contract.name,
+          consumer: contract.consumer,
+          before: contract.before,
+          request: contract.request,
+          response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
+        }
+      })
+
+      execute(parsedContracts, function (err, results) {
         res.status(200).send(results.map(mapResult))
 
         return next()

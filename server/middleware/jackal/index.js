@@ -46,33 +46,7 @@ const createJackal = function (db) {
         return next()
       }
 
-      const parsedContracts = contracts.map(function (contract) {
-        const parsedResponse = parseResponse(contract.response)
-
-        return {
-          name: contract.name,
-          consumer: contract.consumer,
-          before: contract.before,
-          request: contract.request,
-          response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
-        }
-      })
-
-      const malformedContract = parsedContracts.find(findMalformed)
-      if (malformedContract) {
-        res.status(400).send(malformedContract.response.body)
-
-        return next()
-      }
-
-      const unsupportedContract = parsedContracts.find(findUnsupported)
-      if (unsupportedContract) {
-        res.status(400).send(unsupportedContract.response.body)
-
-        return next()
-      }
-
-      if (!db.insert(coll, hash, parsedContracts)) {
+      if (!db.insert(coll, hash, contracts)) {
         res.status(500).send({ message: 'Cache failed on contracts insertion' })
 
         return next()
@@ -87,7 +61,33 @@ const createJackal = function (db) {
       return next()
     }
 
-    execute(dbo.contracts, function (err, results) {
+    const parsedContracts = dbo.contracts.map(function (contract) {
+      const parsedResponse = parseResponse(contract.response)
+
+      return {
+        name: contract.name,
+        consumer: contract.consumer,
+        before: contract.before,
+        request: contract.request,
+        response: parsedResponse.valid ? parsedResponse.response : parsedResponse.error
+      }
+    })
+
+    const malformedContract = parsedContracts.find(findMalformed)
+    if (malformedContract) {
+      res.status(400).send(malformedContract.response.body)
+
+      return next()
+    }
+
+    const unsupportedContract = parsedContracts.find(findUnsupported)
+    if (unsupportedContract) {
+      res.status(400).send(unsupportedContract.response.body)
+
+      return next()
+    }
+
+    execute(parsedContracts, function (err, results) {
       res.status(201).send(results.map(mapResult))
 
       return next()

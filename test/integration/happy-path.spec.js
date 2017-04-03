@@ -4,8 +4,7 @@ const provider = require('./support/provider')
 const jackal = require('./support/jackal')
 const client = require('./support/client')
 
-xdescribe('Happy path tests', function() {
-
+describe('Happy path tests', function() {
   before((done) => jackal.start({}, done))
   after(jackal.stop)
   after(provider.stop)

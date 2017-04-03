@@ -22,6 +22,10 @@ describe('Database tests', function () {
     }, done)
   })
 
+  it('Running the v1 contract passes because it exists', function (done) {
+    client.run({ provider: 'integration', isPass: true }, done)
+  })
+
   it('The database is saved to the local file system', function (done) {
     client.dump({ filePath: 'test/integration/db.json' }, done)
   })
@@ -34,7 +38,7 @@ describe('Database tests', function () {
     jackal.start({}, done)
   })
 
-  it('Running the v1 contract fails because it does not exist', function (done) {
+  it('Running the v1 contract fails because it does not exist any more', function (done) {
     client.run({ provider: 'integration', isPass: false }, done)
   })
 
@@ -61,7 +65,7 @@ describe('Database tests', function () {
     })
   })
 
-  it('Running the v1 contract passes because it now exists', function (done) {
+  it('Running the v1 contract passes because it exists', function (done) {
     client.run({ provider: 'integration', isPass: true }, done)
   })
 
