@@ -1,6 +1,6 @@
 'use strict'
 
-const noContracts = (req, res, next) => {
+const validateNoConsumerContracts = (req, res, next) => {
   const contracts = req.body
 
   if (contracts.length === undefined || contracts.length === 0) {
@@ -10,4 +10,4 @@ const noContracts = (req, res, next) => {
   }
 }
 
-module.exports = noContracts
+module.exports = validateNoConsumerContracts

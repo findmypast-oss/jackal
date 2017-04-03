@@ -4,7 +4,7 @@ const execute = require('../../../lib/contract/executor')
 const parseContract = require('../../../lib/contract/parse-contract')
 const mapResult = require('../../../lib/contract/map-result')
 
-const consumerExecutor = (req, res, next) => {
+const executeConsumer = (req, res, next) => {
   const contracts = req.body
   const parsedContracts = contracts.map(parseContract)
 
@@ -14,4 +14,4 @@ const consumerExecutor = (req, res, next) => {
   })
 }
 
-module.exports = consumerExecutor
+module.exports = executeConsumer

@@ -17,18 +17,18 @@ const createDbInsert = require('./middleware/db/insert')
 const createDbConsistencyCheck = require('./middleware/db/consistency-check')
 
 /* Validators */
-const validateNoContracts = require('./middleware/validation/no-contracts')
+const validateNoConsumerContracts = require('./middleware/validation/no-consumer-contracts')
+const createValidateNoProviderContracts = require('./middleware/validation/no-provider-contracts')
 const validateContracts = require('./middleware/validation/contracts')
 const validateMalformedContract = require('./middleware/validation/malformed-contract')
 const validateUnsupportedContract = require('./middleware/validation/unsupported-contract')
 
 /* Executors */
 const executeConsumer = require('./middleware/consumer/execute')
+const createExecuteProvider = require('./middleware/provider/execute')
 
 
 
-
-const createClaude = require('./middleware/claude')
 const createCrutch = require('./middleware/crutch')
 const stats = require('./middleware/stats')
 
@@ -56,9 +56,16 @@ const startServer = function (config, done) {
   const dbInsert = createDbInsert(db)
   const dbConsistencyCheck = createDbConsistencyCheck(db)
 
+  /* Validators */
+  const validateNoProviderContracts = createValidateNoProviderContracts(db)
+
+  /* Executors */
+  const executeProvider = createExecuteProvider(db)
+
   /* Consumer */
   const consumerMiddleware = [
-    validateNoContracts,
+    json,
+    validateNoConsumerContracts,
     validateContracts,
     validateMalformedContract,
     validateUnsupportedContract,
@@ -67,15 +74,20 @@ const startServer = function (config, done) {
     executeConsumer
   ]
 
-  /* Executors */
-  const claude = createClaude(db)
+  /* Provider */
+  const providerMiddleware = [
+    json,
+    validateNoProviderContracts,
+    executeProvider
+  ]
+
   const crutch = createCrutch(db)
 
   app.use(bodyParser.json())
 
   app.get('/health', function (req, res) { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)
-  app.get('/api/contracts/:provider', json, claude)
+  app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/contracts', json, crutch)
   app.get('/api/stats', json, stats)
 
