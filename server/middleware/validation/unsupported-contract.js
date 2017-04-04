@@ -11,7 +11,7 @@ const validateUnsupportedContract = (req, res, next) => {
   const unsupportedContract = parsedContracts.find(findUnsupported)
 
   if (unsupportedContract) {
-    res.status(400).send(unsupportedContract.response.body)
+    res.status(400).send(unsupportedContract.response)
   } else {
     next()
   }
@@ -19,4 +19,4 @@ const validateUnsupportedContract = (req, res, next) => {
 
 module.exports = validateUnsupportedContract
 
-const findUnsupported = (contract) => isUnsupported(contract.response.body)
+const findUnsupported = (contract) => isUnsupported(contract.response)

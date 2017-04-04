@@ -11,7 +11,7 @@ const validateMalformedContract = (req, res, next) => {
   const malformedContract = parsedContracts.find(findMalformed)
 
   if (malformedContract) {
-    res.status(400).send(malformedContract.response.body)
+    res.status(400).send(malformedContract.response)
   } else {
     next()
   }
@@ -19,4 +19,4 @@ const validateMalformedContract = (req, res, next) => {
 
 module.exports = validateMalformedContract
 
-const findMalformed = (contract) => isMalformed(contract.response.body)
+const findMalformed = (contract) => isMalformed(contract.response)

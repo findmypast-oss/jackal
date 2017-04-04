@@ -1,0 +1,32 @@
+{
+  "consumer-one": {
+    "integration": {
+      "contract": {
+        "OK": {
+          "request": { "url": "http://localhost:5000/contract" },
+          "response": {
+            "statusCode": 200,
+            "body": {
+            "version": "Joi.number().integer()"
+            }
+          }
+        }
+      }
+    }
+  },
+  "consumer-two": {
+    "integration": {
+      "contract": {
+        "OK": {
+          "request": { "url": "http://localhost:5000/contract" },
+          "response": {
+            "statusCode": 200,
+            "body": {
+            "version": "Joi.number().integer()"
+            }
+          }
+        }
+      }
+    }
+  }
+}

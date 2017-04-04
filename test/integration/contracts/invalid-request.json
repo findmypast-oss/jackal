@@ -1,0 +1,11 @@
+{
+  "consumer": {
+    "provider": {
+      "api": {
+        "scenario": {
+          "request": 123
+        }
+      }
+    }
+  }
+}
