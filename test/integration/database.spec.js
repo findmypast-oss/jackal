@@ -6,7 +6,7 @@ const client = require('./support/client')
 const jackal = require('./support/jackal')
 const provider = require('./support/provider')
 
-xdescribe('Database tests', function () {
+describe('Database tests', function () {
   before(function (done) {
     jackal.start({}, done)
   })

@@ -22,12 +22,13 @@ const createExecuteConsumer = (db) => (req, res, next) => {
 module.exports = createExecuteConsumer
 
 const parseContracts = (contracts) => {
-  const consumer = Object.values(contracts)[0]
-  const nestedContracts = map(consumer, (provider, providerName) => {
-    return map(provider, (api, apiName) => {
-      return map(api, (scenario, scenarioName) => {
-        const name      = `${providerName}/${apiName}/${scenarioName}`
-        return Object.assign({}, parseContract(scenario), {name: name, consumer: consumer})
+  const nestedContracts = map(contracts, (consumer, consumerName) => {
+    return map(consumer, (provider, providerName) => {
+      return map(provider, (api, apiName) => {
+        return map(api, (scenario, scenarioName) => {
+          const name      = `${providerName}/${apiName}/${scenarioName}`
+          return Object.assign({}, parseContract(scenario), { name: name, consumer: consumerName })
+        })
       })
     })
   })
