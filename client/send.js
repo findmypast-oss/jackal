@@ -4,7 +4,7 @@ const fs = require('fs')
 const request = require('request')
 const parser = require('./response-contract-results')
 
-function send(options, done) {
+module.exports = (options, done) => {
   const buffer = fs.readFileSync(options.contractsPath)
   const req = {
     url: options.jackalUrl,
@@ -18,5 +18,3 @@ function send(options, done) {
 
   request(req, parser(done))
 }
-
-module.exports = send

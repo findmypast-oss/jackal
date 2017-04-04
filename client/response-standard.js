@@ -1,9 +1,3 @@
-module.exports = function(done) {
-  return function standardParser(err, response, body) {
-    if (err) {
-      return done(err)
-    }
+'use strict'
 
-    return done(null, body)
-  }
-}
+module.exports = (done) => (err, response, body) => err ? done(err) : done(null, body)
