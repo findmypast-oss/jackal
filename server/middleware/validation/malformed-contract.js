@@ -4,9 +4,6 @@ const mapContractObjectToArray = require('../../../lib/map-contract-object-to-ar
 const parseContract = require('../../../lib/parse-contract')
 const isMalformed = require('../../../lib/is-malformed')
 
-const flattenDeep = require('lodash/flattenDeep')
-const map = require('lodash.map')
-
 const validateMalformedContract = (req, res, next) => {
   const contracts = req.body
 

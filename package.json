@@ -91,15 +91,8 @@
     "exclude": [
       "**/*.spec.js",
       "**/*.json",
-      "**/*.ne",
       "index.js",
-      "**/grammar/*.js",
-      "**/parser/*.js",
-      "coverage/**/*",
-      "lib/logger/index.js",
-      "lib/contract/index.js",
-      "lib/contract/executor/index.js",
-      "server/**/*.js"
+      "coverage/**/*"
     ],
     "reporter": [
       "lcov",

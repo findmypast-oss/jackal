@@ -21,7 +21,7 @@ const createExecuteProvider = (db) => (req, res, next) => {
 module.exports = createExecuteProvider
 
 const parseContracts = (contracts) => {
-  const nestedContracts = map(contracts, (contract, contractIndex) => {
+  const nestedContracts = map(contracts, (contract) => {
     return mapContractObjectToContractArray(contract)
   })
 
