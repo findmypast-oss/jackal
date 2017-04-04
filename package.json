@@ -52,6 +52,7 @@
     "eslint": "^3.18.0",
     "jsinspect": "^0.12.3",
     "mocha": "^3.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
     "sinon": "^2.1.0",

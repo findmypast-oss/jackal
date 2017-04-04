@@ -16,7 +16,7 @@ script: docker-compose run jackal_client sh -c "sleep 2 && node index send ./exa
 
 after_success:
   - npm run coverage
-  # - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/"
+  - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/"
 
 deploy:
   provider: npm
