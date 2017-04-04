@@ -21,15 +21,17 @@ const createExecuteProvider = (db) => (req, res, next) => {
 module.exports = createExecuteProvider
 
 const parseContracts = (contracts) => {
-  const nestedContracts = map(contracts, (consumer, consumerName) => {
-    return map(consumer, (provider, providerName) => {
-     return map(provider, (api, apiName) => {
-       return map(api, (scenario, scenarioName) => {
-         const name      = `${providerName}/${apiName}/${scenarioName}`
-         return Object.assign({}, parseContract(scenario), { name: name, consumer: consumerName })
-       })
-     })
-   })
+  const nestedContracts = map(contracts, (contract, contractIndex) => {
+    return map(contract, (consumer, consumerName) => {
+      return map(consumer, (provider, providerName) => {
+        return map(provider, (api, apiName) => {
+          return map(api, (scenario, scenarioName) => {
+            const name = `${providerName}/${apiName}/${scenarioName}`
+            return Object.assign({}, parseContract(scenario), { name: name, consumer: consumerName })
+          })
+        })
+      })
+    })
   })
 
   return flattenDeep(nestedContracts)

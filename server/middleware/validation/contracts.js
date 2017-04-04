@@ -3,6 +3,7 @@
 const validate = require('../../../lib/validate')
 const mapValidation = require('../../../lib/validation/map-validations')
 const flattenDeep = require('lodash/flattenDeep')
+const map = require('lodash.map')
 
 const validateContracts = (req, res, next) => {
   const contracts = req.body
@@ -30,15 +31,13 @@ const allValid = validations => validations.every(isValid)
 const isValid = validation => validation.valid
 
 const validationsForContracts = (contracts) => {
-  const consumer = Object.keys(contracts)[0]
-  const providers = Object.values(contracts[consumer])
-  const nestedValidations = providers.map((provider) => {
-    const apis = Object.values(provider)
-
-    return apis.map((api) => {
-      const scenarios = Object.values(api)
-
-      return scenarios.map(validate)
+  const nestedValidations = map(contracts, (consumer, consumerName) => {
+    return map(consumer, (provider, providerName) => {
+      return map(provider, (api, apiName) => {
+        return map(api, (scenario, scenarioName) => {
+          return validate(scenario)
+        })
+      })
     })
   })
 

@@ -3,6 +3,7 @@
 const parseContract = require('../../../lib/parse-contract')
 const isMalformed = require('../../../lib/is-malformed')
 const flattenDeep = require('lodash/flattenDeep')
+const map = require('lodash.map')
 
 const validateMalformedContract = (req, res, next) => {
   const contracts = req.body
@@ -22,15 +23,13 @@ module.exports = validateMalformedContract
 const findMalformed = (contract) => isMalformed(contract.response.body)
 
 const parseContracts = (contracts) => {
-  const consumer = Object.keys(contracts)[0]
-  const providers = Object.values(contracts[consumer])
-  const nestedContracts = providers.map((provider) => {
-    const apis = Object.values(provider)
-
-    return apis.map((api) => {
-      const scenarios = Object.values(api)
-
-      return scenarios.map(parseContract)
+  const nestedContracts = map(contracts, (consumer, consumerName) => {
+    return map(consumer, (provider, providerName) => {
+      return map(provider, (api, apiName) => {
+        return map(api, (scenario, scenarioName) => {
+          return parseContract(scenario)
+        })
+      })
     })
   })
 
