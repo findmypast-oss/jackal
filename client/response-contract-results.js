@@ -1,7 +1,5 @@
 'use strict'
 
-const prettyjson = require('prettyjson')
-
 function contractFailed (result) {
   return result.status === 'Fail'
 }
@@ -10,27 +8,13 @@ function noContractsExistMessage (message) {
   return message.startsWith('No contracts exist for provider: ')
 }
 
-function parserCallback (statusCode, quiet, done) {
+function parser (done) {
   return function (err, response, body) {
     if (err) {
       return done(err)
     }
 
     const parsed = JSON.parse(body)
-    const prettified = prettyjson.render(parsed)
-
-    if (!quiet) {
-      /* eslint-disable no-console */
-      console.log(prettified)
-      /* eslint-enable no-console */
-    }
-
-    if (response.statusCode !== statusCode) {
-      return done(
-        'Failure - expected response code ' + statusCode + ' got ' + response.statusCode,
-        parsed
-      )
-    }
 
     if (Array.isArray(parsed) && parsed.some(contractFailed)) {
       return done('Failure - not all contracts passed', parsed)
@@ -44,4 +28,4 @@ function parserCallback (statusCode, quiet, done) {
   }
 }
 
-module.exports = parserCallback
+module.exports = parser

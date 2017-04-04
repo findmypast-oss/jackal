@@ -2,50 +2,54 @@
 
 'use strict'
 
-const fs = require('fs')
 const client = require('../client')
 const startServer = require('../server')
+const reporter = require('./reporter')
+const configReader = require('./config-reader')
 
-function start(configPath) {
-  let config
-
-  if (configPath) {
-    const buffer = fs.readFileSync(configPath)
-    config = JSON.parse(buffer.toString())
-  } else {
-    config = {
-      logger: { environment: 'production' },
-      statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
-      db:     { path: 'db.json' }
-    }
-  }
-
+function start(options, config) {
   startServer(config)
 }
 
-function send(contractsPath, jackalUrl) {
-  client.send(contractsPath, jackalUrl, false, exitCodeHandler)
+function send(contractsPath, jackalUrl, options, config) {
+  client.send(
+    { contractsPath, jackalUrl },
+    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
+  )
 }
 
-function run(jackalUrl) {
-  client.run(jackalUrl, false, exitCodeHandler)
+function run(jackalUrl, options, config) {
+  client.run(
+    { jackalUrl },
+    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
+  )
 }
 
-function dump(jackalUrl) {
-  client.dump({
-    jackalUrl: jackalUrl,
-    quiet: false
-  }, exitCodeHandler)
+function dump(jackalUrl, options, config) {
+  client.dump(
+    { jackalUrl },
+    reporter(['standard'], config.reporters, exitCodeHandler)
+  )
 }
 
-// function stats (jackalUrl){
-//
-// }
+function configWrapper(fn) {
+  return function() {
+    var args = Array.prototype.slice.call(arguments)
+    var options = args[args.length-1]
+
+    const config = configReader(options.configPath)
+
+    fn.apply(null, args.concat(config))
+  }
+}
 
 function exitCodeHandler(err) {
   err ? process.exit(1) : process.exit(0)
 }
 
 module.exports = {
-  start, send, run, dump
+  start: configWrapper(start),
+  send: configWrapper(send),
+  run: configWrapper(run),
+  dump: configWrapper(dump)
 }
