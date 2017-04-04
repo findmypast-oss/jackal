@@ -1,6 +1,6 @@
 'use strict'
 
-const mapContractObjectToArray = require('../../../lib/map-contract-object')
+const mapContractObjectToArray = require('../../../lib/map-contract-object-to-array')
 const parseContract = require('../../../lib/parse-contract')
 const isMalformed = require('../../../lib/is-malformed')
 
