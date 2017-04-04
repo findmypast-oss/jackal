@@ -33,6 +33,7 @@ function dump(options, done) {
 
 function assert(isPass, done) {
   return function(err, results) {
+    
     if(isPass) {
       expect(err).to.not.exist
       expect(results[0].status).to.equal('Pass')

@@ -64,8 +64,10 @@
     "fast-json-stringify": "^0.10.3",
     "hot-shots": "^4.4.0",
     "joi": "^10.2.2",
+    "lodash.every": "^4.6.0",
+    "lodash.foreach": "^4.5.0",
+    "lodash.map": "^4.6.0",
     "lokijs": "^1.4.3",
-    "nearley": "^2.8.0",
     "pino": "^4.0.1",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0"
