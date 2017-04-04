@@ -11,6 +11,7 @@
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
     "inspect": "jsinspect",
+    "depcheck": "depcheck",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -47,12 +48,12 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
+    "depcheck": "^0.6.7",
     "eslint": "^3.18.0",
     "jsinspect": "^0.12.3",
     "mocha": "^3.2.0",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
-    "rewire": "^2.5.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0"
   },
@@ -62,11 +63,9 @@
     "consumer-contracts": "^1.5.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
-    "fast-json-stringify": "^0.10.3",
     "hot-shots": "^4.4.0",
     "joi": "^10.2.2",
     "lodash.every": "^4.6.0",
-    "lodash.foreach": "^4.5.0",
     "lodash.map": "^4.6.0",
     "lokijs": "^1.4.3",
     "pino": "^4.0.1",
