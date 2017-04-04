@@ -52,8 +52,7 @@
     "nyc": "^10.1.2",
     "rewire": "^2.5.2",
     "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0",
-    "tap": "^10.2.2"
+    "sinon-chai": "^2.9.0"
   },
   "dependencies": {
     "body-parser": "^1.16.1",
