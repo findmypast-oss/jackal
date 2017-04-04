@@ -1,3 +1,5 @@
+--colors
 --recursive
 --reporter spec
 --require test/globals
+--ui bdd

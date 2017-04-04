@@ -32,6 +32,8 @@ function assert(isPass, done) {
   return function(err, results) {
     if(isPass) {
       expect(err).to.not.exist
+      expect(results[0].name).to.equal('integration/contract/OK')
+      expect(results[0].consumer).to.equal('consumer')
       expect(results[0].status).to.equal('Pass')
     } else {
       expect(err).to.exist

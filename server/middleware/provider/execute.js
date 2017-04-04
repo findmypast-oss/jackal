@@ -1,13 +1,15 @@
 'use strict'
 
+const map = require('lodash.map')
+const flattenDeep = require('lodash/flattenDeep')
+const mapResult = require('../../../lib/map-result')
 const execute = require('../../../lib/contract/executor')
-const mapResult = require('../../../lib/contract/map-result')
-const parseContract = require('../../../lib/contract/parse-contract')
+const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteProvider = (db) => (req, res, next) => {
   const provider = req.params.provider
   const contracts = db.retrieveCollection(provider).map(dbo => dbo.contract)
-  const parsedContracts = contracts.map(parseContract)
+  const parsedContracts = parseContracts(contracts)
 
   execute(parsedContracts, (err, results) => {
     res.status(200).send(results.map(mapResult))
@@ -17,3 +19,11 @@ const createExecuteProvider = (db) => (req, res, next) => {
 }
 
 module.exports = createExecuteProvider
+
+const parseContracts = (contracts) => {
+  const nestedContracts = map(contracts, (contract, contractIndex) => {
+    return mapContractObjectToContractArray(contract)
+  })
+
+  return flattenDeep(nestedContracts)
+}

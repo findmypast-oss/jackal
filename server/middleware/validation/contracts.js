@@ -2,10 +2,11 @@
 
 const validate = require('../../../lib/validate')
 const mapValidation = require('../../../lib/validation/map-validations')
+const mapContractObjectToArray = require('../../../lib/map-contract-object-to-array')
 
 const validateContracts = (req, res, next) => {
   const contracts = req.body
-  const validations = contracts.map(validate)
+  const validations = mapContractObjectToArray(contracts, validate)
 
   if (allValid(validations)) {
     next()

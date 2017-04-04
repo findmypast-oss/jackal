@@ -1,12 +1,16 @@
 'use strict'
 
-const parseContract = require('../../../lib/contract/parse-contract')
-const isMalformed = require('../../../lib/contract/responseParser/joiParser/errors').isMalformed
+const mapContractObjectToArray = require('../../../lib/map-contract-object-to-array')
+const parseContract = require('../../../lib/parse-contract')
+const isMalformed = require('../../../lib/is-malformed')
+
+const flattenDeep = require('lodash/flattenDeep')
+const map = require('lodash.map')
 
 const validateMalformedContract = (req, res, next) => {
   const contracts = req.body
 
-  const parsedContracts = contracts.map(parseContract)
+  const parsedContracts = mapContractObjectToArray(contracts, parseContract)
   const malformedContract = parsedContracts.find(findMalformed)
 
   if (malformedContract) {
