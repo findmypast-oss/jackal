@@ -1,3 +1,3 @@
-module.exports = function print(data) {
-  return [data]
-}
+'use strict'
+
+module.exports = (data) => [ data ]

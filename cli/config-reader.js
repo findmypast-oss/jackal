@@ -1,8 +1,11 @@
+'use strict'
+
 const fs = require('fs')
 
-module.exports = function configReader(configPath) {
+module.exports = (configPath) => {
   if (configPath) {
     const buffer = fs.readFileSync(configPath)
+
     return JSON.parse(buffer.toString())
   }
 

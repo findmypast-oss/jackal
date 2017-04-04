@@ -7,43 +7,41 @@ const startServer = require('../server')
 const reporter = require('./reporter')
 const configReader = require('./config-reader')
 
-function start(options, config) {
+const start = (options, config) => {
   startServer(config)
 }
 
-function send(contractsPath, jackalUrl, options, config) {
+const send = (contractsPath, jackalUrl, options, config) => {
   client.send(
     { contractsPath, jackalUrl },
     reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
 }
 
-function run(jackalUrl, options, config) {
+const run = (jackalUrl, options, config) => {
   client.run(
     { jackalUrl },
     reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
 }
 
-function dump(jackalUrl, options, config) {
+const dump = (jackalUrl, options, config) => {
   client.dump(
     { jackalUrl },
     reporter(['standard'], config.reporters, exitCodeHandler)
   )
 }
 
-function configWrapper(fn) {
-  return function() {
-    var args = Array.prototype.slice.call(arguments)
-    var options = args[args.length-1]
+const configWrapper = (fn) => function () {
+  const args = Array.prototype.slice.call(arguments)
+  const options = args[args.length-1]
 
-    const config = configReader(options.configPath)
+  const config = configReader(options.configPath)
 
-    fn.apply(null, args.concat(config))
-  }
+  fn.apply(null, args.concat(config))
 }
 
-function exitCodeHandler(err) {
+const exitCodeHandler = (err) => {
   err ? process.exit(1) : process.exit(0)
 }
 
