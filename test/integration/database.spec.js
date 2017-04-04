@@ -1,5 +1,6 @@
 'use strict'
 
+const fs = require('fs')
 const client = require('./helpers/client')
 const jackal = require('./helpers/jackal')
 const provider = require('./helpers/provider')
@@ -57,6 +58,7 @@ describe('Database tests', function () {
   after(function (done) {
     jackal.stop()
     provider.stop()
+    fs.unlinkSync('test/integration/db.json')
     done()
   })
 })
