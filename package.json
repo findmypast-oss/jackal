@@ -10,6 +10,7 @@
     "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
+    "inspect": "jsinspect",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
@@ -47,6 +48,7 @@
     "chai": "^3.5.0",
     "coveralls": "^2.12.0",
     "eslint": "^3.18.0",
+    "jsinspect": "^0.12.3",
     "mocha": "^3.2.0",
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",

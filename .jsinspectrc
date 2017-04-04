@@ -1,0 +1,9 @@
+{
+  "threshold":     40,
+  "identifiers":   true,
+  "literals":      true,
+  "color":         true,
+  "minInstances":  2,
+  "ignore":        "coverage|node_modules|test|spec",
+  "truncate":      100
+}
