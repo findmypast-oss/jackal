@@ -1,15 +1,13 @@
 'use strict'
 
 const request = require('request')
+const parser = require('./response-standard')
 
 function stats(options, done) {
-  request(options.jackalUrl + '/api/stats', function (err, response, body) {
-    if (err) {
-      return done(err)
-    }
-
-    return done(null, body)
-  })
+  request(
+    options.jackalUrl + '/api/stats',
+    parser(done)
+  )
 }
 
 module.exports = stats

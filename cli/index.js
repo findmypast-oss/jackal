@@ -2,77 +2,41 @@
 
 'use strict'
 
-const fs = require('fs')
-const prettyjson = require('prettyjson')
 const client = require('../client')
 const startServer = require('../server')
+const reporter = require('./reporter')
+const configReader = require('./config-reader')
 
-function start(configPath) {
-  let config
-
-  if (configPath) {
-    const buffer = fs.readFileSync(configPath)
-    config = JSON.parse(buffer.toString())
-  } else {
-    config = {
-      logger: { environment: 'production' },
-      statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
-      db:     { path: 'db.json' }
-    }
-  }
+function start(options) {
+  const config = configReader(options.configFile)
 
   startServer(config)
 }
 
-function send(contractsPath, jackalUrl) {
+function send(contractsPath, jackalUrl, options) {
+  const config = configReader(options.configFile)
+
   client.send(
     { contractsPath, jackalUrl },
-    prettyprint(exitCodeHandler)
+    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
 }
 
-function run(jackalUrl) {
+function run(jackalUrl, options) {
+  const config = configReader(options.configFile)
+
   client.run(
     { jackalUrl },
-    prettyprint(exitCodeHandler)
+    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
 }
 
-function dump(jackalUrl) {
+function dump(jackalUrl, options) {
+  const config = configReader(options.configFile)
   client.dump(
     { jackalUrl },
-    print(exitCodeHandler)
+    reporter(['standard'], config.reporters, exitCodeHandler)
   )
-}
-
-// function stats (jackalUrl){
-//
-// }
-
-function print(fn) {
-  var args =
-
-  return function (err, data) {
-    /* eslint-disable no-console */
-    console.log(data)
-    /* eslint-enable no-console */
-
-    return fn(Array.prototype.slice.apply(arguments))
-  }
-}
-
-function prettyprint(fn) {
-  var args = Array.prototype.slice.apply(arguments)
-
-  return function (err, data) {
-    const prettified = prettyjson.render(data)
-
-    /* eslint-disable no-console */
-    console.log(prettified)
-    /* eslint-enable no-console */
-
-    return fn(args)
-  }
 }
 
 function exitCodeHandler(err) {

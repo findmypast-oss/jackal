@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const request = require('request')
-const parser = require('./contract-results-parser')
+const parser = require('./response-contract-results')
 
 function send(options, done) {
   const buffer = fs.readFileSync(options.contractsPath)

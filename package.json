@@ -7,10 +7,12 @@
     "jackal": "index.js"
   },
   "scripts": {
+    "cli": "node index",
     "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc tap \"lib/**/*.spec.js\"",
     "test:integration": "nyc mocha --opts test/local.opts test/integration/**/*spec.js",
+    "test:cli": "nyc mocha --opts test/local.opts cli/**/*spec.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
