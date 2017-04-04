@@ -12,8 +12,7 @@
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
     "inspect": "jsinspect",
-    "depcheck": "depcheck",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "depcheck": "depcheck"
   },
   "repository": {
     "type": "git",
@@ -48,7 +47,6 @@
   "homepage": "https://github.com/findmypast/jackal#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.12.0",
     "depcheck": "^0.6.7",
     "eslint": "^3.18.0",
     "jsinspect": "^0.12.3",
