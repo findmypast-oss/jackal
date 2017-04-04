@@ -3,7 +3,7 @@
 const fs = require('fs')
 const consumer = require('../../../client')
 
-function send(options, done) {
+const send = (options, done) => {
   consumer.send({
     jackalUrl: 'http://localhost:25863/api/contracts',
     contractsPath: options.filePath
@@ -11,14 +11,14 @@ function send(options, done) {
   assert(options.isPass, done) )
 }
 
-function run(options, done) {
+const run = (options, done) => {
   consumer.run({
     jackalUrl: 'http://localhost:25863/api/contracts/' + options.provider
   },
   assert(options.isPass, done) )
 }
 
-function dump(options, done) {
+const dump = (options, done) => {
   consumer.dump({
     jackalUrl: 'http://localhost:25863'
   }, (err, json) => {
@@ -28,23 +28,21 @@ function dump(options, done) {
   })
 }
 
-function assert(isPass, done) {
-  return function(err, results) {
-    if(isPass) {
-      expect(err).to.not.exist
-      expect(results[0].name).to.equal('integration/contract/OK')
-      expect(results[0].consumer).to.equal('consumer')
-      expect(results[0].status).to.equal('Pass')
+const assert = (isPass, done) => (err, results) => {
+  if(isPass) {
+    expect(err).to.not.exist
+    expect(results[0].name).to.equal('integration/contract/OK')
+    expect(results[0].consumer).to.equal('consumer')
+    expect(results[0].status).to.equal('Pass')
+  } else {
+    expect(err).to.exist
+    if (Array.isArray(results)) {
+      expect(results[0].status).to.equal('Fail')
     } else {
-      expect(err).to.exist
-      if (Array.isArray(results)) {
-        expect(results[0].status).to.equal('Fail')
-      } else {
-        expect(results.message).to.exist
-      }
+      expect(results.message).to.exist
     }
-    done()
   }
+  done()
 }
 
 module.exports = { run, send, dump }

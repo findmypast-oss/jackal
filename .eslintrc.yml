@@ -21,7 +21,5 @@ rules:
   semi:
     - error
     - never
-  no-console:
-    - off
 globals:
   expect: true

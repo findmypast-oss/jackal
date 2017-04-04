@@ -1,63 +1,59 @@
 'use strict'
 
-const provider = require('./support/provider')
-const jackal = require('./support/jackal')
-const client = require('./support/client')
+const provider = require('./helpers/provider')
+const jackal = require('./helpers/jackal')
+const client = require('./helpers/client')
 
-describe('Happy path tests', function() {
+describe('Happy path tests', function () {
   before((done) => jackal.start({}, done))
   after(jackal.stop)
   after(provider.stop)
 
-  it('The provider should start successfully', function(done){
+  it('should start the provider successfully using version: "1"', function (done) {
     provider.start({ port: 5000, contract: { version: '1' } }, done)
   })
 
-  it('Sending contract-v1 the first time should pass', function(done) {
-    client.send({ filePath: 'test/integration/contract-v1.json', isPass: true }, done)
+  it('should pass when sending contracts/v1 once', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v1.json', isPass: true }, done)
   })
 
-  it('Sending contract-v1 a second time should pass', function(done) {
-    client.send({ filePath: 'test/integration/contract-v1.json', isPass: true }, done)
+  it('should pass when sending contracts/v1 twice', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v1.json', isPass: true }, done)
   })
 
-  it('Sending contract-v1 a third time should pass', function(done) {
-    client.send({ filePath: 'test/integration/contract-v1.json', isPass: true }, done)
+  it('should pass when sending contracts/v1 thrice', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v1.json', isPass: true }, done)
   })
 
-  it('Jackal should have hit "/contract" 3 times', function() {
+  it('should have hit the provider "/contract" route 3 times', function () {
     expect(provider.contractHitCount()).to.equal(3)
   })
 
-  it('The provider should stop successfully', function(done) {
+  it('should stop the provider successfully', function (done) {
     provider.stop(done)
   })
 
-  it('The provider should start successfully with contract-v2', function(done){
+  it('should start the provider successfully using version: "abc"', function (done) {
     provider.start({ port: 5000, contract: { version: 'abc' } }, done)
   })
 
-  it('The existing contract-v1 should fail for the provider with contract-v2', function(done){
+  it('should fail when running the provider "integration" as it still expects contracts/v1 to be honoured', function (done) {
     client.run({ provider: 'integration', isPass: false }, done)
   })
 
-  it('Sending contract-v2 should pass', function(done) {
-    client.send({ filePath: 'test/integration/contract-v2.json', isPass: true }, done)
+  it('should pass when sending contracts/v2 once', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v2.json', isPass: true }, done)
   })
 
-  it('Running contract-v2 the first time should pass', function(done) {
-    client.run({ provider: 'integration', isPass: true }, done)
+  it('should pass when sending contracts/v2 twice', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v2.json', isPass: true }, done)
   })
 
-  it('Running contract-v2 a second time should pass', function(done) {
-    client.run({ provider: 'integration', isPass: true }, done)
+  it('should pass when sending contracts/v2 thrice', function (done) {
+    client.send({ filePath: 'test/integration/contracts/v2.json', isPass: true }, done)
   })
 
-  it('Running contract-v2 a third time should pass', function(done) {
-    client.run({ provider: 'integration', isPass: true }, done)
-  })
-
-  it('Jackal should have hit "/contract" 5 times', function() {
-    expect(provider.contractHitCount()).to.equal(5)
+  it('should now have hit the provider "/contract" 4 times', function () {
+    expect(provider.contractHitCount()).to.equal(4)
   })
 })

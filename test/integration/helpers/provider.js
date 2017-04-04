@@ -8,7 +8,6 @@ var server = null
 var hitCount = 0
 
 app.get('/contract', function(req, res) {
-  
   res.status(200).json(mockContract)
   hitCount++
 })

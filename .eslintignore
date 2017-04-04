@@ -2,3 +2,4 @@
 **/*.json
 
 coverage/**/*
+test/**/*
