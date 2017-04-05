@@ -16,8 +16,7 @@ module.exports = (reporters, config, done) => (err, data) => {
   reporters
     .reduce((acc, reporter) => {
       const logs = loggers[reporter](data, config)
-      acc.concat(logs)
-      return logs
+      return acc.concat(logs)
     }, [])
     .forEach((log) => {
       /* eslint-disable no-console */
