@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "25863:25863"
+    command: node index start -c examples/config.json
 
   jackal_client:
     build: .
