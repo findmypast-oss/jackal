@@ -1,0 +1,203 @@
+{
+  "filename": "db.json",
+  "collections": [
+    {
+      "name": "contracts",
+      "data": [
+        {
+          "hash": "82143d76f8d46e9894edbb23457459e07929b2b5707fd90b3432270306286c56",
+          "consumer": "itunes_search_app",
+          "providers": [
+            "itunes"
+          ],
+          "contracts": {
+            "itunes_search_app": {
+              "itunes": {
+                "search_by_term_and_country": {
+                  "OK": {
+                    "request": {
+                      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+                      "method": "GET"
+                    },
+                    "response": {
+                      "statusCode": 200,
+                      "body": {
+                        "resultCount": "Joi.number().integer()",
+                        "results": [
+                          {
+                            "trackName": "Joi.string()",
+                            "collectionName": "Joi.string()"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "meta": {
+            "revision": 0,
+            "created": 1491406529905,
+            "version": 0
+          },
+          "$loki": 1
+        }
+      ],
+      "idIndex": [
+        1
+      ],
+      "binaryIndices": {},
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "contracts",
+      "dirty": true,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableChangesApi": true,
+      "autoupdate": false,
+      "ttl": null,
+      "maxId": 1,
+      "DynamicViews": [],
+      "events": {
+        "insert": [
+          null
+        ],
+        "update": [
+          null
+        ],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [
+          null
+        ],
+        "warning": [
+          null
+        ]
+      },
+      "changes": []
+    },
+    {
+      "name": "itunes",
+      "data": [
+        {
+          "hash": "82143d76f8d46e9894edbb23457459e07929b2b5707fd90b3432270306286c56",
+          "name": "itunes/search_by_term_and_country/OK",
+          "consumer": "itunes_search_app",
+          "provider": "itunes",
+          "api": "search_by_term_and_country",
+          "contract": {
+            "itunes_search_app": {
+              "itunes": {
+                "search_by_term_and_country": {
+                  "OK": {
+                    "request": {
+                      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+                      "method": "GET"
+                    },
+                    "response": {
+                      "statusCode": 200,
+                      "body": {
+                        "resultCount": "Joi.number().integer()",
+                        "results": [
+                          {
+                            "trackName": "Joi.string()",
+                            "collectionName": "Joi.string()"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "meta": {
+            "revision": 0,
+            "created": 1491406529907,
+            "version": 0
+          },
+          "$loki": 1
+        }
+      ],
+      "idIndex": [
+        1
+      ],
+      "binaryIndices": {},
+      "constraints": null,
+      "uniqueNames": [],
+      "transforms": {},
+      "objType": "itunes",
+      "dirty": true,
+      "cachedIndex": null,
+      "cachedBinaryIndex": null,
+      "cachedData": null,
+      "adaptiveBinaryIndices": true,
+      "transactional": false,
+      "cloneObjects": false,
+      "cloneMethod": "parse-stringify",
+      "asyncListeners": false,
+      "disableChangesApi": true,
+      "autoupdate": false,
+      "ttl": null,
+      "maxId": 1,
+      "DynamicViews": [],
+      "events": {
+        "insert": [
+          null
+        ],
+        "update": [
+          null
+        ],
+        "pre-insert": [],
+        "pre-update": [],
+        "close": [],
+        "flushbuffer": [],
+        "error": [],
+        "delete": [
+          null
+        ],
+        "warning": [
+          null
+        ]
+      },
+      "changes": []
+    }
+  ],
+  "databaseVersion": 1.1,
+  "engineVersion": 1.1,
+  "autosave": true,
+  "autosaveInterval": 60000,
+  "autosaveHandle": null,
+  "throttledSaves": true,
+  "options": {
+    "autosave": true,
+    "autosaveInterval": 60000,
+    "serializationMethod": "normal",
+    "destructureDelimiter": "$<\n"
+  },
+  "persistenceMethod": "fs",
+  "persistenceAdapter": null,
+  "verbose": false,
+  "events": {
+    "init": [
+      null
+    ],
+    "loaded": [],
+    "flushChanges": [],
+    "close": [],
+    "changes": [],
+    "warning": []
+  },
+  "ENV": "NODEJS"
+}
