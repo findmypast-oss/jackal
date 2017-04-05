@@ -89,3 +89,9 @@ $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: a
 ]
 
 ```
+
+Or you can use `jackal` as a client:
+
+```
+jackal send ./contracts.json http://localhost:25863/api/contracts
+```
