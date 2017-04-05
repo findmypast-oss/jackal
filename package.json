@@ -66,6 +66,7 @@
     "joi": "^10.2.2",
     "lodash.every": "^4.6.0",
     "lodash.map": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
     "lokijs": "^1.4.3",
     "pino": "^4.0.1",
     "prettyjson": "^1.2.1",
