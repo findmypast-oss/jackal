@@ -13,7 +13,7 @@ const buildJackalUrl = (config, path) => {
     }
 
     if (config.stats.provider) {
-      providerQuery = `provider=${config.stats.provider}`
+      const providerQuery = `provider=${config.stats.provider}`
       query = query === '' ? `?${providerQuery}` : `${query}&${providerQuery}`
     }
   }
