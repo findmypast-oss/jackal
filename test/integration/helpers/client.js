@@ -4,23 +4,22 @@ const fs = require('fs')
 const consumer = require('../../../client')
 
 const send = (options, done) => {
-  consumer.send({
-    jackalUrl: 'http://localhost:25863/api/contracts',
-    contractsPath: options.filePath
+  consumer.send(options.filePath, {
+    jackal: { host: 'http://localhost', port: 25853}
   },
   assert(options.isPass, options.message, done) )
 }
 
 const run = (options, done) => {
-  consumer.run({
-    jackalUrl: 'http://localhost:25863/api/contracts/' + options.provider
+  consumer.run(options.provider, {
+    jackal: { host: 'http://localhost', port: 25853}
   },
   assert(options.isPass, options.message, done) )
 }
 
 const dump = (options, done) => {
   consumer.dump({
-    jackalUrl: 'http://localhost:25863'
+    jackal: { host: 'http://localhost', port: 25853}
   }, (err, json) => {
     if(err) return done(err)
     fs.writeFileSync(options.filePath, json)

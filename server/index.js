@@ -36,7 +36,7 @@ const startServer = (config, done) => {
   app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/contracts', dumpMiddleware)
 
-  return app.listen(25863, done)
+  return app.listen(config.jackal.port, done)
 }
 
 module.exports = startServer
