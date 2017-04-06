@@ -1,7 +1,8 @@
 'use strict'
 
+const prefix = 'No contracts exist for provider: '
 const contractFailed = (result) => result.status === 'Fail'
-const noContractsExistMessage = (message) => message.startsWith('No contracts exist for provider: ')
+const noContractsExistMessage = (message) => message.startsWith(prefix)
 
 module.exports = (done) => (err, response, body) => {
   if (err) {

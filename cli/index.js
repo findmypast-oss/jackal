@@ -43,14 +43,19 @@ const stats = (config) => {
 
 const configWrapper = (fn) => function () {
   const args = Array.from(arguments)
-  const config = configReader(args.splice(args.length - 1, 1))
+  const config = configReader(args.pop())
   const newArgs = args.concat(config)
 
   fn.apply(null, newArgs)
 }
 
 const exitCodeHandler = (err) => {
-  err ? process.exit(1) : process.exit(0)
+  if (err) {
+    console.error(err)
+    process.exit(1)
+  }
+
+  process.exit(0)
 }
 
 module.exports = {

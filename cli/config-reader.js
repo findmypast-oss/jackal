@@ -3,6 +3,10 @@
 const fs = require('fs')
 
 const defaultConfig = {
+  jackal: {
+    baseUrl: 'http://localhost',
+    port: 25863
+  },
   logger: {
     environment: 'production'
   },
@@ -16,11 +20,7 @@ const defaultConfig = {
   },
   reporters:  {
     'pretty': true,
-    'teamcity': true
-  },
-  jackal: {
-    baseUrl: 'http://localhost',
-    port: 25863
+    'teamcity': false
   },
   quiet: false
 }

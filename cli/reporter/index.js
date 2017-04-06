@@ -10,6 +10,8 @@ const loggers = {
 
 module.exports = (reporters, config, done) => (err, data) => {
   if (err) {
+    console.error(err)
+
     return done(err, data)
   }
 
@@ -19,9 +21,7 @@ module.exports = (reporters, config, done) => (err, data) => {
       return acc.concat(logs)
     }, [])
     .forEach((log) => {
-      /* eslint-disable no-console */
       console.log(log)
-      /* eslint-enable no-console */
     })
 
   return done(err, data)

@@ -1,4 +1,8 @@
 {
+  "jackal": {
+    "baseUrl": "http://localhost",
+    "port": 25863
+  },
   "logger": {
     "environment": "development"
   },
@@ -13,5 +17,6 @@
   "reporters": {
     "pretty": true,
     "teamcity": false
-  }
+  },
+  "quiet": false
 }

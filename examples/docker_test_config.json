@@ -17,5 +17,6 @@
   "reporters": {
     "pretty": true,
     "teamcity": false
-  }
+  },
+  "quiet": true
 }
