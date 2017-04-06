@@ -11,6 +11,7 @@
     "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
+    "test-client": "nyc mocha --opts mocha.opts './client/**/*.spec.js'",
     "inspect": "jsinspect",
     "depcheck": "depcheck"
   },
@@ -68,6 +69,7 @@
     "lodash.map": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "lokijs": "^1.4.3",
+    "normalize-url": "^1.9.1",
     "pino": "^4.0.1",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0"

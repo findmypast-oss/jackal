@@ -39,7 +39,7 @@ const startServer = (config, done) => {
   app.get('/api/contracts', dumpMiddleware)
   app.get('/api/stats', statsMiddleware)
 
-  return app.listen(25863, done)
+  return app.listen(config.jackal.port, done)
 }
 
 module.exports = startServer

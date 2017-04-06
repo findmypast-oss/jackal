@@ -2,17 +2,45 @@
 
 const fs = require('fs')
 
-module.exports = (configPath) => {
-  if (configPath) {
-    const buffer = fs.readFileSync(configPath)
+const defaultConfig = {
+  logger: {
+    environment: 'production'
+  },
+  statsD: {
+    host: 'localhost',
+    port: 8125,
+    prefix: 'jackal'
+  },
+  db: {
+    path: 'db.json'
+  },
+  reporters:  {
+    'pretty': true,
+    'teamcity': true
+  },
+  jackal: {
+    baseUrl: 'http://localhost',
+    port: 25863
+  },
+  quiet: false
+}
 
+const getConfig = (options) => {
+  const configPath = options.configPath || './jackal.json'
+
+  if (fs.existsSync(configPath)) {
+    const buffer = fs.readFileSync(configPath)
     return JSON.parse(buffer.toString())
   }
 
-  return {
-    logger:     { environment: 'production' },
-    statsD:     { host: 'localhost', port: 8125, prefix: 'jackal' },
-    db:         { path: 'db.json' },
-    reporters:  { 'pretty': true, 'teamcity': true }
-  }
+  return defaultConfig
+}
+
+module.exports = (options) => {
+  let config = getConfig(options)
+
+  config.jackal.baseUrl = options.baseUrl || config.jackal.baseUrl
+  config.jackal.port = options.port || config.jackal.port
+
+  return config
 }

@@ -7,7 +7,8 @@ const config = {
   db:     { path: 'db.json' },
   logger: { environment: 'production' },
   statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
-  quiet:  true
+  quiet:  true,
+  jackal: { host: 'http://localhost', port: 25853}
 }
 
 const start = function (options, done) {
