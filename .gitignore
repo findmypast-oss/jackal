@@ -39,3 +39,4 @@ jspm_packages
 # Contracts.json file for local development
 !examples/contracts.json
 contracts.json
+db.json
