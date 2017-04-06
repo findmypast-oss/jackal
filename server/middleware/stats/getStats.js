@@ -29,7 +29,7 @@ const createGetStats = (db) => {
         const providerContracts = db.retrieveCollection(provider)
         const consumerContracts = providerContracts.filter(filterByConsumer)
         return count + consumerContracts.length
-      })
+      }, 0)
 
       statsPack = {
         consumer: consumer,
@@ -78,9 +78,3 @@ const createGetStats = (db) => {
 }
 
 module.exports = createGetStats
-
-
-
-// consumer/provider/api/scenario
-//
-// consumers

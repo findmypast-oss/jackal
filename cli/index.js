@@ -37,7 +37,7 @@ const start = (config) => {
 const stats = (config) => {
   client.stats(
     config,
-    reporter(['standard'], config.reporters, exitCodeHandler)
+    reporter(['pretty'], config.reporters, exitCodeHandler)
   )
 }
 
