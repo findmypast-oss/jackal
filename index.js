@@ -14,6 +14,7 @@ program
   .description('Start the Jackal server')
   .option('-c, --config-path [path]', 'Pass a path to a config file, default ./jackal.json')
   .option('-p, --port [port]', 'Port to run the server on, default 25863')
+  .option('-v, --verbose [verbose]', 'Verbose logging')
   .action(cli.start)
 
 program
@@ -21,6 +22,7 @@ program
   .option('-c, --config-path [path]', 'Path to a jackal config file, default ./jackal.json')
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
+  .option('-v, --verbose [verbose]', 'Verbose logging')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service')
   .action(cli.send)
 
@@ -29,6 +31,7 @@ program
   .option('-c, --config-path [path]', 'Path to a jackal config file, default ./jackal.json')
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
+  .option('-v, --verbose [verbose]', 'Verbose logging')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service')
   .action(cli.run)
 
@@ -37,6 +40,7 @@ program
   .option('-c, --config-path [path]', 'Path to a jackal config file, default ./jackal.json')
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
+  .option('-v, --verbose [verbose]', 'Verbose logging')
   .description('Dumps the database of the Jackal service')
   .action(cli.dump)
 
@@ -47,6 +51,7 @@ program
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
   .option('-C, --consumer [consumer]', 'Consumer to retrieve current statistics for')
   .option('-P, --provider [provider]', 'Provider to retrieve current statistics for')
+  .option('-v, --verbose [verbose]', 'Verbose logging')  
   .description('Gets usage stats from the running Jackal service')
   .action(cli.stats)
 
