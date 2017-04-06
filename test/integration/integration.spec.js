@@ -6,7 +6,7 @@ const jackal = require('./helpers/jackal')
 const client = require('./helpers/client')
 
 describe('Integration Tests', function () {
-  describe('Happy Path', function () {
+  describe.only('Happy Path', function () {
     before((done) => jackal.start({}, done))
     after(jackal.stop)
     after(provider.stop)
@@ -42,6 +42,56 @@ describe('Integration Tests', function () {
         client.send({ filePath: 'test/integration/contracts/v2.json', isPass: true }, done)
       })
     }
+
+    it('should allow usage statistics to be requested', function () {
+      const expected = {
+        consumerCount: 1,
+        consumers: [ 'consumer' ],
+        providerCount: 1,
+        providers: [ 'integration' ],
+        apiCount: 1,
+        contractCount: 1
+      }
+
+      client.stats({}, expected)
+    })
+
+    it('should allow usage statistics to be requested by consumer', function () {
+      const expected = {
+        consumer: 'consumer',
+        providerCount: 1,
+        providers: [ 'integration' ],
+        apiCount: 1,
+        contractCount: 1
+      }
+
+      client.stats({ stats: { consumer: 'consumer' } }, expected)
+    })
+
+    it('should allow usage statistics to be requested by provider', function () {
+      const expected = {
+        provider: 'integration',
+        consumerCount: 1,
+        consumers: [ 'consumer' ],
+        apiCount: 1,
+        apis: [ 'contract' ],
+        contractCount: 1
+      }
+
+      client.stats({ stats: { provider: 'integration' } }, expected)
+    })
+
+    it('should allow usage statistics to be requested by consumer and provider', function () {
+      const expected = {
+        consumer: 'consumer',
+        provider: 'integration',
+        apiCount: 1,
+        apis: [ 'contract' ],
+        contractCount: 1
+      }
+
+      client.stats({ stats: { consumer: 'consumer', provider: 'integration' } }, expected)
+    })
 
     it('should now have hit the provider "/contract" 4 times', function () {
       expect(provider.contractHitCount()).to.equal(4)

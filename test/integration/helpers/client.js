@@ -1,28 +1,40 @@
 'use strict'
 
 const fs = require('fs')
-const consumer = require('../../../client')
+const client = require('../../../client')
 
 const send = (options, done) => {
-  consumer.send(options.filePath, {
-    jackal: { baseUrl: 'http://localhost', port: 25853}
+  client.send(options.filePath, {
+    jackal: { baseUrl: 'http://localhost', port: 25853 }
   },
   assert(options.isPass, options.message, done) )
 }
 
 const run = (options, done) => {
-  consumer.run(options.provider, {
-    jackal: { baseUrl: 'http://localhost', port: 25853}
+  client.run(options.provider, {
+    jackal: { baseUrl: 'http://localhost', port: 25853 }
   },
   assert(options.isPass, options.message, done) )
 }
 
 const dump = (options, done) => {
-  consumer.dump({
-    jackal: { baseUrl: 'http://localhost', port: 25853}
+  client.dump({
+    jackal: { baseUrl: 'http://localhost', port: 25853 }
   }, (err, json) => {
     if(err) return done(err)
     fs.writeFileSync(options.filePath, json)
+    done()
+  })
+}
+
+const stats = (options, expected, done) => {
+  client.stats({
+    jackal: { baseUrl: 'http://localhost', port: 25853 },
+    stats: options.stats || {}
+  }, (err, res) => {
+    if (err) { return done(err) }
+
+    expect(res).to.eql(expected)
     done()
   })
 }
@@ -43,4 +55,4 @@ const assert = (isPass, message, done) => (err, results) => {
   done()
 }
 
-module.exports = { run, send, dump }
+module.exports = { run, send, stats, dump }
