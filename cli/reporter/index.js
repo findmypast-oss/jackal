@@ -10,8 +10,6 @@ const loggers = {
 
 module.exports = (reporters, config, done) => (err, data) => {
   if (err) {
-    console.error(err)
-
     return done(err, data)
   }
 

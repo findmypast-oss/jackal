@@ -1,6 +1,6 @@
 {
   "consumer": {
-    "integration": {
+    "program": {
       "contract": {
         "OK": {
           "request": {
