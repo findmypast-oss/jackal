@@ -78,9 +78,3 @@ const createGetStats = (db) => {
 }
 
 module.exports = createGetStats
-
-
-
-// consumer/provider/api/scenario
-//
-// consumers

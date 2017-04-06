@@ -45,6 +45,8 @@ program
   .option('-c, --config-path [path]', 'Path to a jackal config file, default ./jackal.json')
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
+  .option('-C, --consumer [consumer]', 'Consumer to retrieve current statistics for')
+  .option('-P, --provider [provider]', 'Provider to retrieve current statistics for')
   .description('Gets usage stats from the running Jackal service')
   .action(cli.stats)
 
