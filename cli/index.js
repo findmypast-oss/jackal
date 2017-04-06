@@ -12,7 +12,6 @@ const start = (config) => {
 }
 
 const send = (contractsPath, config) => {
-
   client.send(
     contractsPath,
     config,
@@ -52,7 +51,11 @@ const configWrapper = (fn) => function () {
 }
 
 const exitCodeHandler = (err) => {
-  err ? process.exit(1) : process.exit(0)
+  if(err) {
+    console.error(err)
+    process.exit(1)
+  }
+  process.exit(0)
 }
 
 module.exports = {

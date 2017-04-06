@@ -8,7 +8,6 @@ const program = require('commander')
 
 program
   .version(pkg.version)
-  .option('-p, --print-config', 'Print the config into the terminal')
 
 program
   .command('start')
