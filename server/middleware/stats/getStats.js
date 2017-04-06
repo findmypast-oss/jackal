@@ -1,7 +1,7 @@
 'use strict'
 
 const createGetStats = (db) => {
-  return (req, res, next) => {
+  return (req, res) => {
     const consumer = req.query.consumer
     const provider = req.query.provider
 
