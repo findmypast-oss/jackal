@@ -7,16 +7,10 @@ const startServer = require('../server')
 const reporter = require('./reporter')
 const configReader = require('./config-reader')
 
-const start = (config) => {
-  startServer(config)
-}
-
-const send = (contractsPath, config) => {
-
-  client.send(
-    contractsPath,
+const dump = (config) => {
+  client.dump(
     config,
-    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
+    reporter(['standard'], config.reporters, exitCodeHandler)
   )
 }
 
@@ -28,11 +22,16 @@ const run = (providerName, config) => {
   )
 }
 
-const dump = (config) => {
-  client.dump(
+const send = (contractsPath, config) => {
+  client.send(
+    contractsPath,
     config,
-    reporter(['standard'], config.reporters, exitCodeHandler)
+    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
+}
+
+const start = (config) => {
+  startServer(config)
 }
 
 const stats = (config) => {
@@ -43,10 +42,9 @@ const stats = (config) => {
 }
 
 const configWrapper = (fn) => function () {
-  const args = Array.prototype.slice.call(arguments)
-  const options = args[args.length-1]
-  const config = configReader(options)
-  const newArgs = args.slice(0,1).concat(config)
+  const args = Array.from(arguments)
+  const config = configReader(args.splice(args.length - 1, 1))
+  const newArgs = args.concat(config)
 
   fn.apply(null, newArgs)
 }

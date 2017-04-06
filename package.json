@@ -7,8 +7,6 @@
     "jackal": "index.js"
   },
   "scripts": {
-    "cli": "node index",
-    "start": "node index start",
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
     "test-client": "nyc mocha --opts mocha.opts './client/**/*.spec.js'",
