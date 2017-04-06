@@ -12,6 +12,7 @@ const bodyParser = require('body-parser')
 const buildDumpMiddleware = require('./middleware/dump/build')
 const buildConsumerMiddleware = require('./middleware/consumer/build')
 const buildProviderMiddleware = require('./middleware/provider/build')
+const buildStatsMiddleware = require('./middleware/stats/build')
 
 let db
 
@@ -28,6 +29,7 @@ const startServer = (config, done) => {
   const dumpMiddleware = buildDumpMiddleware(db, json)
   const consumerMiddleware = buildConsumerMiddleware(db, json)
   const providerMiddleware = buildProviderMiddleware(db, json)
+  const statsMiddleware = buildStatsMiddleware(db, json)
 
   app.use(bodyParser.json())
 
@@ -35,6 +37,7 @@ const startServer = (config, done) => {
   app.post('/api/contracts', consumerMiddleware)
   app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/contracts', dumpMiddleware)
+  app.get('/api/stats', statsMiddleware)
 
   return app.listen(25863, done)
 }
