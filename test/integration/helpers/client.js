@@ -5,21 +5,21 @@ const consumer = require('../../../client')
 
 const send = (options, done) => {
   consumer.send(options.filePath, {
-    jackal: { host: 'http://localhost', port: 25853}
+    jackal: { baseUrl: 'http://localhost', port: 25853}
   },
   assert(options.isPass, options.message, done) )
 }
 
 const run = (options, done) => {
   consumer.run(options.provider, {
-    jackal: { host: 'http://localhost', port: 25853}
+    jackal: { baseUrl: 'http://localhost', port: 25853}
   },
   assert(options.isPass, options.message, done) )
 }
 
 const dump = (options, done) => {
   consumer.dump({
-    jackal: { host: 'http://localhost', port: 25853}
+    jackal: { baseUrl: 'http://localhost', port: 25853}
   }, (err, json) => {
     if(err) return done(err)
     fs.writeFileSync(options.filePath, json)

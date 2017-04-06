@@ -11,15 +11,18 @@ const start = (config) => {
   startServer(config)
 }
 
-const send = (config) => {
+const send = (contractsPath, config) => {
+
   client.send(
+    contractsPath,
     config,
     reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
 }
 
-const run = (config) => {
+const run = (providerName, config) => {
   client.run(
+    providerName,
     config,
     reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
   )
@@ -42,9 +45,8 @@ const stats = (config) => {
 const configWrapper = (fn) => function () {
   const args = Array.prototype.slice.call(arguments)
   const options = args[args.length-1]
-
   const config = configReader(options)
-  const newArgs = args.slice(1).concat(config)
+  const newArgs = args.slice(0,1).concat(config)
 
   fn.apply(null, newArgs)
 }

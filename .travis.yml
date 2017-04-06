@@ -12,7 +12,8 @@ node_js:
 before_install:
   - docker-compose build
 
-script: docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json http://jackal:25863/api/contracts"
+script:
+  - docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -c ./examples/docker_test_config.json"
 
 after_success:
   - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/"

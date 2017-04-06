@@ -19,13 +19,13 @@ const defaultConfig = {
     'teamcity': true
   },
   jackal: {
-    host: 'http://localhost',
+    baseUrl: 'http://localhost',
     port: 25863
   },
   quiet: false
 }
 
-module.exports = (options) => {
+const getConfig = (options) => {
   const configPath = options.configPath || './jackal.json'
 
   if (fs.existsSync(configPath)) {
@@ -33,5 +33,14 @@ module.exports = (options) => {
     return JSON.parse(buffer.toString())
   }
 
-  return defaultConfig()
+  return defaultConfig
+}
+
+module.exports = (options) => {
+  let config = getConfig(options)
+
+  config.jackal.baseUrl = options.baseUrl || config.jackal.baseUrl
+  config.jackal.port = options.port || config.jackal.port
+
+  return config
 }
