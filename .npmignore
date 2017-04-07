@@ -12,7 +12,11 @@ test/
 .eslintignore
 .eslintrc.yml
 .gitignore
+.jsinspectrc
 .npmignore
+.nycrc
 .travis.yml
 docker-compose.yml
 Dockerfile
+mocha.opts
+README.md

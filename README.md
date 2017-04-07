@@ -22,6 +22,10 @@ Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jack
 
 Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
 
+## Client
+
+Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
+
 ## Configuration
 
 Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
@@ -33,13 +37,33 @@ Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/bl
 To start a local instance of Jackal with the [default config](./examples/config.json):
 
 ```
-npm start
+node index start
 ```
 
 Alternatively, to use a custom configuration file:
 
 ```
-npm start /path/to/custom/config.json
+node index start /path/to/custom/config.json
+```
+
+Make sure to define a custom configuration file, eg:
+
+```yaml
+jackal:
+  baseUrl: 'http://localhost'
+  port: 25863
+logger:
+  environment: development
+statsD:
+  host: localhost
+  port: 8125
+  prefix: jackal
+db:
+  path: db.json
+reporters:
+  pretty: true
+  teamcity: false
+quiet: false
 ```
 
 Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
@@ -58,35 +82,32 @@ Jackal should now be available at `http://localhost:25863`, a health endpoint is
 
 Make sure to define a contract file, e.g:
 
-```
-// contracts.json
-[
-  {
-    "name": "itunes/search_by_term_and_country",
-    "consumer": "itunes_search_app",
-    "before": [{
-      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
-      "method": "GET"
-    }],
-    "request": {
-      "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
-      "method": "GET"
-    },
-    "response": {
-      "statusCode": 200,
-      "body": {
-        "resultCount": "Joi.number().integer()",
-        "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
-      }
-    }
-  }
-]
+```yaml
+itunes_search_app:
+  itunes:
+    search_by_term_and_country:
+      OK:
+        request:
+          url: 'https://itunes.apple.com/search?term=mclusky&country=gb'
+          method: GET
+        response:
+          statusCode: 200
+          body:
+            resultCount: 'Joi.number().integer()'
+            results:
+              - trackName: Joi.string()
+                collectionName: Joi.string()
+
 ```
 
 To test the contract as a consumer you can `POST` it to the running server, e.g:
 
 ```
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
+```
+
+You should then receive a JSON array in response:
+```json
 [
   {
     "name": "itunes/search_by_term_and_country",
