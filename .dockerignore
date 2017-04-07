@@ -1,1 +1,11 @@
 Dockerfile
+docker-compose.yml
+.git
+node_modules
+docs
+.nyc_output
+coverage
+.jsinspectrc
+.npmignore
+.travis.yml
+README.md
