@@ -98,7 +98,8 @@
       "**/*.spec.js",
       "**/*.json",
       "index.js",
-      "coverage/**/*"
+      "coverage/**/*",
+      "server/middleware/*.js"
     ],
     "reporter": [
       "lcov",
