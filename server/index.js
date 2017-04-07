@@ -21,8 +21,10 @@ const startServer = (config, done) => {
 
   db = new DB(config.db)
 
+  const logger = createLogger(config.logger)
+
   if (!config.quiet) {
-    app.use(logging(createLogger(config.logger)))
+    app.use(logging(logger))
     app.use(graphing(createGrapher(config.statsD)))
   }
 
@@ -39,7 +41,14 @@ const startServer = (config, done) => {
   app.get('/api/contracts', dumpMiddleware)
   app.get('/api/stats', statsMiddleware)
 
-  return app.listen(config.jackal.port, done)
+  return app.listen(config.jackal.port, (err) => {
+    if(err) {
+      logger.error(err)
+      if(done) return done(err)
+    }
+    if (!config.quiet) logger.info(`Starting server on port ${config.jackal.port}`)
+    if(done) done()
+  })
 }
 
 module.exports = startServer

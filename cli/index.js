@@ -45,7 +45,9 @@ const errorWrapper = (fn) => function () {
   try {
     fn.apply(null, arguments)
   } catch (err) {
+    /* eslint-disable no-console  */
     console.error(err)
+    /* eslint-enble no-console  */
     process.exit(1)
   }
 }
@@ -57,7 +59,9 @@ const configWrapper = (fn) => function () {
   const newArgs = args.concat(config)
 
   if (options.verbose) {
+    /* eslint-disable no-console  */
     console.log(config)
+    /* eslint-enble no-console  */
   }
 
   fn.apply(null, newArgs)
@@ -65,7 +69,9 @@ const configWrapper = (fn) => function () {
 
 const exitCodeHandler = (err) => {
   if (err) {
+    /* eslint-disable no-console  */
     console.error(err)
+    /* eslint-enble no-console  */
     process.exit(1)
   }
 

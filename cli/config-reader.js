@@ -28,5 +28,9 @@ module.exports = (options) => {
   if (options.consumer) { config.stats.consumer = options.consumer }
   if (options.provider) { config.stats.provider = options.provider }
 
+  if(options.skipMissingContract){
+    config.skipMissingContract = options.skipMissingContract
+  }
+
   return config
 }

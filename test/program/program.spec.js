@@ -169,6 +169,18 @@ describe('Program Tests (slow)', function () {
         )
       })
 
+      it('Send with missing contract file flag skips testing', function (done) {
+        exec(
+          'node index send ./test/program/helpers/non-existant.json --skip-missing-contract -b http://localhost -p 25865',
+          (err, stdout, stderr) => {
+            if (err) { return done(err) }
+            expect(err).to.not.exist
+            expect(provider.contractHitCount()).to.be.equal(1)
+            done()
+          }
+        )
+      })
+
       it('Run is successful against 25865', function (done) {
         exec(
           'node index run program -b http://localhost -p 25865',
@@ -201,6 +213,25 @@ describe('Program Tests (slow)', function () {
           }
         )
       })
+    })
+
+    describe('Should be successful from command line arguments', function () {
+      before(jackal.start(25865))
+      before(provider.start(5001))
+      after(jackal.stop)
+      after(provider.stop)
+
+      it('Send a contract is successful against 25865', function (done) {
+        exec(
+          'node index send ./test/program/helpers/contract-v1.json -b http://localhost -p 25865',
+          (err, stdout, stderr) => {
+            if (err) { return done(err) }
+            expect(provider.contractHitCount()).to.be.equal(1)
+            done()
+          }
+        )
+      })
+
     })
   })
 })

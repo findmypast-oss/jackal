@@ -23,6 +23,7 @@ program
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
   .option('-v, --verbose [verbose]', 'Verbose logging')
+  .option('--skip-missing-contract', 'Do not execute tests if the contracts file is missing')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service')
   .action(cli.send)
 
@@ -51,7 +52,7 @@ program
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
   .option('-C, --consumer [consumer]', 'Consumer to retrieve current statistics for')
   .option('-P, --provider [provider]', 'Provider to retrieve current statistics for')
-  .option('-v, --verbose [verbose]', 'Verbose logging')  
+  .option('-v, --verbose [verbose]', 'Verbose logging')
   .description('Gets usage stats from the running Jackal service')
   .action(cli.stats)
 
