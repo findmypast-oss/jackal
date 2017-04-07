@@ -6,7 +6,7 @@ const jackal = require('./helpers/jackal')
 const client = require('./helpers/client')
 
 describe('Integration Tests', function () {
-  describe.only('Happy Path', function () {
+  describe('Happy Path', function () {
     before((done) => jackal.start({}, done))
     after(jackal.stop)
     after(provider.stop)
@@ -43,7 +43,7 @@ describe('Integration Tests', function () {
       })
     }
 
-    it('should allow usage statistics to be requested', function () {
+    it('should allow usage statistics to be requested', function (done) {
       const expected = {
         consumerCount: 1,
         consumers: [ 'consumer' ],
@@ -53,10 +53,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({}, expected)
+      client.stats({}, expected, done)
     })
 
-    it('should allow usage statistics to be requested by consumer', function () {
+    it('should allow usage statistics to be requested by consumer', function (done) {
       const expected = {
         consumer: 'consumer',
         providerCount: 1,
@@ -65,10 +65,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { consumer: 'consumer' } }, expected)
+      client.stats({ stats: { consumer: 'consumer' } }, expected, done)
     })
 
-    it('should allow usage statistics to be requested by provider', function () {
+    it('should allow usage statistics to be requested by provider', function (done) {
       const expected = {
         provider: 'integration',
         consumerCount: 1,
@@ -78,10 +78,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { provider: 'integration' } }, expected)
+      client.stats({ stats: { provider: 'integration' } }, expected, done)
     })
 
-    it('should allow usage statistics to be requested by consumer and provider', function () {
+    it('should allow usage statistics to be requested by consumer and provider', function (done) {
       const expected = {
         consumer: 'consumer',
         provider: 'integration',
@@ -90,7 +90,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { consumer: 'consumer', provider: 'integration' } }, expected)
+      client.stats({ stats: { consumer: 'consumer', provider: 'integration' } }, expected, done)
     })
 
     it('should now have hit the provider "/contract" 4 times', function () {

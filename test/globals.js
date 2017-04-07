@@ -1,4 +1,4 @@
-const chai = require('chai')
+'use strict'
 
-global.should = chai.should()
+global.chai = require('chai')
 global.expect = chai.expect

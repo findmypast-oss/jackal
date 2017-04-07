@@ -1,8 +1,5 @@
 'use strict'
 
-const chai = require('chai')
-const expect = chai.expect
-
 const DB = require('../../lib/db')
 
 describe('Database', function () {

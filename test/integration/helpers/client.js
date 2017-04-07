@@ -34,7 +34,7 @@ const stats = (options, expected, done) => {
   }, (err, res) => {
     if (err) { return done(err) }
 
-    expect(res).to.eql(expected)
+    expect(res).to.be.deep.equal(expected)
     done()
   })
 }
