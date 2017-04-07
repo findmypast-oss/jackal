@@ -10,10 +10,10 @@ __NOTE:__ Jackal is currently in alpha and under active development, as such the
 METHOD:   POST
 URL:      http://path.to.your.jackal.server:25863/api/contracts
 HEADERS:  Content-Type: application/json
-BODY:     <contract_array>
+BODY:     <contracts_object>
 ```
 
-The contract array should follow the guidelines laid out in the [Jackal Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
+The contracts object should follow the guidelines laid out in the [Jackal Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
 
 #### Responses
 
