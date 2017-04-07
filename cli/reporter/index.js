@@ -19,7 +19,9 @@ module.exports = (reporters, config, done) => (err, data) => {
       return acc.concat(logs)
     }, [])
     .forEach((log) => {
+      /* eslint-disable no-console  */
       console.log(log)
+      /* eslint-enble no-console  */
     })
 
   return done(err, data)
