@@ -13,7 +13,7 @@
     "test-program": "nyc mocha --opts mocha.opts './test/program/**/*.spec.js'",
     "inspect": "jsinspect",
     "depcheck": "depcheck",
-    "coveralls": "nyc mocha --recursive --reporter=text-lcov --require test/globals './{cli,client,lib,server,test}/**/*.spec.js' | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
