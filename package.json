@@ -99,7 +99,8 @@
       "**/*.json",
       "index.js",
       "coverage/**/*",
-      "server/middleware/*.js"
+      "server/middleware/*.js",
+      "test/**/*"
     ],
     "reporter": [
       "lcov",
