@@ -1,13 +1,24 @@
 'use strict'
 
 const fs = require('fs')
+const yaml = require('js-yaml')
 const request = require('request')
 const parser = require('./response-contract-results')
 const url = require('./jackal-url')
 
 module.exports = (contractsPath, options, done) => {
   const jacky = url(options, '/api/contracts')
-  const buffer = fs.readFileSync(contractsPath)
+  const fileBuffer = fs.readFileSync(contractsPath)
+
+  let bodyBuffer
+  if (contractsPath.endsWith('json')) {
+    bodyBuffer = fileBuffer
+  } else {
+    const contracts = yaml.safeLoad(fileBuffer.toString())
+    const json = JSON.stringify(contracts)
+    bodyBuffer = Buffer.from(json)
+  }
+
   const req = {
     url: jacky,
     method: 'POST',
@@ -15,7 +26,7 @@ module.exports = (contractsPath, options, done) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: buffer
+    body: bodyBuffer
   }
 
   request(req, parser(done))

@@ -16,7 +16,7 @@ describe('Integration Tests', function () {
     })
 
     for (let i = 0; i < 3; i++) {
-      it(`should pass when sending contracts/v1, iteration: ${i}`, function (done) {
+      it(`should pass when sending contracts/v1 using json contracts file, iteration: ${i}`, function (done) {
         client.send({ filePath: 'test/integration/contracts/v1.json', isPass: true }, done)
       })
     }
@@ -38,8 +38,8 @@ describe('Integration Tests', function () {
     })
 
     for (let i = 0; i < 3; i++) {
-      it(`should pass when sending contracts/v2, iteration: ${i}`, function (done) {
-        client.send({ filePath: 'test/integration/contracts/v2.json', isPass: true }, done)
+      it(`should pass when sending contracts/v2 using yaml contracts file, iteration: ${i}`, function (done) {
+        client.send({ filePath: 'test/integration/contracts/v2.yaml', isPass: true }, done)
       })
     }
 

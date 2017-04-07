@@ -64,6 +64,7 @@
     "express-pino-logger": "^2.0.0",
     "hot-shots": "^4.4.0",
     "joi": "^10.2.2",
+    "js-yaml": "^3.8.3",
     "lodash.every": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.uniq": "^4.5.0",

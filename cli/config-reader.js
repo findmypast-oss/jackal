@@ -1,36 +1,18 @@
 'use strict'
 
 const fs = require('fs')
-
-const defaultConfig = {
-  jackal: {
-    baseUrl: 'http://localhost',
-    port: 25863
-  },
-  logger: {
-    environment: 'production'
-  },
-  statsD: {
-    host: 'localhost',
-    port: 8125,
-    prefix: 'jackal'
-  },
-  db: {
-    path: 'db.json'
-  },
-  reporters:  {
-    'pretty': true,
-    'teamcity': false
-  },
-  quiet: false
-}
+const yaml = require('js-yaml')
+const defaultConfig = require('./default-config')
 
 const getConfig = (options) => {
   const configPath = options.configPath || './jackal.json'
 
   if (fs.existsSync(configPath)) {
     const buffer = fs.readFileSync(configPath)
-    return JSON.parse(buffer.toString())
+
+    return configPath.endsWith('json')
+      ? JSON.parse(buffer.toString())
+      : yaml.safeLoad(buffer.toString())
   }
 
   return defaultConfig
