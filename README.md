@@ -12,15 +12,15 @@ Jackal is a consumer-driven contracts microservice designed to prevent breaking 
 
 ## Development
 
-Please see the [Jackal Development Guide](./docs/development.md)
+Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
 
 ## API
 
-Please see the [Jackal API Guide](./docs/api.md)
+Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
 
 ## Configuration
 
-Please see the [Jackal Config Guide](./docs/config.md)
+Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
 
 ## Quickstart Guide
 

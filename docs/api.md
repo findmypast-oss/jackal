@@ -13,7 +13,7 @@ HEADERS:  Content-Type: application/json
 BODY:     <contract_array>
 ```
 
-The contract array should follow the guidelines laid out in the [Jackal Contract Guide](./contract.md)
+The contract array should follow the guidelines laid out in the [Jackal Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
 
 #### Responses
 
@@ -25,7 +25,7 @@ HEADERS:  Content-Type: application/json
 BODY:     <result_array>
 ```
 
-The result array will follow the guidelines laid out in the [Jackal Result Guide](./result.md)
+The result array will follow the guidelines laid out in the [Jackal Result Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/result.md)
 
 ##### No Contracts Received
 
@@ -47,7 +47,7 @@ BODY:     { name: 'JoiError', message: 'Joi string not well formed' }
 BODY:     { name: 'JoiError', message: 'Joi type not supported' }
 ```
 
-The validation array will follow the guidelines laid out in the [Jackal Validation Guide](./validation.md)
+The validation array will follow the guidelines laid out in the [Jackal Validation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/validation.md)
 
 ##### Cache Error
 
@@ -80,7 +80,7 @@ BODY:     <result_array>
 BODY:     { message: 'No contracts exist for provider: <provider>' }
 ```
 
-The result array will follow the guidelines laid out in the [Jackal Result Guide](./result.md)
+The result array will follow the guidelines laid out in the [Jackal Result Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/result.md)
 
 ## Dump Endpoint
 
