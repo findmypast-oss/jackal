@@ -76,38 +76,5 @@
     "pino": "^4.0.1",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0"
-  },
-  "nyc": {
-    "lines": [
-      80,
-      95
-    ],
-    "statements": [
-      80,
-      95
-    ],
-    "functions": [
-      80,
-      95
-    ],
-    "branches": [
-      80,
-      95
-    ],
-    "exclude": [
-      "**/*.spec.js",
-      "**/*.json",
-      "index.js",
-      "coverage/**/*",
-      "server/middleware/*.js",
-      "test/**/*"
-    ],
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "cache": true,
-    "all": true,
-    "check-coverage": true
   }
 }
