@@ -1,0 +1,15 @@
+jackal:
+  baseUrl: 'http://localhost'
+  port: 25863
+logger:
+  environment: development
+statsD:
+  host: localhost
+  port: 8125
+  prefix: jackal
+db:
+  path: db.json
+reporters:
+  pretty: true
+  teamcity: false
+quiet: false
