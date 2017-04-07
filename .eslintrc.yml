@@ -22,6 +22,6 @@ rules:
     - error
     - never
   no-console:
-    - off
+    - warn
 globals:
   expect: true
