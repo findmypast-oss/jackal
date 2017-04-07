@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 
-var mockContract = null
+var mockContract = { version: '1' }
 var server = null
 var hitCount = 0
 
@@ -12,10 +12,9 @@ app.get('/contract', function(req, res) {
   hitCount++
 })
 
-const start = function(options, done) {
+const start = function(done) {
   hitCount = 0
-  mockContract = options.contract
-  server = app.listen(options.port, done)
+  server = app.listen(5001, done)
 }
 
 const stop = function(done) {

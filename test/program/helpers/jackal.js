@@ -8,11 +8,10 @@ const config = {
   logger: { environment: 'production' },
   statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
   quiet:  true,
-  jackal: { host: 'http://localhost', port: 25863}
+  jackal: { host: 'http://localhost', port: 25863 }
 }
 
-const start = function (options, done) {
-  config.db.path = options.dbPath || config.db.path
+const start = function (done) {
   server = startServer(config, done)
 }
 
