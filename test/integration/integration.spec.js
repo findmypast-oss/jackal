@@ -4,12 +4,21 @@ const fs = require('fs')
 const provider = require('./helpers/provider')
 const jackal = require('./helpers/jackal')
 const client = require('./helpers/client')
+const request = require('request')
 
 describe('Integration Tests', function () {
   describe('Happy Path', function () {
     before((done) => jackal.start({}, done))
     after(jackal.stop)
     after(provider.stop)
+
+    it('should be living long and prospering', function (done) {
+      request('http://localhost:25853/health', (err, res, body) => {
+        expect(res.statusCode).to.be.equal(200)
+        expect(body).to.be.equal('😊')
+        done()
+      })
+    })
 
     it('should start the provider successfully using version: "1"', function (done) {
       provider.start({ port: 5000, contract: { version: '1' } }, done)
