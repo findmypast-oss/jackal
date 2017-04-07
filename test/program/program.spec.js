@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const request = require('request')
-const spawn = require('child_process').spawn;
+const spawn = require('child_process').spawn
 const jackal = require('./helpers/jackal')
 const provider = require('./helpers/provider')
 
