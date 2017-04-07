@@ -13,9 +13,9 @@ before_install:
   - docker-compose build
 
 script:
-  - docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -c ./examples/docker_test_config.json"
-  - docker-compose run jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -b http://jackal -p 25863"
   - npm test
+  - docker-compose run --rm jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -c ./examples/docker_test_config.json"
+  - docker-compose run --rm jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -b http://jackal -p 25863"
 
 after_success:
   - npm run coveralls
