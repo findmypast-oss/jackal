@@ -12,16 +12,16 @@ app.get('/contract', function(req, res) {
   hitCount++
 })
 
-const start = function(done) {
+const start = (port) => (done) => {
   hitCount = 0
-  server = app.listen(5001, done)
+  server = app.listen(port, done)
 }
 
-const stop = function(done) {
+const stop = (done) => {
   server.close(done)
 }
 
-const contractHitCount = function() {
+const contractHitCount = () => {
   return hitCount
 }
 
