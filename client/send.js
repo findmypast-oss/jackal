@@ -20,7 +20,6 @@ module.exports = (contractsPath, options, done) => {
     return done()
   }
 
-  console.error('Keeping up')
   const fileBuffer = fs.readFileSync(contractsPath)
 
   let bodyBuffer
