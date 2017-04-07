@@ -2,47 +2,91 @@
 
 __NOTE:__ Jackal is currently in alpha and so the API is not yet considered fully stable. Currently we anticipate at least one major API change prior to reaching a 1.0.0 release, and this document will be updated to reflect any API changes we make.
 
-Consumers should define an array of contracts in JSON, where each contract within the array is an object with the following format:
+Consumers should define a contracts object in JSON or YAML, however it should be noted: the Jackal server will __only__ accept contracts sent in JSON. In order to define contracts in the more concise YAML format it is recommended to use the Jackal Client to handle communication with the server. See the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md) for more details.
+
+In JSON, the contracts object should have the following format:
 
 ```
 {
-  name:         STRING                    // REQUIRED
-  consumer:     STRING                    // REQUIRED
-  before: [
-    {
-      url:      STRING                    // REQUIRED
-      method:   STRING                    // OPTIONAL, DEFAULT: GET
-      body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
-      timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+  consumer: {
+    provider: {
+      api: {
+        scenario: {
+          before: [
+            {
+              url:      STRING                    // REQUIRED
+              method:   STRING                    // OPTIONAL, DEFAULT: GET
+              body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+              timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+            }
+          ]
+          after: [
+            {
+              url:      STRING                    // REQUIRED
+              method:   STRING                    // OPTIONAL, DEFAULT: GET
+              body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+              timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+            }
+          ]
+          request: {
+            url:        STRING                    // REQUIRED
+            method:     STRING                    // OPTIONAL, DEFAULT: GET
+            headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
+            body:       OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+            timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+          }
+          response: {
+            statusCode: INTEGER                   // REQUIRED
+            headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
+            body:       OBJECT                    // OPTIONAL, DEFAULT: undefined
+          }
+        }
+      }
     }
-  ]
-  after: [
-    {
-      url:      STRING                    // REQUIRED
-      method:   STRING                    // OPTIONAL, DEFAULT: GET
-      body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
-      timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
-    }
-  ]
-  request: {
-    url:        STRING                    // REQUIRED
-    method:     STRING                    // OPTIONAL, DEFAULT: GET
-    headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
-    body:       OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
-    timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
-  }
-  response: {
-    statusCode: INTEGER                   // REQUIRED
-    headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
-    body:       OBJECT                    // OPTIONAL, DEFAULT: undefined
   }
 }
 ```
 
-The following restrictions apply:
+In YAML, the contracts object should have the following format:
 
-- In the name field `provider` and `api` may contain only `a-z`, `0-9` and `_`
-- In the name field `consumer` and `api` may contain only `a-z`, `0-9` and `_`
+```
+consumer:
+  provider:
+    api:
+      scenario:
+        before:
+          - url:      STRING                    // REQUIRED
+            method:   STRING                    // OPTIONAL, DEFAULT: GET
+            body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+            timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+        after:
+          - url:      STRING                    // REQUIRED
+            method:   STRING                    // OPTIONAL, DEFAULT: GET
+            body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+            timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+        request:
+          url:        STRING                    // REQUIRED
+          method:     STRING                    // OPTIONAL, DEFAULT: GET
+          headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
+          body:       OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
+          timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+        response:
+          statusCode: INTEGER                   // REQUIRED
+          headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
+          body:       OBJECT                    // OPTIONAL, DEFAULT: undefined
+```
+
+The following should be noted about the shape of the contracts object:
+
+- At the top level, a _single_ consumer object __must__ be defined
+- The consumer may contain many provider objects
+- Each provider may contain many APIs
+- Each API may contain many scenarios
+- Each Scenario __must__ define a request object and response object and may _optionally_ define a before and after array
+
+Note that `consumer`, `provider`, `api` and `scenario` above are the generic names for objects at their respective levels, these properties can be named anything so long as it is a valid JSON object key.
+
+The following restrictions apply to each scenario:
 
 - The `before` and `after` arrays are optional
   - If specified, objects in the `before` and `after` arrays must have the fields as indicated in the example above

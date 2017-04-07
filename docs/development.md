@@ -2,11 +2,9 @@
 
 ## Testing
 
-Jackal uses [Node TAP](http://www.node-tap.org/basics/) for unit tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
+Jackal uses [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/) for tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
 
-Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors __and__ warnings should be fixed prior to pushing changes. HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
-
-Jackal uses [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/) for integration tests. In due course we will probably migrate _all_ unit tests to use Mocha & Chai also, however this is not currently prioritised.
+Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors should be fixed prior to pushing changes. HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
 
 ## Contributing
 
