@@ -41,23 +41,26 @@ const stats = (config) => {
   )
 }
 
+const errorWrapper = (fn) => function () {
+  try {
+    fn.apply(null, arguments)
+  } catch (err) {
+    console.error(err)
+    process.exit(1)
+  }
+}
+
 const configWrapper = (fn) => function () {
   const args = Array.from(arguments)
   const options = args.pop()
   const config = configReader(options)
   const newArgs = args.concat(config)
 
-  if(options.verbose) {
+  if (options.verbose) {
     console.log(config)
   }
 
-  try {
-    fn.apply(null, newArgs)
-    process.exit(0)
-  } catch(err) {
-    console.error(err)
-    process.exit(1)
-  }
+  fn.apply(null, newArgs)
 }
 
 const exitCodeHandler = (err) => {
@@ -70,9 +73,9 @@ const exitCodeHandler = (err) => {
 }
 
 module.exports = {
-  start: configWrapper(start),
-  send:  configWrapper(send),
-  run:   configWrapper(run),
-  dump:  configWrapper(dump),
-  stats: configWrapper(stats)
+  start: errorWrapper(configWrapper(start)),
+  send:  errorWrapper(configWrapper(send)),
+  run:   errorWrapper(configWrapper(run)),
+  dump:  errorWrapper(configWrapper(dump)),
+  stats: errorWrapper(configWrapper(stats))
 }

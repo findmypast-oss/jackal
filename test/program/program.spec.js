@@ -12,23 +12,11 @@ describe('Program Tests', function () {
   after(jackal.stop)
   after(provider.stop)
 
-  it('Jackal is up and running', function (done) {
-    request('http://localhost:25863/health', done)
-  })
-
-  it('Provider is up and running', function (done) {
-    request('http://localhost:5001/contract', done)
-  })
-
   it('Send a contract is successful', function (done) {
-    const child = spawn('node',
-      [
-        'index',
-        'send', './test/program/helpers/contract-v1.json'
-      ]
-      ,{
-        stdio: ['inherit', 'inherit', 'inherit']
-      }
+    const child = spawn(
+      'node',
+      [ 'index', 'send', './test/program/helpers/contract-v1.json' ],
+      { stdio: 'inherit' }
     )
 
     child.on('close',  (code, signal) => {
@@ -38,15 +26,11 @@ describe('Program Tests', function () {
     })
   })
 
-  it('Run is successful', function () {
-    const child = spawn('node',
-      [
-        'index',
-        'run', 'program'
-      ]
-      ,{
-        stdio: ['inherit', 'inherit', 'inherit']
-      }
+  it('Run is successful', function (done) {
+    const child = spawn(
+      'node',
+      [ 'index', 'run', 'program' ],
+      { stdio: 'inherit' }
     )
 
     child.on('close',  (code, signal) => {
@@ -55,5 +39,4 @@ describe('Program Tests', function () {
       done()
     })
   })
-
 })

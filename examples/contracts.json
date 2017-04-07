@@ -1,17 +1,15 @@
 {
-  "itunes_search_app": {                // This is the name of the consumer.
-    "itunes": {                         // This is the name of the provider.
-      "search_by_term_and_country": {   // This is the name of the API endpoint, we usually just refer to it as API.
-        "OK": {                         // This is the name of a scenario.
+  "itunes_search_app": {
+    "itunes": {
+      "search_by_term_and_country": {
+        "OK": {
           "request": {
-            // This is the node.js request library, please refer to https://www.npmjs.com/package/request
             "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
             "method": "GET"
           },
           "response": {
             "statusCode": 200,
             "body": {
-              // Joi is a library to describe JSON types. https://www.npmjs.com/package/joi
               "resultCount": "Joi.number().integer()",
               "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
             }
