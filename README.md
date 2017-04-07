@@ -34,16 +34,26 @@ Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/bl
 
 ### Local
 
+To install Jackal
+```
+npm i -g jackal
+```
+
 To start a local instance of Jackal with the [default config](./examples/config.json):
-
 ```
-node index start
+jackal start
 ```
 
-Alternatively, to use a custom configuration file:
-
+Alternatively, the following options are available to be used in combination or isolation:
 ```
-node index start /path/to/custom/config.json
+// to use a custom configuration file
+jackal start -c /path/to/custom/config.json
+
+// to override the port (this will override any custom configuration file, if specified):
+jackal start -p <port>
+
+// to enable verbose logging:
+jackal start -v
 ```
 
 Make sure to define a custom configuration file, eg:
