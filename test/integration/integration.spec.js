@@ -7,6 +7,12 @@ const client = require('./helpers/client')
 
 describe('Integration Tests', function () {
   describe('Happy Path', function () {
+    before((done) => {
+      if(fs.existsSync('db.json')){
+        fs.unlinkSync('db.json')
+      }
+      done()
+    })
     before((done) => jackal.start({}, done))
     after(jackal.stop)
     after(provider.stop)
