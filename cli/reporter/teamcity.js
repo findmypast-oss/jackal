@@ -1,5 +1,8 @@
 'use strict'
 
+const forEach = require('lodash/forEach')
+const flattenDeep = require('lodash/flattenDeep')
+
 const testOutput = (result) => {
   const testName = [result.consumer]
     .concat(result.name.split('/').slice(1))
@@ -17,20 +20,35 @@ const testOutput = (result) => {
   return logs
 }
 
+const consumerLogs = (allResults, provider) => {
+  const resultsByConsumer = allResults.reduce((acc, result) => {
+    acc[result.consumer] = acc[result.consumer] || []
+    acc[result.consumer].push(result)
+    return acc
+  }, {})
+
+  let logs = []
+
+  forEach(resultsByConsumer, (results, consumer) => {
+    logs.push(`##teamcity[testSuiteStarted name='${consumer} contracts executed against ${provider}']`)
+    logs.push(results.reduce((acc, result) => acc.concat(testOutput(result)), []))
+    logs.push(`##teamcity[testSuiteEnded name='${consumer} contracts executed against ${provider}']`)
+  })
+
+  return logs
+}
+
 module.exports = (results, config) => {
   if (!config.teamcity) { return [] }
 
   const provider = results[0].name.split('/')[0]
   let logs = []
 
-  logs.push(`##teamcity[testSuiteStarted name='${provider}']`)
+  logs.push(`##teamcity[testSuiteStarted name='${provider} contracts']`)
 
-  logs = results.reduce((acc, result) => {
-    const testLogs = testOutput(result)
-    return acc.concat(testLogs)
-  }, logs)
+  logs.push(consumerLogs(results, provider))
 
-  logs.push(`##teamcity[testSuiteEnded name='${provider}']`)
+  logs.push(`##teamcity[testSuiteEnded name='${provider} contracts']`)
 
-  return logs
+  return flattenDeep(logs)
 }
