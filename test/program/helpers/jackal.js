@@ -8,14 +8,15 @@ const config = {
   logger: { environment: 'production' },
   statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
   quiet:  true,
-  jackal: { host: 'http://localhost', port: 25863 }
+  jackal: { baseUrl: 'http://localhost' }
 }
 
-const start = function (done) {
+const start = (port) => (done) => {
+  config.jackal.port = port
   server = startServer(config, done)
 }
 
-const stop = function (done) {
+const stop = (done) => {
   server.close(done)
 }
 

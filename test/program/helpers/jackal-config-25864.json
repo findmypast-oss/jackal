@@ -1,0 +1,10 @@
+{
+  "jackal": {
+    "baseUrl": "http://localhost",
+    "port": 25864
+  },
+  "reporters":  {
+    "pretty": true,
+    "teamcity": false
+  }
+}
