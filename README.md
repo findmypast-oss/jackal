@@ -35,28 +35,25 @@ Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/bl
 ### Local
 
 To install Jackal
+
 ```
 npm i -g jackal
 ```
 
 To start a local instance of Jackal with the [default config](./examples/config.json):
+
 ```
 jackal start
 ```
 
-Alternatively, the following options are available to be used in combination or isolation:
+Alternatively, to specify a custom configuration file:
+
 ```
 // to use a custom configuration file
 jackal start -c /path/to/custom/config.json
-
-// to override the port (this will override any custom configuration file, if specified):
-jackal start -p <port>
-
-// to enable verbose logging:
-jackal start -v
 ```
 
-Make sure to define a custom configuration file, eg:
+Make sure to define a custom configuration file:
 
 ```yaml
 jackal:
@@ -88,9 +85,9 @@ docker run -p 25863:25863 findmypast/jackal
 
 Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
 
-### Testing a contract
+### Testing Contracts as a Consumer
 
-Make sure to define a contract file, e.g:
+Make sure to define a contracts file, e.g:
 
 ```yaml
 itunes_search_app:
@@ -110,9 +107,16 @@ itunes_search_app:
 
 ```
 
-To test the contract as a consumer you can `POST` it to the running server, e.g:
+To test the contracts as a consumer you can `POST` them to the running server, e.g:
 
 ```
+// to send a YAML contracts file using the client
+jackal send /path/to/contracts.yaml
+
+// to send a JSON contracts file using the client
+jackal send /path/to/contracts.json
+
+// to send a JSON contracts file using curl
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
 
@@ -126,11 +130,25 @@ You should then receive a JSON array in response:
     "error": null
   }
 ]
-
 ```
 
-Or you can use `jackal` as a client:
+### Testing Contracts as a Provider
+
+To test the contracts as a provider you can do a `GET` request to the running server, eg:
 
 ```
-jackal send ./contracts.json http://localhost:25863/api/contracts
+// to run contracts for a provider using the client
+jackal run <provider_name>
+```
+
+You should then receive a JSON array in response:
+```json
+[
+  {
+    "name": "itunes/search_by_term_and_country",
+    "consumer": "itunes_search_app",
+    "status": "Pass",
+    "error": null
+  }
+]
 ```
