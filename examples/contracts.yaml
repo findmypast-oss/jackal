@@ -8,5 +8,7 @@ itunes_search_app:
         response:
           statusCode: 200
           body:
-            resultCount: Joi.number().integer()
-            results: '[ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]'
+            resultCount: 'Joi.number().integer()'
+            results:
+              - trackName: Joi.string()
+                collectionName: Joi.string()
