@@ -14,22 +14,6 @@ __NOTE:__ Jackal is currently in alpha and under active development, as such the
 
 Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
 
-## Development
-
-Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
-
-## API
-
-Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
-
-## Client
-
-Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
-
-## Configuration
-
-Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
-
 ## Quickstart Guide
 
 ### Local
@@ -161,3 +145,19 @@ You should then receive a JSON array in response:
   }
 ]
 ```
+
+## Development
+
+Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
+
+## API
+
+Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
+
+## Client
+
+Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
+
+## Configuration
+
+Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
