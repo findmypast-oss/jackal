@@ -1,24 +1,10 @@
 const normalizeUrl = require('normalize-url')
 
-const buildJackalUrl = (config, path) => {
-  let baseUrl = config.jackal.baseUrl.replace(/\/+$/, '')
-  let port = config.jackal.port || 80
+const buildJackalUrl = (jackalUrl, path) => {
+  let baseUrl = jackalUrl.replace(/\/+$/, '')
   path = path || ''
 
-  let query = ''
-
-  if (config.stats) {
-    if (config.stats.consumer) {
-      query = `?consumer=${config.stats.consumer}`
-    }
-
-    if (config.stats.provider) {
-      const providerQuery = `provider=${config.stats.provider}`
-      query = query === '' ? `?${providerQuery}` : `${query}&${providerQuery}`
-    }
-  }
-
-  return normalizeUrl(`${baseUrl}:${port}/${path}${query}`)
+  return normalizeUrl(`${baseUrl}/${path}`)
 }
 
 module.exports = buildJackalUrl

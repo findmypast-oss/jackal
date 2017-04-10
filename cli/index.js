@@ -7,37 +7,42 @@ const startServer = require('../server')
 const reporter = require('./reporter')
 const configReader = require('./config-reader')
 
-const dump = (config) => {
-  client.dump(
-    config,
-    reporter(['standard'], config.reporters, exitCodeHandler)
-  )
-}
-
-const run = (providerName, config) => {
-  client.run(
-    providerName,
-    config,
-    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
-  )
-}
-
-const send = (contractsPath, config) => {
-  client.send(
-    contractsPath,
-    config,
-    reporter(['pretty', 'teamcity'], config.reporters, exitCodeHandler)
-  )
-}
-
-const start = (config) => {
+const start = (options) => {
+  const config = configReader(options)
   startServer(config)
 }
 
-const stats = (config) => {
+const dump = (jackalUrl, options) => {
+  client.dump(
+    jackalUrl,
+    options,
+    reporter(['json', 'pretty'], options.reporter, exitCodeHandler)
+  )
+}
+
+const run = (jackalUrl, providerName, options) => {
+  client.run(
+    jackalUrl,
+    providerName,
+    options,
+    reporter(['spec', 'teamcity', 'json'], options.reporter, exitCodeHandler)
+  )
+}
+
+const send = (jackalUrl, contractsPath, options) => {
+  client.send(
+    jackalUrl,
+    contractsPath,
+    options,
+    reporter(['spec', 'teamcity', 'json'], options.reporter, exitCodeHandler)
+  )
+}
+
+const stats = (jackalUrl, options) => {
   client.stats(
-    config,
-    reporter(['pretty'], config.reporters, exitCodeHandler)
+    jackalUrl,
+    options,
+    reporter(['json', 'pretty'], options.reporter, exitCodeHandler)
   )
 }
 
@@ -52,21 +57,6 @@ const errorWrapper = (fn) => function () {
   }
 }
 
-const configWrapper = (fn) => function () {
-  const args = Array.from(arguments)
-  const options = args.pop()
-  const config = configReader(options)
-  const newArgs = args.concat(config)
-
-  if (options.verbose) {
-    /* eslint-disable no-console  */
-    console.log(config)
-    /* eslint-enble no-console  */
-  }
-
-  fn.apply(null, newArgs)
-}
-
 const exitCodeHandler = (err) => {
   if (err) {
     /* eslint-disable no-console  */
@@ -79,9 +69,9 @@ const exitCodeHandler = (err) => {
 }
 
 module.exports = {
-  start: errorWrapper(configWrapper(start)),
-  send:  errorWrapper(configWrapper(send)),
-  run:   errorWrapper(configWrapper(run)),
-  dump:  errorWrapper(configWrapper(dump)),
-  stats: errorWrapper(configWrapper(stats))
+  start: errorWrapper(start),
+  send:  errorWrapper(send),
+  run:   errorWrapper(run),
+  dump:  errorWrapper(dump),
+  stats: errorWrapper(stats)
 }

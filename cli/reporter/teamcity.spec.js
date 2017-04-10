@@ -49,11 +49,6 @@ const testData = [
 
 describe('Teamcity reporter', function() {
 
-  it('Should return empty array when turned off', function(){
-    expect(teamcity(testData, {teamcity: false}))
-      .to.be.eql([])
-  })
-
   it('Should return correct logs when turned on', function() {
     expect(teamcity(testData, {teamcity: true}))
       .to.eql([

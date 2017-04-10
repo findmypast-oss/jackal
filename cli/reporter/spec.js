@@ -46,9 +46,7 @@ const consumerSpecs = (allResults, provider) => {
   return logs
 }
 
-function spec (results, config) {
-  if (!config.spec) { return [] }
-
+function spec (results) {
   const provider = results[0].name.split('/')[0]
   let logs = []
 

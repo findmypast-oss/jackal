@@ -38,9 +38,7 @@ const consumerLogs = (allResults, provider) => {
   return logs
 }
 
-module.exports = (results, config) => {
-  if (!config.teamcity) { return [] }
-
+module.exports = (results) => {
   const provider = results[0].name.split('/')[0]
   let logs = []
 

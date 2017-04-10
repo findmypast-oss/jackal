@@ -20,11 +20,6 @@ const testData = [
 
 describe('Pretty logger', function() {
 
-  it('Should return empty array when turned off', function(){
-    expect(pretty(testData, {pretty: false}))
-      .to.be.eql([])
-  })
-
   it('Should return correct logs when turned on', function() {
     expect(pretty(testData, {pretty: true}).length)
       .to.equal(1)

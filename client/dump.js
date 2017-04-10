@@ -4,7 +4,7 @@ const request = require('request')
 const parser = require('./response-standard')
 const url = require('./jackal-url')
 
-module.exports = (config, done) => {
-  const jacky = url(config, '/api/contracts')
+module.exports = (jackalUrl, done) => {
+  const jacky = url(jackalUrl, '/api/contracts')
   request(jacky, parser(done))
 }

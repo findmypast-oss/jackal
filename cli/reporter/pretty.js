@@ -2,6 +2,6 @@
 
 const prettyjson = require('prettyjson')
 
-module.exports = (data, config) => {
-  return !config.pretty || !data ? [] : [ prettyjson.render(data) ]
+module.exports = (data) => {
+  return !data ? [] : [ prettyjson.render(data) ]
 }

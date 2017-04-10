@@ -10,8 +10,8 @@ const exitOnMissingContract = (contractsPath, skipMissingContract) => {
   return skipMissingContract && !fs.existsSync(contractsPath)
 }
 
-module.exports = (contractsPath, options, done) => {
-  const jackal = url(options, '/api/contracts')
+module.exports = (jackalUrl, contractsPath, options, done) => {
+  const jackal = url(jackalUrl, '/api/contracts')
 
   if(exitOnMissingContract(contractsPath, options.skipMissingContract)){
     /* eslint-disable no-console  */

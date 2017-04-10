@@ -1,6 +1,6 @@
 'use strict'
 
-const standard = require('./standard')
+const json = require('./json')
 
 const testData = [
   {
@@ -21,7 +21,7 @@ const testData = [
 describe('Standard logger', function() {
 
   it('Should return correct logs when turned on', function() {
-    expect(standard(testData, {standard: true}))
+    expect(json(testData, {standard: true}))
       .to.eql([testData])
   })
 })

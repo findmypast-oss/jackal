@@ -16,9 +16,5 @@ module.exports = {
   db: {
     path: 'db.json'
   },
-  reporters:  {
-    'pretty': true,
-    'teamcity': false
-  },
   quiet: false
 }

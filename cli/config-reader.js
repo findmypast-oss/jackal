@@ -21,16 +21,7 @@ const getConfig = (options) => {
 module.exports = (options) => {
   let config = getConfig(options)
 
-  config.jackal.baseUrl = options.baseUrl || config.jackal.baseUrl
   config.jackal.port = options.port || config.jackal.port
-
-  config.stats = {}
-  if (options.consumer) { config.stats.consumer = options.consumer }
-  if (options.provider) { config.stats.provider = options.provider }
-
-  if(options.skipMissingContract){
-    config.skipMissingContract = options.skipMissingContract
-  }
 
   return config
 }

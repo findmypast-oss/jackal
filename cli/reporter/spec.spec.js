@@ -49,11 +49,6 @@ const testData = [
 
 describe('Spec reporter', function() {
 
-  it('Should return empty array when turned off', function(){
-    expect(spec(testData, {spec: false}))
-      .to.be.eql([])
-  })
-
   it('Should return correct logs when turned on', function() {
     expect(spec(testData, {spec: true}))
       .to.eql([

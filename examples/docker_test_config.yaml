@@ -1,5 +1,4 @@
 jackal:
-  baseUrl: 'http://jackal'
   port: 25863
 logger:
   environment: development
@@ -9,7 +8,4 @@ statsD:
   prefix: jackal
 db:
   path: db.json
-reporters:
-  pretty: true
-  teamcity: false
 quiet: true
