@@ -47,7 +47,7 @@ const testData = [
   }
 ]
 
-describe.only('Spec reporter', function() {
+describe('Spec reporter', function() {
 
   it('Should return empty array when turned off', function(){
     expect(spec(testData, {spec: false}))
