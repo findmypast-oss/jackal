@@ -47,7 +47,7 @@ const testData = [
   }
 ]
 
-describe('Teamcity logger', function() {
+describe('Teamcity reporter', function() {
 
   it('Should return empty array when turned off', function(){
     expect(teamcity(testData, {teamcity: false}))
