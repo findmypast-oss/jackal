@@ -78,8 +78,10 @@ itunes_search_app:                # consumer name
   itunes:                         # provider name
     search_by_term_and_country:   # api endpoint name
       OK:                         # scenario name
-        request:                  # request object (follows the same options as https://github.com/request/request#requestoptions-callback)
-          url: 'https://itunes.apple.com/search?term=mclusky&country=gb'
+        request:
+          baseUrl: 'https://itunes.apple.com'
+          path: '/search'
+          query: '?term=mclusky&country=gb'
           method: GET
         response:
           statusCode: 200
