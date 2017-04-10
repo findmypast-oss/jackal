@@ -27,6 +27,7 @@ program
 program
   .command('run <jackalUrl> <providerName>')
   .option('-R, --reporter [reporter]', 'Reporter for output [json|spec|teamcity]')
+  .option('-t, --test-url [testUrl]', 'Base url of the provider, defaults to the original URL specified by the consumer contract')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service')
   .action(cli.run)
 

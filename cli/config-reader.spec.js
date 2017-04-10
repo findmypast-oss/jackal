@@ -5,7 +5,7 @@ const defaultConfig = require('./default-config')
 const readConfig = require('./config-reader')
 
 describe('readConfig', function () {
-  let dockerTestConfig
+  let dockerTestConfig, expected
 
   before(function () {
     const buf = fs.readFileSync('examples/docker_test_config.json')

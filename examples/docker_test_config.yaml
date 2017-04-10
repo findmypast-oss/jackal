@@ -2,6 +2,8 @@ jackal:
   port: 25863
 logger:
   environment: development
+stats: {}
+provider: {}
 statsD:
   host: localhost
   port: 8125

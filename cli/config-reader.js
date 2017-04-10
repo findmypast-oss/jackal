@@ -5,17 +5,18 @@ const yaml = require('js-yaml')
 const defaultConfig = require('./default-config')
 
 const getConfig = (options) => {
+  let config = Object.assign({}, defaultConfig)
   const configPath = options.configPath || './jackal.json'
 
   if (fs.existsSync(configPath)) {
     const buffer = fs.readFileSync(configPath)
 
     return configPath.endsWith('json')
-      ? JSON.parse(buffer.toString())
-      : yaml.safeLoad(buffer.toString())
+      ? Object.assign(config, JSON.parse(buffer.toString()))
+      : Object.assign(config, yaml.safeLoad(buffer.toString()))
   }
 
-  return defaultConfig
+  return config
 }
 
 module.exports = (options) => {

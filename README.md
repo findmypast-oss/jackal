@@ -14,22 +14,6 @@ __NOTE:__ Jackal is currently in alpha and under active development, as such the
 
 Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
 
-## Development
-
-Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
-
-## API
-
-Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
-
-## Client
-
-Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
-
-## Configuration
-
-Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
-
 ## Quickstart Guide
 
 ### Local
@@ -90,16 +74,18 @@ Jackal should now be available at `http://localhost:25863`, a health endpoint is
 Make sure to define a contracts file, e.g:
 
 ```yaml
-itunes_search_app:
-  itunes:
-    search_by_term_and_country:
-      OK:
+itunes_search_app:                # consumer name
+  itunes:                         # provider name
+    search_by_term_and_country:   # api endpoint name
+      OK:                         # scenario name
         request:
-          url: 'https://itunes.apple.com/search?term=mclusky&country=gb'
+          baseUrl: 'https://itunes.apple.com'
+          path: '/search'
+          query: '?term=mclusky&country=gb'
           method: GET
         response:
           statusCode: 200
-          body:
+          body:                   # body uses Joi type definitions (https://github.com/hapijs/joi)
             resultCount: 'Joi.number().integer()'
             results:
               - trackName: Joi.string()
@@ -109,14 +95,23 @@ itunes_search_app:
 
 To test the contracts as a consumer you can `POST` them to the running server, e.g:
 
+To send a YAML contracts file using the client
+```bash
+$ jackal send /path/to/contracts.yaml
 ```
-// to send a YAML contracts file using the client
-jackal send /path/to/contracts.yaml
 
-// to send a JSON contracts file using the client
-jackal send /path/to/contracts.json
+You can also specify the host url and port to run against
+```bash
+$ jackal send /path/to/contracts.yaml -b http://jackal-server -p 1234
+```
 
-// to send a JSON contracts file using curl
+The client also supports JSON contracts
+```bash
+$ jackal send /path/to/contracts.json
+```
+
+To send a JSON contracts file using curl
+```bash
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
 
@@ -136,9 +131,9 @@ You should then receive a JSON array in response:
 
 To test the contracts as a provider you can do a `GET` request to the running server, eg:
 
-```
-// to run contracts for a provider using the client
-jackal run <provider_name>
+To run contracts for a provider using the client
+```bash
+$ jackal run <provider_name>
 ```
 
 You should then receive a JSON array in response:
@@ -152,3 +147,19 @@ You should then receive a JSON array in response:
   }
 ]
 ```
+
+## Development
+
+Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
+
+## API
+
+Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
+
+## Client
+
+Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
+
+## Configuration
+
+Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)

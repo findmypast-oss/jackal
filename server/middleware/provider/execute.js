@@ -8,8 +8,10 @@ const mapContractObjectToContractArray = require('../../../lib/map-contract-obje
 
 const createExecuteProvider = (db) => (req, res, next) => {
   const provider = req.params.provider
+  const testUrl = req.query.testUrl
+
   const contracts = db.retrieveCollection(provider).map(dbo => dbo.contract)
-  const parsedContracts = parseContracts(contracts)
+  const parsedContracts = parseContracts(contracts, testUrl)
 
   execute(parsedContracts, (err, results) => {
     res.status(200).send(results.map(mapResult))
@@ -20,9 +22,9 @@ const createExecuteProvider = (db) => (req, res, next) => {
 
 module.exports = createExecuteProvider
 
-const parseContracts = (contracts) => {
+const parseContracts = (contracts, testUrl) => {
   const nestedContracts = map(contracts, (contract) => {
-    return mapContractObjectToContractArray(contract)
+    return mapContractObjectToContractArray(contract, testUrl)
   })
 
   return flattenDeep(nestedContracts)

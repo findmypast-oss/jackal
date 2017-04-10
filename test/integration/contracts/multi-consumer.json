@@ -3,7 +3,10 @@
     "integration": {
       "contract": {
         "OK": {
-          "request": { "url": "http://localhost:5000/contract" },
+          "request": {
+            "baseUrl": "http://localhost:5000",
+            "path": "/contract"
+          },
           "response": {
             "statusCode": 200,
             "body": {
@@ -18,7 +21,10 @@
     "integration": {
       "contract": {
         "OK": {
-          "request": { "url": "http://localhost:5000/contract" },
+          "request": {
+            "baseUrl": "http://localhost:5000",
+            "path": "/contract"
+          },
           "response": {
             "statusCode": 200,
             "body": {

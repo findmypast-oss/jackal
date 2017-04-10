@@ -1,6 +1,9 @@
 'use strict'
 
 module.exports = {
+  db: {
+    path: 'db.json'
+  },
   jackal: {
     port: 25863
   },
@@ -11,9 +14,6 @@ module.exports = {
     host: 'localhost',
     port: 8125,
     prefix: 'jackal'
-  },
-  db: {
-    path: 'db.json'
   },
   quiet: false
 }

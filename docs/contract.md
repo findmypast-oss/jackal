@@ -29,7 +29,9 @@ In JSON, the contracts object should have the following format:
             }
           ]
           request: {
-            url:        STRING                    // REQUIRED
+            baseUrl:    STRING                    // REQUIRED
+            path:       STRING                    // OPTIONAL, DEFAULT: undefined
+            quer:       STRING                    // OPTIONAL, DEFAULT: undefined
             method:     STRING                    // OPTIONAL, DEFAULT: GET
             headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
             body:       OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
@@ -65,7 +67,9 @@ consumer:
             body:     OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
             timeout:  INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
         request:
-          url:        STRING                    // REQUIRED
+          baseUrl:    STRING                    // REQUIRED
+          path:       STRING                    // OPTIONAL, DEFAULT: undefined
+          query:      STRING                    // OPTIONAL, DEFAULT: undefined
           method:     STRING                    // OPTIONAL, DEFAULT: GET
           headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
           body:       OBJECT / STRING / ARRAY   // OPTIONAL, DEFAULT: undefined
@@ -91,7 +95,9 @@ The following restrictions apply to each scenario:
 - The `before` and `after` arrays are optional
   - If specified, objects in the `before` and `after` arrays must have the fields as indicated in the example above
 
-- `request/url` must be a valid url
+- `request/baseUrl` must be a valid url
+- `request/path` must begin with a `/`
+- `request/query` must begin with a `?`
 - `request/method` must be one of:
   - `CONNECT`, `DELETE`, `GET`, `HEAD`, `OPTIONS`, `PATCH`, `POST`, `PUT`, `TRACE`
 
