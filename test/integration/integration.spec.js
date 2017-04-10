@@ -6,8 +6,31 @@ const jackal = require('./helpers/jackal')
 const client = require('./helpers/client')
 const request = require('request')
 
+const assertAllContractResultsPass = (done) => (err, results) => {
+  expect(err).to.not.exist
+  results.forEach(x => expect(x.status).to.equal('Pass'))
+  done()
+}
+
+const assertSomeContractResultsFail = (done) => (err, results) => {
+  expect(err).to.exist
+  expect(results.some(x => x.status === 'Fail')).to.be.true
+  done()
+}
+
+const assertErrorMessage = (message, done) => (err, results) => {
+  expect(results.message).to.equal(message)
+  done()
+}
+
+const assertStats = (expected, done) => (err, res) => {
+  if (err) { return done(err) }
+  expect(res).to.be.deep.equal(JSON.stringify(expected))
+  done()
+}
+
 describe('Integration Tests', function () {
-  describe('Happy Path', function () {
+  describe('Happy Path integration tests', function () {
     before((done) => {
       if(fs.existsSync('db.json')){
         fs.unlinkSync('db.json')
@@ -27,12 +50,15 @@ describe('Integration Tests', function () {
     })
 
     it('should start the provider successfully using version: "1"', function (done) {
-      provider.start({ port: 5000, contract: { version: '1' } }, done)
+      provider.start({ port: 5000, contract: { version: 1 } }, done)
     })
 
     for (let i = 0; i < 3; i++) {
       it(`should pass when sending contracts/v1 using json contracts file, iteration: ${i}`, function (done) {
-        client.send({ filePath: 'test/integration/contracts/v1.json', isPass: true }, done)
+        client.send(
+          { filePath: 'test/integration/contracts/v1.json' },
+          assertAllContractResultsPass(done)
+        )
       })
     }
 
@@ -49,12 +75,18 @@ describe('Integration Tests', function () {
     })
 
     it('should fail when running the provider "integration" as it still expects contracts/v1 to be honoured', function (done) {
-      client.run({ provider: 'integration', isPass: false }, done)
+      client.run(
+        { provider: 'integration'},
+        assertSomeContractResultsFail(done)
+      )
     })
 
     for (let i = 0; i < 3; i++) {
       it(`should pass when sending contracts/v2 using yaml contracts file, iteration: ${i}`, function (done) {
-        client.send({ filePath: 'test/integration/contracts/v2.yaml', isPass: true }, done)
+        client.send(
+          { filePath: 'test/integration/contracts/v2.yaml' },
+          assertAllContractResultsPass(done)
+        )
       })
     }
 
@@ -68,7 +100,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({}, JSON.stringify(expected), done)
+      client.stats(
+        {},
+        assertStats(expected, done)
+      )
     })
 
     it('should allow usage statistics to be requested by consumer', function (done) {
@@ -80,7 +115,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ consumer: 'consumer' }, JSON.stringify(expected), done)
+      client.stats(
+        { consumer: 'consumer' },
+        assertStats(expected, done)
+      )
     })
 
     it('should allow usage statistics to be requested by provider', function (done) {
@@ -93,7 +131,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ provider: 'integration' }, JSON.stringify(expected), done)
+      client.stats(
+        { provider: 'integration' },
+        assertStats(expected, done)
+      )
     })
 
     it('should allow usage statistics to be requested by consumer and provider', function (done) {
@@ -105,7 +146,10 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ consumer: 'consumer', provider: 'integration' }, JSON.stringify(expected), done)
+      client.stats(
+        { consumer: 'consumer', provider: 'integration' },
+        assertStats(expected, done)
+      )
     })
 
     it('should now have hit the provider "/contract" 4 times', function () {
@@ -118,28 +162,36 @@ describe('Integration Tests', function () {
       jackal.start({}, done)
     })
 
+    after(() => fs.unlinkSync('test/integration/db.json'))
+    after(jackal.stop)
+    after(provider.stop)
+
     it('should start the provider successfully using version: "1"', function (done){
-      provider.start({ port: 5000, contract: { version: '1' } }, done)
+      provider.start({ port: 5000, contract: { version: 1 } }, done)
     })
 
     it('should pass when sending contracts/v1 the first time', function (done) {
-      client.send({
-        filePath: 'test/integration/contracts/v1.json',
-        isPass: true
-      }, done)
+      client.send(
+        { filePath: 'test/integration/contracts/v1.json' },
+        assertAllContractResultsPass(done)
+      )
     })
 
     it('should pass when running provider "integration"', function (done) {
-      client.run({ provider: 'integration', isPass: true }, done)
+      client.run(
+        { provider: 'integration' },
+        assertAllContractResultsPass(done)
+      )
     })
 
     it('should save the database to the local file system', function (done) {
-      client.dump({ filePath: 'test/integration/db.json' },
-      (err, json) => {
-        if(err) return done(err)
-        fs.writeFileSync(options.filePath, json)
-        done()
-      }
+      client.dump(
+        {},
+        (err, json) => {
+          if(err) return done(err)
+          fs.writeFileSync('test/integration/db.json', json)
+          done()
+        }
       )
     })
 
@@ -152,7 +204,10 @@ describe('Integration Tests', function () {
     })
 
     it('should fail when running provider "integration" as no contracts have been sent to the new Jackal instance', function (done) {
-      client.run({ provider: 'integration', isPass: false, message: 'No contracts exist for provider: integration' }, done)
+      client.run(
+        { provider: 'integration'},
+        assertErrorMessage('No contracts exist for provider: integration', done)
+      )
     })
 
     it('should stop the second Jackal instance successfully', function (done) {
@@ -166,14 +221,10 @@ describe('Integration Tests', function () {
     })
 
     it('should pass when running provider "integration" as contracts for this provider exist in the loaded database', function (done) {
-      client.run({ provider: 'integration', isPass: true }, done)
-    })
-
-    after(function (done) {
-      jackal.stop()
-      provider.stop()
-      fs.unlinkSync('test/integration/db.json')
-      done()
+      client.run(
+        { provider: 'integration' },
+        assertAllContractResultsPass(done)
+      )
     })
   })
 
@@ -182,22 +233,25 @@ describe('Integration Tests', function () {
       jackal.start({}, done)
     })
 
+    after(jackal.stop)
+    after(provider.stop)
+
     it('should start the provider successfully using version: "1"', function (done) {
-      provider.start({ port: 5000, contract: { version: '1' } }, done)
+      provider.start({ port: 5000, contract: { version: 1 } }, done)
     })
 
     it('should fail when sending an empty contracts object', function (done) {
-      client.send({ filePath: 'test/integration/contracts/empty.json', isPass: false, message: 'Contract object must contain a single consumer' }, done)
+      client.send(
+        { filePath: 'test/integration/contracts/empty.json' },
+        assertErrorMessage('Contract object must contain a single consumer', done)
+      )
     })
 
     it('should fail when sending an empty contracts array', function (done) {
-      client.send({ filePath: 'test/integration/contracts/multi-consumer.json', isPass: false, message: 'Contract object must contain a single consumer' }, done)
-    })
-
-    after(function (done) {
-      jackal.stop()
-      provider.stop()
-      done()
+      client.send(
+        { filePath: 'test/integration/contracts/multi-consumer.json' },
+        assertErrorMessage('Contract object must contain a single consumer', done)
+      )
     })
   })
 
@@ -221,17 +275,17 @@ describe('Integration Tests', function () {
         })
 
         before(function (done) {
-          provider.start({ port: 5000, contract: { version: '1' } }, done)
+          provider.start({ port: 5000, contract: { version: 1 } }, done)
         })
+
+        after(jackal.stop)
+        after(provider.stop)
 
         it(`should fail when sending a contracts object with a: ${t.description}`, function (done) {
-          client.send({ filePath: t.filePath, isPass: false, message: 'One or more contracts are invalid' }, done)
-        })
-
-        after(function (done) {
-          jackal.stop()
-          provider.stop()
-          done()
+          client.send(
+            { filePath: t.filePath },
+            assertErrorMessage('One or more contracts are invalid', done)
+          )
         })
       })
     })
@@ -243,17 +297,17 @@ describe('Integration Tests', function () {
     })
 
     before(function (done) {
-      provider.start({ port: 5000, contract: { version: '1' } }, done)
+      provider.start({ port: 5000, contract: { version: 1 } }, done)
     })
+
+    after(jackal.stop)
+    after(provider.stop)
 
     it('should fail when sending a contracts object with malformed response schema', function (done) {
-      client.send({ filePath: 'test/integration/contracts/malformed-response.json', isPass: false, message: 'Joi string not well formed' }, done)
-    })
-
-    after(function (done) {
-      jackal.stop()
-      provider.stop()
-      done()
+      client.send(
+        { filePath: 'test/integration/contracts/malformed-response.json' },
+        assertErrorMessage('Joi string not well formed', done)
+      )
     })
   })
 
@@ -263,17 +317,17 @@ describe('Integration Tests', function () {
     })
 
     before(function (done) {
-      provider.start({ port: 5000, contract: { version: '1' } }, done)
+      provider.start({ port: 5000, contract: { version: 1 } }, done)
     })
+
+    after(jackal.stop)
+    after(provider.stop)
 
     it('should fail when sending a contracts object with unsupported response schema', function (done) {
-      client.send({ filePath: 'test/integration/contracts/unsupported-response.json', isPass: false, message: 'Joi type not supported' }, done)
-    })
-
-    after(function (done) {
-      jackal.stop()
-      provider.stop()
-      done()
+      client.send(
+        { filePath: 'test/integration/contracts/unsupported-response.json' },
+        assertErrorMessage('Joi type not supported', done)
+      )
     })
   })
 })

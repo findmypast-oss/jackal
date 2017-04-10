@@ -26,35 +26,15 @@ const dump = (options, done) => {
     'http://localhost:25863',
     options,
     done
-    
   )
 }
 
-const stats = (options, expected, done) => {
+const stats = (options, done) => {
   client.stats(
     'http://localhost:25863',
     options,
-    (err, res) => {
-      if (err) { return done(err) }
-      expect(res).to.be.deep.equal(expected)
-      done()
-    }
+    done
   )
-}
-
-const assert = (options, done) => (err, results) => {
-  if(options.isPass) {
-    expect(err).to.not.exist
-    expect(results[0].status).to.equal('Pass')
-  } else {
-    if (Array.isArray(results)) {
-      expect(results[0].status).to.equal('Fail')
-    } else {
-      expect(results.message).to.equal(options.message)
-    }
-  }
-
-  done()
 }
 
 module.exports = { run, send, stats, dump }
