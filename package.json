@@ -65,6 +65,7 @@
     "consumer-contracts": "^1.5.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
+    "figures": "^2.0.0",
     "hot-shots": "^4.4.0",
     "joi": "^10.2.2",
     "js-yaml": "^3.8.3",
