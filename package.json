@@ -57,8 +57,7 @@
     "mockery": "^2.0.0",
     "nyc": "^10.1.2",
     "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0",
-    "snyk": "^1.28.0"
+    "sinon-chai": "^2.9.0"
   },
   "dependencies": {
     "body-parser": "^1.16.1",
