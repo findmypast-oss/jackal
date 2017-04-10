@@ -19,7 +19,6 @@ const testData = [
 
 describe('Standard logger', function() {
   it('Should return correct logs when turned on', function() {
-    expect(json(testData, {standard: true}))
-      .to.eql([testData])
+    expect(json(testData)).to.eql([testData])
   })
 })

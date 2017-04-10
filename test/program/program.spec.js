@@ -16,21 +16,25 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25863', function (done) {
         exec(
-          'node index send http://localhost:25863 ./test/program/contracts/contract-v1.json',
+          'node index send http://localhost:25863 ./test/program/contracts/contract-v1.json --reporter json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(1)
+            // const result = JSON.parse(stdout)[0]
+            // expect(result.status === 'Pass')
             done()
           }
         )
       })
 
-      it('Run is successful against 25863', function (done) {
+      it('Run is successful against 25863 --reporter json', function (done) {
         exec(
-          'node index run http://localhost:25863 program',
+          'node index run http://localhost:25863 program --reporter json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(2)
+            // const result = JSON.parse(stdout)[0]
+            // expect(result.status === 'Pass')
             done()
           }
         )
