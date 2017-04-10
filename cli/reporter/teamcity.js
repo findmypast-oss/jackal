@@ -30,9 +30,10 @@ const consumerLogs = (allResults, provider) => {
   let logs = []
 
   forEach(resultsByConsumer, (results, consumer) => {
-    logs.push(`##teamcity[testSuiteStarted name='${consumer} contracts executed against ${provider}']`)
+    const name = `${consumer}-contracts-executed-against-${provider}`
+    logs.push(`##teamcity[testSuiteStarted name='${name}']`)
     logs.push(results.reduce((acc, result) => acc.concat(testOutput(result)), []))
-    logs.push(`##teamcity[testSuiteEnded name='${consumer} contracts executed against ${provider}']`)
+    logs.push(`##teamcity[testSuiteEnded name='${name}']`)
   })
 
   return logs
@@ -44,11 +45,10 @@ module.exports = (results, config) => {
   const provider = results[0].name.split('/')[0]
   let logs = []
 
-  logs.push(`##teamcity[testSuiteStarted name='${provider} contracts']`)
-
+  const name = `${provider}-contracts`
+  logs.push(`##teamcity[testSuiteStarted name='${name}']`)
   logs.push(consumerLogs(results, provider))
-
-  logs.push(`##teamcity[testSuiteEnded name='${provider} contracts']`)
+  logs.push(`##teamcity[testSuiteEnded name='${name}']`)
 
   return flattenDeep(logs)
 }
