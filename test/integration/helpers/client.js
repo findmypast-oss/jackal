@@ -4,39 +4,45 @@ const fs = require('fs')
 const client = require('../../../client')
 
 const send = (options, done) => {
-  client.send(options.filePath, {
-    jackal: { baseUrl: 'http://localhost', port: 25853 }
-  },
-  assert(options.isPass, options.message, done) )
+  client.send(
+    'http://localhost:25863',
+    options.filePath,
+    options,
+    assert(options.isPass, options.message, done)
+  )
 }
 
 const run = (options, done) => {
-  client.run(options.provider, {
-    jackal: { baseUrl: 'http://localhost', port: 25853 }
-  },
-  assert(options.isPass, options.message, done) )
+  client.run(
+    'http://localhost:25863',
+    options.provider,
+    options,
+    assert(options.isPass, options.message, done)
+  )
 }
 
 const dump = (options, done) => {
-  client.dump({
-    jackal: { baseUrl: 'http://localhost', port: 25853 }
-  }, (err, json) => {
-    if(err) return done(err)
-    fs.writeFileSync(options.filePath, json)
-    done()
-  })
+  client.dump(
+    'http://localhost:25863',
+    options,
+    (err, json) => {
+      if(err) return done(err)
+      fs.writeFileSync(options.filePath, json)
+      done()
+    }
+  )
 }
 
 const stats = (options, expected, done) => {
-  client.stats({
-    jackal: { baseUrl: 'http://localhost', port: 25853 },
-    stats: options.stats || {}
-  }, (err, res) => {
-    if (err) { return done(err) }
-
-    expect(res).to.be.deep.equal(expected)
-    done()
-  })
+  client.stats(
+    'http://localhost:25863',
+    options,
+    (err, res) => {
+      if (err) { return done(err) }
+      expect(res).to.be.deep.equal(expected)
+      done()
+    }
+  )
 }
 
 const assert = (isPass, message, done) => (err, results) => {

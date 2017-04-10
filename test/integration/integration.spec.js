@@ -19,7 +19,7 @@ describe('Integration Tests', function () {
     after(provider.stop)
 
     it('should be living long and prospering', function (done) {
-      request('http://localhost:25853/health', (err, res, body) => {
+      request('http://localhost:25863/health', (err, res, body) => {
         expect(res.statusCode).to.be.equal(200)
         expect(body).to.be.equal('😊')
         done()
@@ -80,7 +80,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { consumer: 'consumer' } }, expected, done)
+      client.stats({ consumer: 'consumer' }, expected, done)
     })
 
     it('should allow usage statistics to be requested by provider', function (done) {
@@ -93,7 +93,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { provider: 'integration' } }, expected, done)
+      client.stats({ provider: 'integration' }, expected, done)
     })
 
     it('should allow usage statistics to be requested by consumer and provider', function (done) {
@@ -105,7 +105,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ stats: { consumer: 'consumer', provider: 'integration' } }, expected, done)
+      client.stats({ consumer: 'consumer', provider: 'integration' }, expected, done)
     })
 
     it('should now have hit the provider "/contract" 4 times', function () {
