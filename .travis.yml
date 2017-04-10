@@ -12,8 +12,6 @@ node_js:
 before_install:
   - docker-compose build
 
-before_script: npm run snyk
-
 script:
   - npm test
   - docker-compose run --rm jackal_client sh -c "sleep 2 && node index send ./examples/contracts.json -c ./examples/docker_test_config.json"
