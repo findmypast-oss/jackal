@@ -32,6 +32,7 @@ program
   .option('-c, --config-path [path]', 'Path to a jackal config file, default ./jackal.json')
   .option('-b, --base-url [baseUrl]', 'Base url of the jackal server, default http://localhost')
   .option('-p, --port [port]', 'Port of the jackal server, default 25863')
+  .option('-t, --test-url [testUr]', 'Base url of the provider, defaults to the original URL specified by the consumer contract')
   .option('-v, --verbose [verbose]', 'Verbose logging')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service')
   .action(cli.run)

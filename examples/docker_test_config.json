@@ -11,6 +11,8 @@
     "port": 8125,
     "prefix": "jackal"
   },
+  "stats": {},
+  "provider": {},
   "db": {
     "path": "db.json"
   },

@@ -1,6 +1,9 @@
 'use strict'
 
 module.exports = {
+  db: {
+    path: 'db.json'
+  },
   jackal: {
     baseUrl: 'http://localhost',
     port: 25863
@@ -8,17 +11,16 @@ module.exports = {
   logger: {
     environment: 'production'
   },
+  provider: {},
+  reporters:  {
+    'pretty': true,
+    'teamcity': false
+  },
+  stats: {},
   statsD: {
     host: 'localhost',
     port: 8125,
     prefix: 'jackal'
-  },
-  db: {
-    path: 'db.json'
-  },
-  reporters:  {
-    'pretty': true,
-    'teamcity': false
   },
   quiet: false
 }
