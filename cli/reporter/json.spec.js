@@ -15,11 +15,9 @@ const testData = [
     status: 'Fail',
     error: 'Shape of the data incorrect'
   }
-
 ]
 
 describe('Standard logger', function() {
-
   it('Should return correct logs when turned on', function() {
     expect(json(testData, {standard: true}))
       .to.eql([testData])
