@@ -109,14 +109,23 @@ itunes_search_app:                # consumer name
 
 To test the contracts as a consumer you can `POST` them to the running server, e.g:
 
+To send a YAML contracts file using the client
+```bash
+$ jackal send /path/to/contracts.yaml
 ```
-// to send a YAML contracts file using the client
-jackal send /path/to/contracts.yaml
 
-// to send a JSON contracts file using the client
-jackal send /path/to/contracts.json
+You can also specify the host url and port to run against
+```bash
+$ jackal send /path/to/contracts.yaml -b http://jackal-server -p 1234
+```
 
-// to send a JSON contracts file using curl
+The client also supports JSON contracts
+```bash
+$ jackal send /path/to/contracts.json
+```
+
+To send a JSON contracts file using curl
+```bash
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
 
@@ -136,9 +145,9 @@ You should then receive a JSON array in response:
 
 To test the contracts as a provider you can do a `GET` request to the running server, eg:
 
-```
-// to run contracts for a provider using the client
-jackal run <provider_name>
+To run contracts for a provider using the client
+```bash
+$ jackal run <provider_name>
 ```
 
 You should then receive a JSON array in response:
