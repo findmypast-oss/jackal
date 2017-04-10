@@ -9,16 +9,11 @@
   "scripts": {
     "pretest": "eslint .",
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
-<<<<<<< HEAD
     "inspect": "jsinspect",
     "depcheck": "depcheck",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "uat": "node test/uat/index.js"
-=======
-    "test-client": "nyc mocha --opts mocha.opts './client/**/*.spec.js'",
-    "test-program": "nyc mocha --opts mocha.opts './test/program/**/*.spec.js'",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
->>>>>>> 0173e2ed39f3c635ecbb0219fa8421badf1b4552
   },
   "repository": {
     "type": "git",

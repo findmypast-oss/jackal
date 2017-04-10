@@ -5,13 +5,7 @@ const parser = require('./response-contract-results')
 const url = require('./jackal-url')
 
 module.exports = (jackalUrl, providerName, options, done) => {
-  let jacky
-  if (options.testUrl) {
-    const query = `testUrl=${options.provider.testUrl}`
-    jacky = url(options, `/api/contracts/${providerName}?${query}`)
-  } else {
-    jacky = url(options, `/api/contracts/${providerName}`)
-  }
-
+  const query = options.testUrl ? `?testUrl=${options.testUrl}` : ''
+  const jacky = url(jackalUrl, `/api/contracts/${providerName}${query}`)
   request(jacky, parser(done))
 }
