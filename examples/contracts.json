@@ -4,7 +4,9 @@
       "search_by_term_and_country": {
         "OK": {
           "request": {
-            "url": "https://itunes.apple.com/search?term=mclusky&country=gb",
+            "baseUrl": "https://itunes.apple.com",
+            "path": "/search",
+            "query": "?term=mclusky&country=gb",
             "method": "GET"
           },
           "response": {

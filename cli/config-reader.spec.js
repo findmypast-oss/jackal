@@ -5,12 +5,15 @@ const defaultConfig = require('./default-config')
 const readConfig = require('./config-reader')
 
 describe('readConfig', function () {
-  let dockerTestConfig
+  let dockerTestConfig, expected
 
   before(function () {
     const buf = fs.readFileSync('examples/docker_test_config.json')
     dockerTestConfig = JSON.parse(buf.toString())
-    dockerTestConfig.stats = {}
+  })
+
+  beforeEach(function () {
+    expected = Object.assign({}, defaultConfig)
   })
 
   it('should return default config when no config path is specified', function () {
@@ -30,27 +33,30 @@ describe('readConfig', function () {
   })
 
   it('should allow overriding of baseUrl in the jackal section', function () {
-    const expected = Object.assign({}, defaultConfig, { jackal: { baseUrl: 'http://fake.url', port: defaultConfig.jackal.port }, stats: {} })
+    expected.jackal.baseUrl = 'http://fake.url'
     expect(readConfig({ baseUrl: 'http://fake.url' })).to.be.deep.equal(expected)
   })
 
   it('should allow overriding of port in the jackal section', function () {
-    const expected = Object.assign({}, defaultConfig, { jackal: { baseUrl: defaultConfig.jackal.baseUrl, port: 1234 }, stats: {} })
+    expected.jackal.port = 1234
     expect(readConfig({ port: 1234 })).to.be.deep.equal(expected)
   })
 
   it('should allow overriding of baseUrl in the jackal section', function () {
-    const expected = Object.assign({}, defaultConfig, { stats: { consumer: 'consumer' } })
+    expected.stats.consumer = 'consumer'
     expect(readConfig({ consumer: 'consumer' })).to.be.deep.equal(expected)
   })
 
   it('should allow overriding of port in the jackal section', function () {
-    const expected = Object.assign({}, defaultConfig, { stats: { provider: 'provider' } })
+    expected.stats.provider = 'provider'
     expect(readConfig({ provider: 'provider' })).to.be.deep.equal(expected)
   })
 
   it('should allow overriding of port in the jackal section', function () {
-    const expected = Object.assign({}, defaultConfig, { jackal: { baseUrl: 'http://fake.url', port: 1234 }, stats: { consumer: 'consumer', provider: 'provider' } })
+    expected.jackal.baseUrl = 'http://fake.url'
+    expected.jackal.port = 1234
+    expected.stats.consumer = 'consumer'
+    expected.stats.provider = 'provider'
     expect(readConfig({ baseUrl: 'http://fake.url', port: 1234, consumer: 'consumer', provider: 'provider' })).to.be.deep.equal(expected)
   })
 })

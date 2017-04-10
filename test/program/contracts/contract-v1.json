@@ -4,7 +4,8 @@
       "contract": {
         "OK": {
           "request": {
-            "url": "http://localhost:5001/contract",
+            "baseUrl": "http://localhost:5001",
+            "path": "/contract",
             "method": "GET"
           },
           "response": {

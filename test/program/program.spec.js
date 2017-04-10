@@ -16,7 +16,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25863', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v1.json',
+          'node index send ./test/program/contracts/contract-v1.json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(1)
@@ -67,7 +67,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25863', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v3.json --verbose',
+          'node index send ./test/program/contracts/contract-v3.json --verbose',
           (err, stdout, stderr) => {
             if (err) {
               expect(err).to.exist
@@ -88,7 +88,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25863', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v1.json',
+          'node index send ./test/program/contracts/contract-v1.json',
           (err, stdout, stderr) => {
             if (err) {
               expect(err).to.exist
@@ -109,7 +109,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25864', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v1.json -c ./test/program/helpers/jackal-config-25864.json',
+          'node index send ./test/program/contracts/contract-v1.json -c ./test/program/config/jackal-config-25864.json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(1)
@@ -120,7 +120,7 @@ describe('Program Tests (slow)', function () {
 
       it('Run is successful against 25864', function (done) {
         exec(
-          'node index run program -c ./test/program/helpers/jackal-config-25864.json',
+          'node index run program -c ./test/program/config/jackal-config-25864.json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(2)
@@ -131,7 +131,7 @@ describe('Program Tests (slow)', function () {
 
       it('Dump is successful against 25864', function (done) {
         exec(
-          'node index dump -c ./test/program/helpers/jackal-config-25864.json',
+          'node index dump -c ./test/program/config/jackal-config-25864.json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(err).to.not.exist
@@ -142,7 +142,7 @@ describe('Program Tests (slow)', function () {
 
       it('Stats is successful against 25864', function (done) {
         exec(
-          'node index stats -P program -c ./test/program/helpers/jackal-config-25864.json',
+          'node index stats -P program -c ./test/program/config/jackal-config-25864.json',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(err).to.not.exist
@@ -160,7 +160,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25865', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v1.json -b http://localhost -p 25865',
+          'node index send ./test/program/contracts/contract-v1.json -b http://localhost -p 25865',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(1)
@@ -171,7 +171,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send with missing contract file flag skips testing', function (done) {
         exec(
-          'node index send ./test/program/helpers/non-existant.json --skip-missing-contract -b http://localhost -p 25865',
+          'node index send ./test/program/contracts/non-existant.json --skip-missing-contract -b http://localhost -p 25865',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(err).to.not.exist
@@ -223,7 +223,7 @@ describe('Program Tests (slow)', function () {
 
       it('Send a contract is successful against 25865', function (done) {
         exec(
-          'node index send ./test/program/helpers/contract-v1.json -b http://localhost -p 25865',
+          'node index send ./test/program/contracts/contract-v1.json -b http://localhost -p 25865',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(provider.contractHitCount()).to.be.equal(1)

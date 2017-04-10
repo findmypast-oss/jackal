@@ -4,7 +4,8 @@
       "api": {
         "scenario": {
           "request": {
-            "url": "http://localhost:5000/contract"
+            "baseUrl": "http://localhost:5000",
+            "path": "/contract"
           }
         }
       }
