@@ -1,0 +1,193 @@
+{
+  "titan_api": {
+    "surnames": {
+      "list_of_surnames": {
+        "OK": {
+          "request": {
+            "url": "http://integration.surname.service.consul:3333/api/surnames/ellio",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "surnames": ["Joi.string()"]
+            }
+          }
+        },
+        "OK_limit": {
+          "request": {
+            "url": "http://integration.surname.service.consul:3333/api/surnames/ellio?limit=3",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "surnames": ["Joi.string()"]
+            }
+          }
+        },
+        "not_found": {
+          "request": {
+            "url": "http://integration.surname.service.consul:3333/api/surnames/thissurnamedoesnotexist",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 404,
+            "body": {
+              "surnames": []
+            }
+          }
+        }
+      }
+    },
+    "flipper": {
+      "get_feature_key_state": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test/ci-integration-test",
+            "query": "?trackingId=1&anonymous=true",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "error": null,
+              "state": "Joi.boolean().required()"
+            }
+          }
+        }
+      },
+      "get_missing_tracking_id": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test/ci-integration-test",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 400,
+            "body": {
+              "error": "No member provided in the request body",
+              "state": null
+            }
+          }
+        }
+      },
+      "get_invalid_key": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test/bad-key",
+            "query": "?trackingId=1&anonymous=true",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 404,
+            "body": {
+              "error": "Cannot find feature toggle name"
+            }
+          }
+        }
+      },
+      "get_invalid_env_key": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/bad-env/ci-integration-test",
+            "query": "?trackingId=1&anonymous=true",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 404,
+            "body": {
+              "error": "Cannot find environment name for the service"
+            }
+          }
+        }
+      },
+      "get_invalid_project_key": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/bad-project/test/ci-integration-test",
+            "query": "?trackingId=1&anonymous=true",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 404,
+            "body": {
+              "error": "Cannot find service name"
+            }
+          }
+        }
+      },
+      "get_experiment_slots": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/experiments/default",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "id": "Joi.string()",
+              "featureKey": "Joi.string()",
+              "slot": "Joi.number().integer().min(0)"
+            }
+          }
+        }
+      },
+      "get_all_feature_flag_values": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test",
+            "query": "trackingId=1&anonymous=true",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "error": null,
+              "state": "Joi.object().pattern(/[\\w-]*/, Joi.boolean())"
+            }
+          }
+        }
+      },
+      "set_feature_state_for_member_id": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test/ci-integration-test/users/memberId/0",
+            "method": "PUT"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "error": null,
+              "state": "ok"
+            }
+          }
+        }
+      },
+      "remove_feature_state_for_member_id": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://integration.flipper.service.consul:3333",
+            "path": "api/default/test/ci-integration-test/users/memberId/0",
+            "method": "DELETE"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "error": null,
+              "state": "ok"
+            }
+          }
+        }
+      }
+    }
+  }
+}
