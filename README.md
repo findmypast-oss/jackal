@@ -90,16 +90,16 @@ Jackal should now be available at `http://localhost:25863`, a health endpoint is
 Make sure to define a contracts file, e.g:
 
 ```yaml
-itunes_search_app:
-  itunes:
-    search_by_term_and_country:
-      OK:
-        request:
+itunes_search_app:                # consumer name
+  itunes:                         # provider name
+    search_by_term_and_country:   # api endpoint name
+      OK:                         # scenario name
+        request:                  # request object (follows the same options as https://github.com/request/request#requestoptions-callback)
           url: 'https://itunes.apple.com/search?term=mclusky&country=gb'
           method: GET
         response:
           statusCode: 200
-          body:
+          body:                   # body uses Joi type definitions (https://github.com/hapijs/joi)
             resultCount: 'Joi.number().integer()'
             results:
               - trackName: Joi.string()
