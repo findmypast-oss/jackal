@@ -55,9 +55,11 @@ const validationSpecs = (validations) => {
 module.exports = (results) => {
   const logs = []
 
-  if (results.validations) {
+  if (results.message && results.validations) {
     logs.push(results.message)
     logs.push(validationSpecs(results.validations))
+  } else if (results.message) {
+    logs.push(results.message)
   } else {
     const provider = results[0].name.split('/')[0]
 
