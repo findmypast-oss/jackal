@@ -37,7 +37,7 @@ describe('Integration Tests', function () {
     }
 
     it('should have hit the provider "/contract" route 3 times', function () {
-      expect(provider.contractHitCount()).to.equal(3)
+      expect(provider.contractHitCount().contract).to.equal(3)
     })
 
     it('should stop the provider successfully', function (done) {
@@ -109,7 +109,7 @@ describe('Integration Tests', function () {
     })
 
     it('should now have hit the provider "/contract" 4 times', function () {
-      expect(provider.contractHitCount()).to.equal(4)
+      expect(provider.contractHitCount().contract).to.equal(4)
     })
   })
 
@@ -134,7 +134,13 @@ describe('Integration Tests', function () {
     })
 
     it('should save the database to the local file system', function (done) {
-      client.dump({ filePath: 'test/integration/db.json' }, done)
+      client.dump({ filePath: 'test/integration/db.json' },
+      (err, json) => {
+        if(err) return done(err)
+        fs.writeFileSync(options.filePath, json)
+        done()
+      }
+      )
     })
 
     it('should stop the Jackal instance successfully', function (done) {

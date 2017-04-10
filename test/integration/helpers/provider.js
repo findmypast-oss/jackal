@@ -5,15 +5,35 @@ const app = express()
 
 var mockContract = null
 var server = null
-var hitCount = 0
+var hitCounts = null
 
 app.get('/contract', function(req, res) {
   res.status(200).json(mockContract)
-  hitCount++
+  hitCounts.contract++
+})
+
+app.get('/contract-a', function(req, res) {
+  res.status(200).json(mockContract)
+  hitCounts.contractA++
+})
+
+app.get('/contract-b', function(req, res) {
+  res.status(200).json(mockContract)
+  hitCounts.contractB++
+})
+
+app.get('/contract-c', function(req, res) {
+  res.status(200).json(mockContract)
+  hitCounts.contractC++
 })
 
 const start = function(options, done) {
-  hitCount = 0
+  hitCounts = {
+    contract: 0,
+    contractA: 0,
+    contractB: 0,
+    contractC: 0,
+  }
   mockContract = options.contract
   server = app.listen(options.port, done)
 }
@@ -23,7 +43,7 @@ const stop = function(done) {
 }
 
 const contractHitCount = function() {
-  return hitCount
+  return hitCounts
 }
 
 module.exports = {
