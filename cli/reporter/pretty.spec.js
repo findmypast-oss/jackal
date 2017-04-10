@@ -19,9 +19,9 @@ const testData = [
 ]
 
 describe('Pretty logger', function() {
-
   it('Should return correct logs when turned on', function() {
-    expect(pretty(testData, {pretty: true}).length)
-      .to.equal(1)
+    const input = JSON.stringify(testData)
+
+    expect(pretty(input).length).to.equal(1)
   })
 })

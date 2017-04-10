@@ -42,7 +42,7 @@ const stats = (jackalUrl, options) => {
   client.stats(
     jackalUrl,
     options,
-    reporter(['json', 'pretty'], options.reporter, exitCodeHandler)
+    reporter(['pretty', 'json'], options.reporter, exitCodeHandler)
   )
 }
 
