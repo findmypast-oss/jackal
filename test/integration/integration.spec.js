@@ -37,12 +37,14 @@ describe('Integration Tests', function () {
       }
       done()
     })
+    before((done) => setTimeout(done, 500))
     before((done) => jackal.start({}, done))
     after(jackal.stop)
     after(provider.stop)
 
     it('should be living long and prospering', function (done) {
       request('http://localhost:25863/health', (err, res, body) => {
+        console.log(err);
         expect(res.statusCode).to.be.equal(200)
         expect(body).to.be.equal('😊')
         done()
@@ -215,9 +217,7 @@ describe('Integration Tests', function () {
     })
 
     it('should start a new Jackal instance using the saved database', function (done) {
-      jackal.start({
-        dbPath: 'test/integration/db.json'
-      }, done)
+      jackal.start({ dbPath: 'test/integration/db.json' }, done)
     })
 
     it('should pass when running provider "integration" as contracts for this provider exist in the loaded database', function (done) {

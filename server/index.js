@@ -1,6 +1,7 @@
 'use strict'
 
 const DB = require('../lib/db')
+const configReader = require('../lib/config')
 const express = require('express')
 const createLogger = require('../lib/create-logger')
 const createGrapher = require('../lib/create-grapher')
@@ -16,7 +17,8 @@ const buildStatsMiddleware = require('./middleware/stats/build')
 
 let db
 
-const startServer = (config, done) => {
+const startServer = (options, done) => {
+  const config = configReader(options)
   const app = express()
 
   db = new DB(config.db)

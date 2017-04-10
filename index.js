@@ -3,6 +3,7 @@
 'use strict'
 
 const cli = require('./cli')
+const server = require('./server')
 const pkg = require('./package.json')
 const program = require('commander')
 
@@ -14,8 +15,7 @@ program
   .description('Start the Jackal server')
   .option('-c, --config-path [path]', 'Pass a path to a config file, default ./jackal.json')
   .option('-p, --port [port]', 'Port to run the server on, default 25863')
-  .option('-v, --verbose [verbose]', 'Verbose logging')
-  .action(cli.start)
+  .action(server)
 
 program
   .command('send <jackalUrl> <contractsPath>')

@@ -8,7 +8,7 @@ const config = {
   logger: { environment: 'production' },
   statsD: { host: 'localhost', port: 8125, prefix: 'jackal' },
   quiet:  true,
-  jackal: { baseUrl: 'http://localhost' }
+  jackal: { }
 }
 
 const start = (port) => (done) => {

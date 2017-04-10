@@ -3,14 +3,7 @@
 'use strict'
 
 const client = require('../client')
-const startServer = require('../server')
 const reporter = require('./reporter')
-const configReader = require('./config-reader')
-
-const start = (options) => {
-  const config = configReader(options)
-  startServer(config)
-}
 
 const dump = (jackalUrl, options) => {
   client.dump(
@@ -69,7 +62,6 @@ const exitCodeHandler = (err) => {
 }
 
 module.exports = {
-  start: errorWrapper(start),
   send:  errorWrapper(send),
   run:   errorWrapper(run),
   dump:  errorWrapper(dump),
