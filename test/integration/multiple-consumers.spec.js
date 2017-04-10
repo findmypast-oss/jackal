@@ -12,7 +12,7 @@ const assertAllContractResultsPassWithCount = (count, done) => (err, results) =>
   done()
 }
 
-describe.only('Multiple Consumers, One Provider', function () {
+describe('Multiple Consumers, One Provider', function () {
   before((done) => jackal.start({}, done))
   after(jackal.stop)
   after(provider.stop)
