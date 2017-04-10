@@ -5,8 +5,6 @@ const forEach = require('lodash/forEach')
 const flattenDeep = require('lodash/flattenDeep')
 const figures = require('figures')
 
-module.exports = spec
-
 const providerStart = (provider) =>
   `${provider} contracts executed`
 
@@ -36,7 +34,7 @@ const consumerSpecs = (allResults, provider) => {
     return acc
   }, {})
 
-  let logs = []
+  const logs = []
 
   forEach(resultsByConsumer, (results, consumer) => {
     logs.push(consumerStart(consumer, provider))
@@ -46,12 +44,26 @@ const consumerSpecs = (allResults, provider) => {
   return logs
 }
 
-function spec (results) {
-  const provider = results[0].name.split('/')[0]
-  let logs = []
+const validationSpecs = (validations) => {
+  return validations.map(validation => {
+    return validation.valid
+      ? chalk.green(`    ${figures.tick} `) + chalk.dim(`${validation.contract} is valid`)
+      : chalk.red(`    ${figures.cross} ${validation.contract} is invalid: ${JSON.stringify(validation.errors)}`)
+  })
+}
 
-  logs.push(providerStart(provider))
-  logs.push(consumerSpecs(results, provider))
+module.exports = (results) => {
+  const logs = []
+
+  if (results.validations) {
+    logs.push(results.message)
+    logs.push(validationSpecs(results.validations))
+  } else {
+    const provider = results[0].name.split('/')[0]
+
+    logs.push(providerStart(provider))
+    logs.push(consumerSpecs(results, provider))
+  }
 
   return flattenDeep(logs)
 }
