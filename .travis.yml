@@ -12,8 +12,7 @@ node_js:
 before_install:
   - docker-compose build
 
-before_script:
-  snyk test
+before_script: npm run snyk
 
 script:
   - npm test
