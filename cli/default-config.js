@@ -2,7 +2,6 @@
 
 module.exports = {
   jackal: {
-    baseUrl: 'http://localhost',
     port: 25863
   },
   logger: {
