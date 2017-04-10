@@ -68,7 +68,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({}, expected, done)
+      client.stats({}, JSON.stringify(expected), done)
     })
 
     it('should allow usage statistics to be requested by consumer', function (done) {
@@ -80,7 +80,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ consumer: 'consumer' }, expected, done)
+      client.stats({ consumer: 'consumer' }, JSON.stringify(expected), done)
     })
 
     it('should allow usage statistics to be requested by provider', function (done) {
@@ -93,7 +93,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ provider: 'integration' }, expected, done)
+      client.stats({ provider: 'integration' }, JSON.stringify(expected), done)
     })
 
     it('should allow usage statistics to be requested by consumer and provider', function (done) {
@@ -105,7 +105,7 @@ describe('Integration Tests', function () {
         contractCount: 1
       }
 
-      client.stats({ consumer: 'consumer', provider: 'integration' }, expected, done)
+      client.stats({ consumer: 'consumer', provider: 'integration' }, JSON.stringify(expected), done)
     })
 
     it('should now have hit the provider "/contract" 4 times', function () {

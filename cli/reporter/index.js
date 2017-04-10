@@ -14,7 +14,7 @@ module.exports = (reporters, reporterOption, done) => (err, data) => {
     return done(err, data)
   }
 
-  if(reporterOption && !reporters.find(reporterOption)) {
+  if(reporterOption && !reporters.find(reporter => reporter === reporterOption)) {
     throw new Error(`Invalid reporter ${reporterOption} for command`)
   }
 
@@ -23,7 +23,7 @@ module.exports = (reporters, reporterOption, done) => (err, data) => {
     : loggers[reporters[0]]
 
   /* eslint-disable no-console  */
-  reporter(data).forEach(console.log)
+  reporter(data).forEach((log) => console.log(log))
   /* eslint-enble no-console  */
 
   return done(err, data)

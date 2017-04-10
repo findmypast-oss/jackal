@@ -1,7 +1,7 @@
 'use strict'
 
 const request = require('request')
-const parser = require('./response-json')
+const parser = require('./response-standard')
 const url = require('./jackal-url')
 
 module.exports = (jackalUrl, options, done) => {

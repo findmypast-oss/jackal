@@ -3,5 +3,10 @@
 const prettyjson = require('prettyjson')
 
 module.exports = (data) => {
-  return !data ? [] : [ prettyjson.render(data) ]
+  if (data) {
+    const parsed = JSON.parse(data)
+    return [ prettyjson.render(parsed) ]
+  }
+
+  return []
 }
