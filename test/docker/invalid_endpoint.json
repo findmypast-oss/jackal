@@ -1,0 +1,21 @@
+{
+  "itunes_search_app": {
+    "itunes": {
+      "search_by_term_and_country": {
+        "OK": {
+          "request": {
+            "query": "?term=mclusky&country=gb",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": "brokenhere!",
+            "body": {
+              "resultCount": "Joi.number().integer()",
+              "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
