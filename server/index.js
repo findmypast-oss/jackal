@@ -40,7 +40,7 @@ const startServer = (options, done) => {
   app.get('/api/health', (req, res) => { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)
   app.get('/api/contracts/:provider', providerMiddleware)
-  app.get('/api/contracts', dumpMiddleware)
+  app.get('/api/db', dumpMiddleware)
   app.get('/api/stats', statsMiddleware)
 
   return app.listen(config.jackal.port, (err) => {
