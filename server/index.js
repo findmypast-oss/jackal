@@ -37,7 +37,7 @@ const startServer = (options, done) => {
 
   app.use(bodyParser.json())
 
-  app.get('/health', (req, res) => { res.send('😊') })
+  app.get('/api/health', (req, res) => { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)
   app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/db', dumpMiddleware)
