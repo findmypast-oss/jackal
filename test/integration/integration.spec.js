@@ -43,8 +43,7 @@ describe('Integration Tests', function () {
     after(provider.stop)
 
     it('should be living long and prospering', function (done) {
-      request('http://localhost:25863/health', (err, res, body) => {
-        console.log(err);
+      request('http://localhost:25863/api/health', (err, res, body) => {
         expect(res.statusCode).to.be.equal(200)
         expect(body).to.be.equal('😊')
         done()
