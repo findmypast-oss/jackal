@@ -13,7 +13,7 @@ const dataIn = [
 
 const jsonOut = "[{\"name\":\"provider/api/scenario1\",\"consumer\":\"consumer\",\"status\":\"Pass\",\"error\":null}]"
 
-describe.only('Standard logger', function() {
+describe('Standard logger', function() {
   it('Should return correct logs when turned on', function() {
     expect(json(dataIn)).to.eql([jsonOut])
   })
