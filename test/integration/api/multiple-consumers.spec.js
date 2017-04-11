@@ -5,7 +5,7 @@ const request = require('request')
 const jackal = require('./helpers/jackal')
 const Provider = require('./helpers/provider')
 
-describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
+describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Consumers', function () {
   let providerOne, providerTwo, providerThree, port, dbPath, options
 
   before(function (done) {
@@ -25,7 +25,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
 
   before(function (done) {
     port = 8378
-    dbPath = 'test/integration/api/consumer.json'
+    dbPath = 'test/integration/api/multi-consumer.json'
     options = {
       port: port,
       quiet: true,

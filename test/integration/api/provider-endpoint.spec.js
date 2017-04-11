@@ -10,7 +10,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
 
   before(function (done) {
     port = 8378
-    dbPath = 'test/integration/api/stats.json'
+    dbPath = 'test/integration/api/provider.json'
     options = {
       port: port,
       quiet: true,
