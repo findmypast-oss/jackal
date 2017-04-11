@@ -1,3 +1,3 @@
 'use strict'
 
-module.exports = (data) => [ data ]
+module.exports = (data) => [ JSON.stringify(data) ]

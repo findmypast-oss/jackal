@@ -2,23 +2,19 @@
 
 const json = require('./json')
 
-const testData = [
+const dataIn = [
   {
     name: 'provider/api/scenario1',
     consumer: 'consumer',
     status: 'Pass',
     error: null
-  },
-  {
-    name: 'provider/api/scenario2',
-    consumer: 'consumer',
-    status: 'Fail',
-    error: 'Shape of the data incorrect'
   }
 ]
 
-describe('Standard logger', function() {
+const jsonOut = "[{\"name\":\"provider/api/scenario1\",\"consumer\":\"consumer\",\"status\":\"Pass\",\"error\":null}]"
+
+describe.only('Standard logger', function() {
   it('Should return correct logs when turned on', function() {
-    expect(json(testData)).to.eql([testData])
+    expect(json(dataIn)).to.eql([jsonOut])
   })
 })
