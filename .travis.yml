@@ -14,7 +14,7 @@ before_install:
 
 script:
   - npm test
-  - docker-compose run --rm jackal_client sh -c "sleep 2 && node index send http://jackal:25863 ./examples/contracts.json"
+  - docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
 
 after_success:
   - npm run coveralls
