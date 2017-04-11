@@ -1,0 +1,23 @@
+{
+  "itunes_search_app": {
+    "itunes": {
+      "search_by_term_and_country": {
+        "OK": {
+          "request": {
+            "baseUrl": "https://itunes.apple.com",
+            "path": "/search",
+            "query": "?term=mclusky&country=gb",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "resultCount": "Joi.number().integer()",
+              "results": [ { "trackName": "Joi.string()", "collectionName": "Joi.string()" } ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

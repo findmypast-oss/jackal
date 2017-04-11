@@ -1,0 +1,56 @@
+{
+  "itunes_search_app": {
+    "itunes": {
+      "search_by_term_and_country": {
+        "OK": {
+          "request": {
+            "baseUrl": "https://itunes.apple.com",
+            "path": "/search",
+            "query": "?term=mclusky&country=gb",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "resultCount": "Joi.number().integer()",
+              "results": [
+                {
+                  "trackName": "Joi.string()",
+                  "collectionName": "Joi.string()"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "lookup_by_id": {
+        "OK": {
+          "request": {
+            "baseUrl": "https://itunes.apple.com",
+            "path": "/lookup",
+            "query": "?id=909253",
+            "method": "GET"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "resultCount": "Joi.number().integer()",
+              "results": [
+                {
+                  "wrapperType": "Joi.string()",
+                  "artistType": "Joi.string()",
+                  "artistName": "Joi.string()",
+                  "artistLinkUrl": "Joi.string()",
+                  "artistId": "Joi.number().integer()",
+                  "amgArtistId": "Joi.number().integer()",
+                  "primaryGenreName": "Joi.string()",
+                  "primaryGenreId": "Joi.number().integer()"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
