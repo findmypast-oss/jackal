@@ -10,6 +10,8 @@ const json = require('./middleware/json')
 const logging = require('./middleware/logging')
 const graphing = require('./middleware/graphing')
 const bodyParser = require('body-parser')
+const handleError = require('./middleware/handle-error')
+
 const buildDumpMiddleware = require('./middleware/dump/build')
 const buildConsumerMiddleware = require('./middleware/consumer/build')
 const buildProviderMiddleware = require('./middleware/provider/build')
@@ -42,6 +44,8 @@ const startServer = (options, done) => {
   app.get('/api/contracts/:provider', providerMiddleware)
   app.get('/api/db', dumpMiddleware)
   app.get('/api/stats', statsMiddleware)
+
+  app.use(handleError(logger))
 
   return app.listen(config.jackal.port, (err) => {
     if(err) {
