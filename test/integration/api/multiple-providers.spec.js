@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers-v2/jackal')
-const Provider = require('./helpers-v2/provider')
+const jackal = require('./helpers/jackal')
+const Provider = require('./helpers/provider')
 
 describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
   let providerOne, providerTwo, providerThree, port, dbPath, options

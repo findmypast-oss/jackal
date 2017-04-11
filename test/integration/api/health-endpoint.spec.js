@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers-v2/jackal')
+const jackal = require('./helpers/jackal')
 
 describe('Health Endpoint Integration Test', function () {
   let port, dbPath, options
