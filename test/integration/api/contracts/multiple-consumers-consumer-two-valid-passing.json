@@ -1,0 +1,52 @@
+{
+  "consumer_two": {
+    "provider_a": {
+      "user_api": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://localhost:8379",
+            "path": "/api/user"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": [
+              { "id": "Joi.number().integer()", "name": "Joi.string()" }
+            ]
+          }
+        }
+      }
+    },
+    "provider_b": {
+      "receipt_api": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://localhost:8380",
+            "path": "/api/receipt/1234"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "id": "Joi.number().integer()", "item": "Joi.string()", "amount": "Joi.number()"
+            }
+          }
+        }
+      }
+    },
+    "provider_c": {
+      "product_api": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://localhost:8381",
+            "path": "/api/product"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": [
+              { "id": "Joi.number().integer()", "name": "Joi.string()", "description": "Joi.string()" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

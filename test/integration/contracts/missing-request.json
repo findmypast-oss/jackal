@@ -1,9 +1,0 @@
-{
-  "consumer": {
-    "provider": {
-      "api": {
-        "scenario": {}
-      }
-    }
-  }
-}

@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers-v2/jackal')
-const Provider = require('./helpers-v2/provider')
+const jackal = require('./helpers/jackal')
+const Provider = require('./helpers/provider')
 
 describe('Stats Endpoint Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo

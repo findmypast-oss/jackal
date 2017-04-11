@@ -2,15 +2,15 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers-v2/jackal')
-const Provider = require('./helpers-v2/provider')
+const jackal = require('./helpers/jackal')
+const Provider = require('./helpers/provider')
 
 describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo
 
   before(function (done) {
     port = 8378
-    dbPath = 'test/integration/api/stats.json'
+    dbPath = 'test/integration/api/provider.json'
     options = {
       port: port,
       quiet: true,
