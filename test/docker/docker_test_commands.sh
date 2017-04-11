@@ -25,3 +25,8 @@ OUTPUT=`node index send http://jackal:25863 ./test/docker/multiple_endpoint.json
 echo $OUTPUT
 echo $OUTPUT | grep -q "search_by_term_and_country-OK passed.*lookup_by_id-OK passed"
 check_exit_code
+
+OUTPUT=`node index send http://jackal:25863 ./test/docker/invalid_endpoint.json`
+echo $OUTPUT
+echo $OUTPUT | grep -q "One or more contracts are invalid.*RequestValidationError.*\"baseUrl\" is required.*ResponseValidationError.*\"statusCode\" must be a number"
+check_exit_code
