@@ -4,7 +4,7 @@ const fs = require('fs')
 const request = require('request')
 const jackal = require('./helpers-v2/jackal')
 
-describe.only('Health Endpoint Integration Test', function () {
+describe('Health Endpoint Integration Test', function () {
   let port, dbPath, options
 
   before(function (done) {
