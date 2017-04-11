@@ -14,7 +14,6 @@ program
   .command('start')
   .description('Start the Jackal server')
   .option('-c, --config-path [path]', 'Pass a path to a config file, default ./jackal.json')
-  .option('-p, --port [port]', 'Port to run the server on, default 25863')
   .action(server)
 
 program
