@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "0.20.4",
+  "version": "0.20.5",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {
@@ -11,7 +11,6 @@
     "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
     "inspect": "jsinspect",
     "depcheck": "depcheck",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "uat": "node test/uat/index.js"
   },
