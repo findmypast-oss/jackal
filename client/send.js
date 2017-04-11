@@ -6,8 +6,8 @@ const request = require('request')
 const parser = require('./response-contract-results')
 const url = require('./jackal-url')
 
-const exitOnMissingContract = (contractsPath, skipMissingContract) => {
-  return skipMissingContract && !fs.existsSync(contractsPath)
+const exitOnMissingContract = (contractsPath, skipMissingContractFlag) => {
+  return skipMissingContractFlag && !fs.existsSync(contractsPath)
 }
 
 module.exports = (jackalUrl, contractsPath, options, done) => {
@@ -18,6 +18,10 @@ module.exports = (jackalUrl, contractsPath, options, done) => {
     console.log(`Skipping no contracts, file not found: ${contractsPath}`)
     /* eslint-enble no-console  */
     return done()
+  }
+
+  if(!fs.existsSync(contractsPath)){
+    return done(`Missing contract file ${contractsPath}`)
   }
 
   const fileBuffer = fs.readFileSync(contractsPath)

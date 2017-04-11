@@ -54,7 +54,7 @@ const errorWrapper = (fn) => function () {
 const exitCodeHandler = (err, data) => {
   if (err) {
     /* eslint-disable no-console  */
-    console.error(JSON.stringify(err))
+    console.error(err)
     if(data){
       console.error(prettyjson.render(data))
     }
