@@ -4,6 +4,7 @@
 
 const client = require('../client')
 const reporter = require('./reporter')
+const prettyjson = require('prettyjson')
 
 const dump = (jackalUrl, options) => {
   client.dump(
@@ -50,10 +51,13 @@ const errorWrapper = (fn) => function () {
   }
 }
 
-const exitCodeHandler = (err) => {
+const exitCodeHandler = (err, data) => {
   if (err) {
     /* eslint-disable no-console  */
     console.error(JSON.stringify(err))
+    if(data){
+      console.error(prettyjson.render(data))
+    }
     /* eslint-enble no-console  */
     process.exit(1)
   }

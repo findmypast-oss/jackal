@@ -6,7 +6,7 @@ const noContractsExistMessage = (message) => message.startsWith(prefix)
 
 module.exports = (done) => (err, response, body) => {
   if (err) {
-    return done(err)
+    return done(err, body)
   }
 
   const parsed = JSON.parse(body)
