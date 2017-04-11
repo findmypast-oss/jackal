@@ -8,10 +8,15 @@ const validateUnsupportedContract = (req, res, next) => {
   const contracts = req.body
 
   const parsedContracts = mapContractObjectToArray(contracts, parseContract)
-  const unsupportedContract = parsedContracts.find(findUnsupported)
+  const unsupportedContracts = parsedContracts.filter(filterUnsupported)
 
-  if (unsupportedContract) {
-    res.status(400).send(unsupportedContract.response)
+  if (unsupportedContracts.length > 0) {
+    const unsupportedResponse = {
+      message: 'One or more contracts are invalid',
+      validations: unsupportedContracts.map(mapUnsupported)
+    }
+
+    res.status(400).send(unsupportedResponse)
   } else {
     next()
   }
@@ -19,4 +24,16 @@ const validateUnsupportedContract = (req, res, next) => {
 
 module.exports = validateUnsupportedContract
 
-const findUnsupported = (contract) => isUnsupported(contract.response)
+const filterUnsupported = (contract) => {
+  if (contract.response.body) { return isUnsupported(contract.response.body) }
+
+  return false
+}
+
+const mapUnsupported = (contract) => {
+  return {
+    contract: `${contract.name} <- ${contract.consumer}`,
+    valid: false,
+    errors: [ contract.response.body ]
+  }
+}

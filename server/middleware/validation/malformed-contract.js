@@ -8,10 +8,15 @@ const validateMalformedContract = (req, res, next) => {
   const contracts = req.body
 
   const parsedContracts = mapContractObjectToArray(contracts, parseContract)
-  const malformedContract = parsedContracts.find(findMalformed)
+  const malformedContracts = parsedContracts.filter(filterMalformed)
 
-  if (malformedContract) {
-    res.status(400).send(malformedContract.response)
+  if (malformedContracts.length > 0) {
+    const malformedResponse = {
+      message: 'One or more contracts are invalid',
+      validations: malformedContracts.map(mapMalformed)
+    }
+
+    res.status(400).send(malformedResponse)
   } else {
     next()
   }
@@ -19,4 +24,16 @@ const validateMalformedContract = (req, res, next) => {
 
 module.exports = validateMalformedContract
 
-const findMalformed = (contract) => isMalformed(contract.response)
+const filterMalformed = (contract) => {
+  if (contract.response.body) { return isMalformed(contract.response.body) }
+
+  return false
+}
+
+const mapMalformed = (contract) => {
+  return {
+    contract: `${contract.name} <- ${contract.consumer}`,
+    valid: false,
+    errors: [ contract.response.body ]
+  }
+}
