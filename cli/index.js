@@ -44,7 +44,7 @@ const errorWrapper = (fn) => function () {
     fn.apply(null, arguments)
   } catch (err) {
     /* eslint-disable no-console  */
-    console.error(err)
+    console.error(JSON.stringify(err))
     /* eslint-enble no-console  */
     process.exit(1)
   }
@@ -53,7 +53,7 @@ const errorWrapper = (fn) => function () {
 const exitCodeHandler = (err) => {
   if (err) {
     /* eslint-disable no-console  */
-    console.error(err)
+    console.error(JSON.stringify(err))
     /* eslint-enble no-console  */
     process.exit(1)
   }

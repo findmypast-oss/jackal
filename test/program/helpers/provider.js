@@ -13,7 +13,7 @@ app.get('/contract', function(req, res) {
 })
 
 const start = (port, contractResponse) => (done) => {
-  mockContract = contractResponse || { version: '1' }
+  mockContract = contractResponse || { version: 1 }
   hitCount = 0
   server = app.listen(port, done)
 }
