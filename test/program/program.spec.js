@@ -53,7 +53,7 @@ describe('Program Tests (slow)', function () {
 
       it('Stats is successful against 25863', function (done) {
         exec(
-          'node index http://localhost:25863 stats -P program',
+          'node index stats http://localhost:25863 --provider program',
           (err, stdout, stderr) => {
             if (err) { return done(err) }
             expect(err).to.not.exist

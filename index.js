@@ -13,34 +13,34 @@ program
 program
   .command('start')
   .description('Start the Jackal server')
-  .option('-c, --config-path [path]', 'Pass a path to a config file, default ./jackal.json')
+  .option('-c, --config-path [configPath]', 'Pass a path to a config file, default ./jackal.json')
   .action(server)
 
 program
   .command('send <jackalUrl> <contractsPath>')
-  .option('-R, --reporter [reporter]', 'Reporter for output [json|spec|teamcity]')
+  .option('-r, --reporter [reporter]', 'Reporter for output [json|spec|teamcity]')
   .option('--skip-missing-contract', 'Do not execute tests if the contracts file is missing')
   .description('Send the consumer\'s contracts in the specified file to the Jackal service')
   .action(cli.send)
 
 program
   .command('run <jackalUrl> <providerName>')
-  .option('-R, --reporter [reporter]', 'Reporter for output [json|spec|teamcity]')
-  .option('-t, --test-url [testUrl]', 'Base url of the provider, defaults to the original URL specified by the consumer contract')
+  .option('-r, --reporter [reporter]', 'Reporter for output [json|spec|teamcity]')
+  .option('-p, --provider-url [providerUrl]', 'Base url of the provider, defaults to the original URL specified by the consumer contract')
   .description('Runs the provider\'s contracts stored in the database of the Jackal service')
   .action(cli.run)
 
 program
   .command('dump <jackalUrl>')
-  .option('-R, --reporter [reporter]', 'Reporter for output [json|pretty]')
+  .option('-r, --reporter [reporter]', 'Reporter for output [json|pretty]')
   .description('Dumps the database of the Jackal service')
   .action(cli.dump)
 
 program
   .command('stats <jackalUrl>')
-  .option('-C, --consumer [consumer]', 'Consumer to retrieve current statistics for')
-  .option('-P, --provider [provider]', 'Provider to retrieve current statistics for')
-  .option('-R, --reporter [reporter]', 'Reporter for output [json|pretty]')
+  .option('-c, --consumer [consumer]', 'Consumer to retrieve current statistics for')
+  .option('-p, --provider [provider]', 'Provider to retrieve current statistics for')
+  .option('-r, --reporter [reporter]', 'Reporter for output [json|pretty]')
   .description('Gets usage stats from the running Jackal service')
   .action(cli.stats)
 
