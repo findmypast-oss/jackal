@@ -3,7 +3,7 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
 const request = require('request')
-const parser = require('./response-contract-results')
+const handleResponse = require('./handle-response')
 const url = require('./jackal-url')
 
 const exitOnMissingContract = (contractsPath, skipMissingContractFlag) => {
@@ -42,5 +42,5 @@ module.exports = (jackalUrl, contractsPath, options, done) => {
     body: bodyBuffer
   }
 
-  request(req, parser(done))
+  request(req, handleResponse(done))
 }
