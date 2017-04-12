@@ -14,13 +14,10 @@ module.exports = (jackalUrl, contractsPath, options, done) => {
   const jackal = url(jackalUrl, '/api/contracts')
 
   if(exitOnMissingContract(contractsPath, options.skipMissingContract)){
-    /* eslint-disable no-console  */
-    console.log(`Skipping no contracts, file not found: ${contractsPath}`)
-    /* eslint-enble no-console  */
-    return done()
+    return done(null, `Skipping no contracts, file not found: ${contractsPath}`)
   }
 
-  if(!fs.existsSync(contractsPath)){
+  if (!fs.existsSync(contractsPath)) {
     return done(`Missing contract file ${contractsPath}`)
   }
 
