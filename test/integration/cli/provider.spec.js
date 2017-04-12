@@ -7,7 +7,7 @@ const jackal = require('../helpers/jackal')
 const Provider = require('../helpers/provider')
 
 describe('CLI.Run Integration Test', function () {
-  let providerOne, providerTwo
+  let providerOne, providerTwo, providerThree, providerFour
 
   before(function (done) {
     providerOne = new Provider()
@@ -19,12 +19,30 @@ describe('CLI.Run Integration Test', function () {
     providerTwo.start({ port: 8380 }, done)
   })
 
+  before(function (done) {
+    providerThree = new Provider()
+    providerThree.start({ port: 8381 }, done)
+  })
+
+  before(function (done) {
+    providerFour = new Provider()
+    providerFour.start({ port: 8382 }, done)
+  })
+
   after(function (done) {
     providerOne.stop(done)
   })
 
   after(function (done) {
     providerTwo.stop(done)
+  })
+
+  after(function (done) {
+    providerThree.stop(done)
+  })
+
+  after(function (done) {
+    providerFour.stop(done)
   })
 
   context('using JSON reporter', function () {
@@ -79,12 +97,47 @@ describe('CLI.Run Integration Test', function () {
       })
     })
 
+    it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
+      const expected = [
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
+      ]
+
+      exec(`node index run -r json -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
+        const parsed = JSON.parse(stdout)
+        const parsedBody = JSON.parse(parsed.body)
+
+        expect(err).to.not.exist
+        expect(parsed.statusCode).to.equal(200)
+        expect(parsedBody).to.eql(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
     it('should get a list of contract results including failures for the specified provider', function (done) {
       const expected = [
         { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
       ]
 
       exec(`node index run -r json http://localhost:${port} provider_two`, (err, stdout, stderr) => {
+        const parsed = JSON.parse(stdout)
+        const parsedBody = JSON.parse(parsed.body)
+
+        expect(err).to.not.exist
+        expect(parsed.statusCode).to.equal(200)
+        expect(parsedBody).to.eql(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
+    it('should get a list of contract results including failures for the specified provider using the specified provider url', function (done) {
+      const expected = [
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+      ]
+
+      exec(`node index run -r json -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
         const parsed = JSON.parse(stdout)
         const parsedBody = JSON.parse(parsed.body)
 
@@ -164,10 +217,32 @@ describe('CLI.Run Integration Test', function () {
       })
     })
 
+    it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
+      const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n'
+
+      exec(`node index run -r spec -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
+        expect(err).to.not.exist
+        expect(stdout).to.equal(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
     it('should get a list of contract results including failures for the specified provider', function (done) {
       const expected = 'Failure - not all contracts passed\nprovider_two contracts executed\n  consumer contracts executed against provider_two\n    ✖ Test product_api-OK failed for consumer against provider_two\n    Error: Contract failed: "description" must be a number\n'
 
       exec(`node index run -r spec http://localhost:${port} provider_two`, (err, stdout, stderr) => {
+        expect(err).to.not.exist
+        expect(stdout).to.equal(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
+    it('should get a list of contract results including failures for the specified provider using the specified provider url', function (done) {
+      const expected = 'Failure - not all contracts passed\nprovider_two contracts executed\n  consumer contracts executed against provider_two\n    ✖ Test product_api-OK failed for consumer against provider_two\n    Error: Contract failed: "description" must be a number\n'
+
+      exec(`node index run -r spec -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
         expect(err).to.not.exist
         expect(stdout).to.equal(expected)
         expect(stderr).to.equal('')
@@ -241,10 +316,32 @@ describe('CLI.Run Integration Test', function () {
       })
     })
 
+    it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
+      const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteEnded name=\'provider_one-contracts\']\n'
+
+      exec(`node index run -r teamcity -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
+        expect(err).to.not.exist
+        expect(stdout).to.equal(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
     it('should get a list of contract results including failures for the specified provider', function (done) {
       const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Error: Contract failed: "description" must be a number\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteEnded name=\'provider_two-contracts\']\n'
 
       exec(`node index run -r teamcity http://localhost:${port} provider_two`, (err, stdout, stderr) => {
+        expect(err).to.not.exist
+        expect(stdout).to.equal(expected)
+        expect(stderr).to.equal('')
+        done()
+      })
+    })
+
+    it('should get a list of contract results including failures for the specified provider using the specified provider url', function (done) {
+      const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Error: Contract failed: "description" must be a number\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteEnded name=\'provider_two-contracts\']\n'
+
+      exec(`node index run -r teamcity -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
         expect(err).to.not.exist
         expect(stdout).to.equal(expected)
         expect(stderr).to.equal('')
