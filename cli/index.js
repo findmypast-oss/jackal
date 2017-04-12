@@ -8,7 +8,6 @@ const reporter = require('./reporter')
 const dump = (jackalUrl, options) => {
   client.dump(
     jackalUrl,
-    options,
     reporter(['json', 'pretty'], options.reporter, exitCodeHandler)
   )
 }

@@ -51,7 +51,7 @@ describe('Client.Dump Integration Test', function () {
   })
 
   it('should get an up to date copy of the database serialised as JSON', function (done) {
-    dump(`http://localhost:${port}`, {}, (err, res, body) => {
+    dump(`http://localhost:${port}`, (err, res, body) => {
       expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
       expect(body).to.be.an('object')
