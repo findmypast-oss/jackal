@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
-const Provider = require('./helpers/provider')
+const jackal = require('../helpers/jackal')
+const Provider = require('../helpers/provider')
 
 describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Multiple Providers & Consumers', function () {
   let providerOne, providerTwo, providerThree, port, dbPath, options
@@ -36,8 +36,8 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
   })
 
   const contractPaths = [
-    'test/integration/api/contracts/multiple-providers-consumer-one-valid-passing.json',
-    'test/integration/api/contracts/multiple-providers-consumer-two-valid-failing.json'
+    'test/integration/contracts/multiple-providers-consumer-one-valid-passing.json',
+    'test/integration/contracts/multiple-providers-consumer-two-valid-failing.json'
   ]
 
   contractPaths.forEach((contractPath) => {
@@ -60,7 +60,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
 
   it('should return a list of contract results for the first provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -78,7 +78,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
 
   it('should return a list of contract results including failures for the second provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const expected = [

@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
-const Provider = require('./helpers/provider')
+const jackal = require('../helpers/jackal')
+const Provider = require('../helpers/provider')
 
 describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo
@@ -31,7 +31,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
   })
 
   before(function (done) {
-    const buf = fs.readFileSync('test/integration/api/contracts/provider.json')
+    const buf = fs.readFileSync('test/integration/contracts/provider.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
@@ -51,7 +51,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
 
   it('should get a list of contract results for the specified provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -67,7 +67,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
 
   it('should get a list of contract results including failures for the specified provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -82,7 +82,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
 
   it('should get a no contracts found message for an unknown provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_three`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)

@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
-const Provider = require('./helpers/provider')
+const jackal = require('../helpers/jackal')
+const Provider = require('../helpers/provider')
 
 describe('DB Endpoint Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo
@@ -31,7 +31,7 @@ describe('DB Endpoint Integration Test', function () {
   })
 
   before(function (done) {
-    const buf = fs.readFileSync('test/integration/api/contracts/stats.json')
+    const buf = fs.readFileSync('test/integration/contracts/stats.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
@@ -51,7 +51,7 @@ describe('DB Endpoint Integration Test', function () {
 
   it('should get an up to date copy of the database serialised as JSON', function (done) {
     request(`http://localhost:${port}/api/db`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)

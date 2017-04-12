@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
+const jackal = require('../helpers/jackal')
 
 describe('Health Endpoint Integration Test', function () {
   let port, dbPath, options
@@ -21,7 +21,7 @@ describe('Health Endpoint Integration Test', function () {
 
   it('should have an accessible health endpoint', function (done) {
     request(`http://localhost:${port}/api/health`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
       expect(body).to.equal('😊')
       done()

@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
-const Provider = require('./helpers/provider')
+const jackal = require('../helpers/jackal')
+const Provider = require('../helpers/provider')
 
 describe('Stats Endpoint Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo
@@ -31,7 +31,7 @@ describe('Stats Endpoint Integration Test', function () {
   })
 
   before(function (done) {
-    const buf = fs.readFileSync('test/integration/api/contracts/stats.json')
+    const buf = fs.readFileSync('test/integration/contracts/stats.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
@@ -51,7 +51,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the basic stats pack when not specifying the consumer or provider', function (done) {
     request(`http://localhost:${port}/api/stats`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -71,7 +71,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the consumer specific stats pack when specifying a consumer', function (done) {
     request(`http://localhost:${port}/api/stats?consumer=consumer`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -90,7 +90,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the consumer specific stats pack when specifying an invalid consumer', function (done) {
     request(`http://localhost:${port}/api/stats?consumer=invalid`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -109,7 +109,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the provider specific stats pack when specifying a provider', function (done) {
     request(`http://localhost:${port}/api/stats?provider=provider_one`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -129,7 +129,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the provider specific stats pack when specifying an invalid provider', function (done) {
     request(`http://localhost:${port}/api/stats?provider=invalid`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -149,7 +149,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the the consumer/provider specific stats pack when specifying a consumer and provider', function (done) {
     request(`http://localhost:${port}/api/stats?consumer=consumer&provider=provider_one`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)
@@ -168,7 +168,7 @@ describe('Stats Endpoint Integration Test', function () {
 
   it('should get the the consumer/provider specific stats pack when specifying an invalid consumer and invalid provider', function (done) {
     request(`http://localhost:${port}/api/stats?consumer=invalid&provider=invalid_too`, (err, res, body) => {
-      expect(err).to.be.null
+      expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
 
       const bodyObj = JSON.parse(body)

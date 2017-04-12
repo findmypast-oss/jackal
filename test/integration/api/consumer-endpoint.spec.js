@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('./helpers/jackal')
-const Provider = require('./helpers/provider')
+const jackal = require('../helpers/jackal')
+const Provider = require('../helpers/provider')
 
 describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
   let providerOne, providerTwo
@@ -37,7 +37,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-valid-passing.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-valid-passing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -50,7 +50,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(201)
 
         const bodyObj = JSON.parse(body)
@@ -63,12 +63,12 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         expect(bodyObj).to.eql(expected)
         done()
       })
+    })
 
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
@@ -91,7 +91,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-valid-failing.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-valid-failing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -104,7 +104,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(201)
 
         const bodyObj = JSON.parse(body)
@@ -117,12 +117,12 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         expect(bodyObj).to.eql(expected)
         done()
       })
+    })
 
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
@@ -145,7 +145,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a message advising a single consumer is required', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-invalid-multi-consumer.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-multi-consumer.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -158,17 +158,17 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
         expect(JSON.parse(body)).to.eql({ message: 'Contract object must contain a single consumer' })
         done()
       })
+    })
 
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
@@ -191,7 +191,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-invalid-missing-field.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-missing-field.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -204,7 +204,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
 
         const expected = {
@@ -219,12 +219,12 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })
+    })
 
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
@@ -247,7 +247,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-invalid-malformed-joi.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-malformed-joi.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -260,7 +260,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
 
         const expected = {
@@ -271,12 +271,12 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })
+    })
 
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
@@ -299,7 +299,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/api/contracts/consumer-invalid-unsupported-joi.json')
+      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-unsupported-joi.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -312,7 +312,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       }
 
       request(req, (err, res, body) => {
-        expect(err).to.be.null
+        expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
 
         const expected = {
@@ -323,12 +323,12 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })
-
-      after(function (done) {
-        fs.stat(dbPath, (err, stats) => {
-          if (stats) { fs.unlink(dbPath, done) }
-          else { done() }
-        })
+    })
+    
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
       })
     })
 
