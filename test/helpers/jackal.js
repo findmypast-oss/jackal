@@ -1,6 +1,6 @@
 'use strict'
 
-const startServer = require('../../../server')
+const startServer = require('../../server')
 
 let server
 

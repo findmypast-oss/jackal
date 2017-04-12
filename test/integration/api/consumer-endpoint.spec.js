@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('../helpers/jackal')
-const Provider = require('../helpers/provider')
+const jackal = require('../../helpers/jackal')
+const Provider = require('../../helpers/provider')
 
 describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
   let providerOne, providerTwo
@@ -37,7 +37,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-valid-passing.json')
+      const buf = fs.readFileSync('test/contracts/consumer-valid-passing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -91,7 +91,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-valid-failing.json')
+      const buf = fs.readFileSync('test/contracts/consumer-valid-failing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -145,7 +145,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a message advising a single consumer is required', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-multi-consumer.json')
+      const buf = fs.readFileSync('test/contracts/consumer-invalid-multi-consumer.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -191,7 +191,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-missing-field.json')
+      const buf = fs.readFileSync('test/contracts/consumer-invalid-missing-field.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -247,7 +247,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-malformed-joi.json')
+      const buf = fs.readFileSync('test/contracts/consumer-invalid-malformed-joi.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -299,7 +299,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/consumer-invalid-unsupported-joi.json')
+      const buf = fs.readFileSync('test/contracts/consumer-invalid-unsupported-joi.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,

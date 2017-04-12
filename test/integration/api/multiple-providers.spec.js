@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('../helpers/jackal')
-const Provider = require('../helpers/provider')
+const jackal = require('../../helpers/jackal')
+const Provider = require('../../helpers/provider')
 
 describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Multiple Providers & Consumers', function () {
   let providerOne, providerTwo, providerThree, port, dbPath, options
@@ -36,8 +36,8 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
   })
 
   const contractPaths = [
-    'test/integration/contracts/multiple-providers-consumer-one-valid-passing.json',
-    'test/integration/contracts/multiple-providers-consumer-two-valid-failing.json'
+    'test/contracts/multiple-providers-consumer-one-valid-passing.json',
+    'test/contracts/multiple-providers-consumer-two-valid-failing.json'
   ]
 
   contractPaths.forEach((contractPath) => {

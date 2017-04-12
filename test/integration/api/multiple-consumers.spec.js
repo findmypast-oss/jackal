@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('../helpers/jackal')
-const Provider = require('../helpers/provider')
+const jackal = require('../../helpers/jackal')
+const Provider = require('../../helpers/provider')
 
 describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Consumers', function () {
   let providerOne, providerTwo, providerThree, port, dbPath, options
@@ -36,7 +36,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
   })
 
   it('should return a list of contract results for the first consumer suite', function (done) {
-    const buf = fs.readFileSync('test/integration/contracts/multiple-consumers-consumer-one-valid-passing.json')
+    const buf = fs.readFileSync('test/contracts/multiple-consumers-consumer-one-valid-passing.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
@@ -65,7 +65,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
   })
 
   it('should return a list of contract results for the second consumer suite', function (done) {
-    const buf = fs.readFileSync('test/integration/contracts/multiple-consumers-consumer-two-valid-passing.json')
+    const buf = fs.readFileSync('test/contracts/multiple-consumers-consumer-two-valid-passing.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
@@ -94,7 +94,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
   })
 
   it('should return a list of contract results including failures for the third consumer suite', function (done) {
-    const buf = fs.readFileSync('test/integration/contracts/multiple-consumers-consumer-three-valid-failing.json')
+    const buf = fs.readFileSync('test/contracts/multiple-consumers-consumer-three-valid-failing.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,
