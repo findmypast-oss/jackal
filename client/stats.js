@@ -1,7 +1,7 @@
 'use strict'
 
 const request = require('request')
-const parser = require('./response-standard')
+const handleResponse = require('./handle-response')
 const url = require('./jackal-url')
 
 module.exports = (jackalUrl, options, done) => {
@@ -19,5 +19,5 @@ module.exports = (jackalUrl, options, done) => {
       : `${query}&${providerQuery}`
   }
 
-  request(`${jacky}${query}`, parser(done))
+  request(`${jacky}${query}`, handleResponse(done))
 }

@@ -52,20 +52,21 @@ describe('Spec reporter', function() {
   it('Should return correct logs when turned on', function() {
     expect(spec(null, null, testData))
       .to.eql([
-        "account contracts executed",
+        'Failure - not all contracts passed',
+        'account contracts executed',
 
-        "  email contracts executed against account",
-        "\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-register passed for email against account\u001b[22m",
-        "\u001b[31m    ✖ Test api-login failed for email against account\n    Shape of the data incorrect\u001b[39m",
+        '  email contracts executed against account',
+        '\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-register passed for email against account\u001b[22m',
+        '\u001b[31m    ✖ Test api-login failed for email against account\n    Shape of the data incorrect\u001b[39m',
 
-        "  auth contracts executed against account",
-        "\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-register passed for auth against account\u001b[22m",
-        "\u001b[31m    ✖ Test api-login failed for auth against account\n    Shape of the data incorrect\u001b[39m",
-        "\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-getbyid passed for auth against account\u001b[22m",
+        '  auth contracts executed against account',
+        '\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-register passed for auth against account\u001b[22m',
+        '\u001b[31m    ✖ Test api-login failed for auth against account\n    Shape of the data incorrect\u001b[39m',
+        '\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-getbyid passed for auth against account\u001b[22m',
 
-        "  frontEnd contracts executed against account",
-        "\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-getbyid passed for frontEnd against account\u001b[22m",
-        "\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-login passed for frontEnd against account\u001b[22m"
+        '  frontEnd contracts executed against account',
+        '\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-getbyid passed for frontEnd against account\u001b[22m',
+        '\u001b[32m    ✔ \u001b[39m\u001b[2mTest api-login passed for frontEnd against account\u001b[22m'
       ])
   })
 

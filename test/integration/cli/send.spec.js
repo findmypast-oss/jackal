@@ -207,7 +207,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✖ Test product_api-OK failed for consumer against provider_one\n    Error: Contract failed: "description" must be a number\n'
+        const expected = 'Failure - not all contracts passed\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✖ Test product_api-OK failed for consumer against provider_one\n    Error: Contract failed: "description" must be a number\n'
 
         exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist

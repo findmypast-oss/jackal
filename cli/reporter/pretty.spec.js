@@ -20,8 +20,6 @@ const testData = [
 
 describe('Pretty logger', function() {
   it('Should return correct logs when turned on', function() {
-    const input = JSON.stringify(testData)
-
-    expect(pretty(input).length).to.equal(1)
+    expect(pretty(null, null, testData).length).to.equal(1)
   })
 })

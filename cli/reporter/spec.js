@@ -61,6 +61,10 @@ const validationSpecs = (validations) => {
   })
 }
 
+const anyFailures = (results) => {
+  return results.some(result => result.status === 'Fail')
+}
+
 module.exports = (err, response, body) => {
   const logs = []
 
@@ -71,8 +75,14 @@ module.exports = (err, response, body) => {
     logs.push(validationSpecs(body.validations))
   } else if (body.message) {
     logs.push(body.message)
+  } else if (body.length === 0) {
+    logs.push('Failure - no contracts exist')
   } else {
     const provider = body[0].name.split('/')[0]
+
+    if (anyFailures(body)) {
+      logs.push('Failure - not all contracts passed')
+    }
 
     logs.push(providerStart(provider))
     logs.push(consumerSpecs(body, provider))
