@@ -50,7 +50,7 @@ const testData = [
 describe('Spec reporter', function() {
 
   it('Should return correct logs when turned on', function() {
-    expect(spec(testData, {spec: true}))
+    expect(spec(null, null, testData))
       .to.eql([
         "account contracts executed",
 

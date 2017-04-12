@@ -50,7 +50,7 @@ const testData = [
 describe('Teamcity reporter', function() {
 
   it('Should return correct logs when turned on', function() {
-    expect(teamcity(testData, {teamcity: true}))
+    expect(teamcity(null, null, testData))
       .to.eql([
         "##teamcity[testSuiteStarted name='account-contracts']",
 

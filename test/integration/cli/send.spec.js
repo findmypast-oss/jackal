@@ -6,7 +6,7 @@ const jackal = require('../helpers/jackal')
 const Provider = require('../helpers/provider')
 const send = require('../../../client/send')
 
-describe.only('CLI.Send Integration Test', function () {
+describe('CLI.Send Integration Test', function () {
   let providerOne, providerTwo
 
   before(function (done) {

@@ -15,6 +15,6 @@ const jsonOut = "[{\"name\":\"provider/api/scenario1\",\"consumer\":\"consumer\"
 
 describe('Standard logger', function() {
   it('Should return correct logs when turned on', function() {
-    expect(json(dataIn)).to.eql([jsonOut])
+    expect(json(null, dataIn)).to.eql([jsonOut])
   })
 })
