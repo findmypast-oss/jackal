@@ -38,6 +38,11 @@ echo $OUTPUT
 echo $OUTPUT | grep -q "Missing contract file ./test/docker/no_contract.json"
 check_exit_code
 
+# OUTPUT=`node index send http://jackal:25863 ./test/docker/no_contract.json --skip-missing-contract 2>&1`
+# echo $OUTPUT
+# echo $OUTPUT | grep -q "^Skipping no contracts, file not found: ./test/docker/no_contract.json$"
+# check_exit_code
+
 # Run command
 
 node index send http://jackal:25863 ./test/docker/single_endpoint.json 1>/dev/null
