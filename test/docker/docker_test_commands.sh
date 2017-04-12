@@ -11,6 +11,8 @@ check_exit_code() {
   return
 }
 
+# Send command
+
 OUTPUT=`node index send http://jackal:25863 ./test/docker/single_endpoint.json`
 echo $OUTPUT
 echo $OUTPUT | grep -q "passed for itunes_search_app against itunes"
@@ -34,4 +36,33 @@ check_exit_code
 OUTPUT=`node index send http://jackal:25863 ./test/docker/no_contract.json 2>&1`
 echo $OUTPUT
 echo $OUTPUT | grep -q "Missing contract file ./test/docker/no_contract.json"
+check_exit_code
+
+# OUTPUT=`node index send http://jackal:25863 ./test/docker/no_contract.json --skip-missing-contract 2>&1`
+# echo $OUTPUT
+# echo $OUTPUT | grep -q "^Skipping no contracts, file not found: ./test/docker/no_contract.json$"
+# check_exit_code
+
+# Run command
+
+node index send http://jackal:25863 ./test/docker/single_endpoint.json 1>/dev/null
+OUTPUT=`node index run http://jackal:25863 itunes`
+echo $OUTPUT
+echo $OUTPUT | grep -q "search_by_term_and_country-OK passed for itunes_search_app against itunes"
+check_exit_code
+
+node index send http://jackal:25863 ./test/docker/failing_endpoint.json 1>/dev/null 2>/dev/null
+OUTPUT=`node index run http://jackal:25863 failing_itunes 2>&1`
+echo $OUTPUT
+echo $OUTPUT | grep -q "Failure - not all contracts passed.*Error: Request failed: getaddrinfo ENOTFOUND failing.endpoint failing.endpoint:443"
+check_exit_code
+
+OUTPUT=`node index run http://jackal:25863 missing_provider 2>&1`
+echo $OUTPUT
+echo $OUTPUT | grep -q "No contracts exist for provider: missing_provider"
+check_exit_code
+
+OUTPUT=`node index stats http://jackal:25863`
+echo $OUTPUT
+echo $OUTPUT | grep -Pq "consumerCount: \d.*consumers: - itunes_search_app providerCount: \d.*providers: - failing_itunes apiCount: \d.* contractCount: \d"
 check_exit_code

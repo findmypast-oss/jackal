@@ -1,6 +1,6 @@
 {
   "itunes_search_app": {
-    "itunes": {
+    "failing_itunes": {
       "search_by_term_and_country": {
         "OK": {
           "request": {

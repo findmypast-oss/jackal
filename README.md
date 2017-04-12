@@ -148,6 +148,9 @@ You should then receive a JSON array in response:
 ]
 ```
 
+### Sequence of Testing
+![](./docs/sequence.png)
+
 ## Development
 
 Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
