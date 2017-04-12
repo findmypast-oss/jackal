@@ -4,8 +4,9 @@ const fs = require('fs')
 const request = require('request')
 const jackal = require('../helpers/jackal')
 const Provider = require('../helpers/provider')
+const dump = require('../../../client/dump')
 
-describe.skip('DB Endpoint Integration Test', function () {
+describe('Client.Dump Integration Test', function () {
   let port, dbPath, options, providerOne, providerTwo
 
   before(function (done) {
@@ -50,13 +51,10 @@ describe.skip('DB Endpoint Integration Test', function () {
   })
 
   it('should get an up to date copy of the database serialised as JSON', function (done) {
-    request(`http://localhost:${port}/api/db`, (err, res, body) => {
+    dump(`http://localhost:${port}`, {}, (err, res, body) => {
       expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
-
-      const bodyObj = JSON.parse(body)
-
-      expect(bodyObj).to.be.an('object')
+      expect(body).to.be.an('object')
       done()
     })
   })
