@@ -9,9 +9,9 @@ const loggers = {
   spec, json, pretty, teamcity
 }
 
-module.exports = (reporters, reporterOption, done) => (err, data) => {
+module.exports = (reporters, reporterOption, done) => (err, response, body) => {
   if (err) {
-    return done(err, data)
+    return done(err, response, body)
   }
 
   if(reporterOption && !reporters.find(reporter => reporter === reporterOption)) {
@@ -23,8 +23,8 @@ module.exports = (reporters, reporterOption, done) => (err, data) => {
     : loggers[reporters[0]]
 
   /* eslint-disable no-console  */
-  reporter(data).forEach((log) => console.log(log))
+  reporter(err, response, body).forEach((log) => console.log(log))
   /* eslint-enble no-console  */
 
-  return done(err, data)
+  return done(err, response, body)
 }

@@ -1,5 +1,8 @@
 'use strict'
 
+// TODO: Consider revising this module, _especially_ the exported function with
+// the if... elseif... else block
+
 const chalk = require('chalk')
 const forEach = require('lodash/forEach')
 const flattenDeep = require('lodash/flattenDeep')
@@ -58,19 +61,21 @@ const validationSpecs = (validations) => {
   })
 }
 
-module.exports = (results) => {
+module.exports = (err, response, body) => {
   const logs = []
 
-  if (results.message && results.validations) {
-    logs.push(results.message)
-    logs.push(validationSpecs(results.validations))
-  } else if (results.message) {
-    logs.push(results.message)
+  if (typeof response === 'string' && response.startsWith('Skipping')) {
+    logs.push(response)
+  } else if (body.message && body.validations) {
+    logs.push(body.message)
+    logs.push(validationSpecs(body.validations))
+  } else if (body.message) {
+    logs.push(body.message)
   } else {
-    const provider = results[0].name.split('/')[0]
+    const provider = body[0].name.split('/')[0]
 
     logs.push(providerStart(provider))
-    logs.push(consumerSpecs(results, provider))
+    logs.push(consumerSpecs(body, provider))
   }
 
   return flattenDeep(logs)

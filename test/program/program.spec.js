@@ -6,7 +6,7 @@ const exec = require('child_process').exec;
 const jackal = require('./helpers/jackal')
 const provider = require('./helpers/provider')
 
-describe('Program Tests (slow)', function () {
+describe.skip('Program Tests (slow)', function () {
   describe('Send, run, dump and stats', function () {
     describe('Should be successful with defaults', function () {
       before(jackal.start(25863))

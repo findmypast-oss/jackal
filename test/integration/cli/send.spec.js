@@ -68,6 +68,80 @@ describe.only('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract results for the consumer suite', function (done) {
+        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✔ Test product_api-OK passed for consumer against provider_one\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-valid-passing.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.equal(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract results for the consumer suite', function (done) {
+        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteEnded name=\'provider_one-contracts\']\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-valid-passing.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.equal(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with valid, failing contracts', function () {
@@ -116,6 +190,80 @@ describe.only('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract results for the consumer suite', function (done) {
+        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✖ Test product_api-OK failed for consumer against provider_one\n    Error: Contract failed: "description" must be a number\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract results for the consumer suite', function (done) {
+        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Error: Contract failed: "description" must be a number\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteEnded name=\'provider_one-contracts\']\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with invalid contracts - multiple consumers', function () {
@@ -143,6 +291,76 @@ describe.only('CLI.Send Integration Test', function () {
 
           expect(parsed.statusCode).to.equal(400)
           expect(parsedBody).to.eql({ message: 'Contract object must contain a single consumer' })
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a message advising a single consumer is required', function (done) {
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql('Contract object must contain a single consumer\n')
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a message advising a single consumer is required', function (done) {
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql('{"message":"Contract object must contain a single consumer"}\n')
           expect(stderr).to.equal('')
 
           done()
@@ -209,6 +427,80 @@ describe.only('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = 'One or more contracts are invalid\n    ✔ provider_one/user_api/OK <- consumer is valid\n    ✔ provider_one/receipt_api/OK <- consumer is valid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - ContractValidationError: "request" is required\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_one/user_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_one/receipt_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"ContractValidationError","message":"\\"request\\" is required"}]}]}\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with invalid contracts - malformed joi', function () {
@@ -241,6 +533,80 @@ describe.only('CLI.Send Integration Test', function () {
 
           expect(parsed.statusCode).to.equal(400)
           expect(parsedBody).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = 'One or more contracts are invalid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - JoiError: Joi string not well formed\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi string not well formed"}]}]}\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -303,6 +669,80 @@ describe.only('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = 'One or more contracts are invalid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - JoiError: Joi type not supported\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a list of contract validations for the consumer suite', function (done) {
+        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi type not supported"}]}]}\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/integration/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.eql(expected)
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with missing contracts', function () {
@@ -343,6 +783,44 @@ describe.only('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return an error advising the contracts file is missing', function (done) {
+        const errMessage = 'Command failed: node index send -r spec http://localhost:8378 test/integration/contracts/missing-contracts-file.json\nMissing contract file test/integration/contracts/missing-contracts-file.json\n'
+
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
+          expect(err.message).to.equal(errMessage)
+          expect(err.code).to.equal(1)
+          expect(stdout).to.equal('')
+          expect(stderr).to.equal('Missing contract file test/integration/contracts/missing-contracts-file.json\n')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with missing contracts with skip missing contracts flag set', function () {
@@ -365,6 +843,41 @@ describe.only('CLI.Send Integration Test', function () {
         exec(`node index send -r json http://localhost:${port} test/integration/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
           expect(stdout).to.equal('"Skipping no contracts, file not found: test/integration/contracts/missing-contracts-file.json"\n')
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the spec reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        exec(`node index send -r spec http://localhost:${port} test/integration/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.equal('Skipping no contracts, file not found: test/integration/contracts/missing-contracts-file.json\n')
           expect(stderr).to.equal('')
 
           done()
