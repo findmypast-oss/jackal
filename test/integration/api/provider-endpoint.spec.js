@@ -69,7 +69,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
 
     after(jackal.stop)
 
-    it('should get a list of contract results for the specified provider', function (done) {
+    it('should get a no contracts found message for an unknown provider', function (done) {
       request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
@@ -78,20 +78,11 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
       })
     })
 
-    it('should get a list of contract results including failures for the specified provider', function (done) {
+    it('should get a no contracts found message for a second unknown provider', function (done) {
       request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
         expect(JSON.parse(body)).to.eql({ message: 'No contracts exist for provider: provider_two' })
-        done()
-      })
-    })
-
-    it('should get a no contracts found message for an unknown provider', function (done) {
-      request(`http://localhost:${port}/api/contracts/provider_three`, (err, res, body) => {
-        expect(err).to.not.exist
-        expect(res.statusCode).to.equal(200)
-        expect(JSON.parse(body)).to.eql({ message: 'No contracts exist for provider: provider_three' })
         done()
       })
     })

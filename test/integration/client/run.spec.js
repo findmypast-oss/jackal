@@ -88,7 +88,7 @@ describe('Client.Run Integration Test', function () {
 
     after(jackal.stop)
 
-    it('should get a list of contract results for the specified provider', function (done) {
+    it('should get a no contracts found message for an unknown provider', function (done) {
       run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
@@ -97,7 +97,7 @@ describe('Client.Run Integration Test', function () {
       })
     })
 
-    it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
+    it('should get a no contracts found message for an unknown provider using the specified provider url', function (done) {
       run(`http://localhost:${port}`, 'provider_one', { testUrl: 'http://localhost:8381' }, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
@@ -106,7 +106,7 @@ describe('Client.Run Integration Test', function () {
       })
     })
 
-    it('should get a list of contract results including failures for the specified provider', function (done) {
+    it('should get a no contracts found message for a second unknown provider', function (done) {
       run(`http://localhost:${port}`, 'provider_two', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
@@ -115,20 +115,11 @@ describe('Client.Run Integration Test', function () {
       })
     })
 
-    it('should get a list of contract results including failures for the specified provider using the specified provider url', function (done) {
+    it('should get a no contracts found message for a second unknown provider using the specified provider url', function (done) {
       run(`http://localhost:${port}`, 'provider_two', { testUrl: 'http://localhost:8382' }, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
         expect(body).to.eql({ message: 'No contracts exist for provider: provider_two' })
-        done()
-      })
-    })
-
-    it('should get a no contracts found message for an unknown provider', function (done) {
-      run(`http://localhost:${port}`, 'provider_three', {}, (err, res, body) => {
-        expect(err).to.not.exist
-        expect(res.statusCode).to.equal(200)
-        expect(body).to.eql({ message: 'No contracts exist for provider: provider_three' })
         done()
       })
     })

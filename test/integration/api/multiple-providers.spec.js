@@ -74,7 +74,7 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
     })
   })
 
-  it('should return a list of contract results including failures for the second provider', function (done) {
+  it('should return a list of contract results for the second provider', function (done) {
     request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
       expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
