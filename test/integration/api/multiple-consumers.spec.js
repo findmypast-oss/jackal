@@ -48,18 +48,20 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
       body: buf
     }
 
-    request(req, (err, res, body) => {
-      expect(err).to.not.exist
-      expect(res.statusCode).to.equal(201)
-
-      const bodyObj = JSON.parse(body)
-      const expected = [
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
         { name: 'provider_one/user_api/OK', consumer: 'consumer_one', status: 'Pass', error: null },
         { name: 'provider_one/receipt_api/OK', consumer: 'consumer_one', status: 'Pass', error: null },
         { name: 'provider_two/product_api/OK', consumer: 'consumer_one', status: 'Pass', error: null }
       ]
+    }
 
-      expect(bodyObj).to.eql(expected)
+    request(req, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(201)
+      expect(JSON.parse(body)).to.eql(expected)
       done()
     })
   })
@@ -77,18 +79,20 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
       body: buf
     }
 
-    request(req, (err, res, body) => {
-      expect(err).to.not.exist
-      expect(res.statusCode).to.equal(201)
-
-      const bodyObj = JSON.parse(body)
-      const expected = [
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
         { name: 'provider_a/user_api/OK', consumer: 'consumer_two', status: 'Pass', error: null },
         { name: 'provider_b/receipt_api/OK', consumer: 'consumer_two', status: 'Pass', error: null },
         { name: 'provider_c/product_api/OK', consumer: 'consumer_two', status: 'Pass', error: null }
       ]
+    }
 
-      expect(bodyObj).to.eql(expected)
+    request(req, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(201)
+      expect(JSON.parse(body)).to.eql(expected)
       done()
     })
   })
@@ -106,18 +110,20 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
       body: buf
     }
 
-    request(req, (err, res, body) => {
-      expect(err).to.not.exist
-      expect(res.statusCode).to.equal(200)
-
-      const bodyObj = JSON.parse(body)
-      const expected = [
+    const expected = {
+      message: 'Failures Exist',
+      status: 'FAILED',
+      results: [
         { name: 'provider_one/user_api/OK', consumer: 'consumer_three', status: 'Pass', error: null },
         { name: 'provider_one/receipt_api/OK', consumer: 'consumer_three', status: 'Pass', error: null },
         { name: 'provider_two/product_api/OK', consumer: 'consumer_three', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
       ]
+    }
 
-      expect(bodyObj).to.eql(expected)
+    request(req, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(200)
+      expect(JSON.parse(body)).to.eql(expected)
       done()
     })
   })
