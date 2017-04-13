@@ -1,20 +1,23 @@
 'use strict'
 
-const hashData = require('../../../lib/hash-data')
 const mapResult = require('../../../lib/map-result')
 const execute = require('../../../lib/contract/executor')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
-const createExecuteConsumer = (db) => (req, res, next) => {
-  const json = JSON.stringify(req.body)
-  const hash = hashData(json)
-  const contracts = db.retrieve('contracts', hash).contracts
+const executeConsumer = (req, res, next) => {
+  const contracts = req.body
   const parsedContracts = mapContractObjectToContractArray(contracts)
 
   execute(parsedContracts, (err, results) => {
-    res.status(201).send(results.map(mapResult))
-    next()
+    const mappedResults = results.map(mapResult)
+
+    if (mappedResults.some(result => result.status === 'Fail')) {
+      res.status(418).send(mappedResults)
+    } else {
+      req.contractResults = mappedResults
+      next()
+    }
   })
 }
 
-module.exports = createExecuteConsumer
+module.exports = executeConsumer

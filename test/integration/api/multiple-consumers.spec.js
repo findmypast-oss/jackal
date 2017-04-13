@@ -108,7 +108,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Multiple Co
 
     request(req, (err, res, body) => {
       expect(err).to.not.exist
-      expect(res.statusCode).to.equal(201)
+      expect(res.statusCode).to.equal(418)
 
       const bodyObj = JSON.parse(body)
       const expected = [

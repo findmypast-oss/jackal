@@ -7,8 +7,8 @@ const buildConsumerMiddleware = (db, json) => {
     require('../validation/contracts'),
     require('../validation/malformed-contract'),
     require('../validation/unsupported-contract'),
-    require('../db/insert')(db),
-    require('./execute')(db)
+    require('./execute'),
+    require('../db/insert')(db)
   ]
 }
 

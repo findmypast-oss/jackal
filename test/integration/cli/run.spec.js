@@ -61,7 +61,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider-failing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -188,7 +188,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider-failing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -287,7 +287,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider-failing.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,

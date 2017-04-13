@@ -65,8 +65,6 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
 
       const bodyObj = JSON.parse(body)
       const expected = [
-        { name: 'provider_one/receipt_api/OK', consumer: 'consumer_two', status: 'Pass', error: null },
-        { name: 'provider_one/user_api/OK', consumer: 'consumer_two', status: 'Pass', error: null },
         { name: 'provider_one/receipt_api/OK', consumer: 'consumer_one', status: 'Pass', error: null },
         { name: 'provider_one/user_api/OK', consumer: 'consumer_one', status: 'Pass', error: null }
       ]
@@ -83,11 +81,6 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
 
       const expected = [
         {
-          consumer: 'consumer_two',
-          error: 'Error: Contract failed: "description" must be a number',
-          name: 'provider_two/product_api/OK',
-          status: 'Fail'
-        }, {
           consumer: 'consumer_one',
           error: null,
           name: 'provider_two/product_api/OK',

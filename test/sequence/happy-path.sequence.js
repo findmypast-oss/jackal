@@ -106,43 +106,16 @@ describe('Happy Path Sequence Test', function () {
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
-      expect(res.statusCode).to.equal(201)
+      expect(res.statusCode).to.equal(418)
       expect(body).to.eql(expected)
       done()
     })
   })
 
-  it('should show three contracts currently in the jackal database', function (done) {
-    const expected = { apiCount: 3, consumerCount: 1, consumers: [ 'consumer' ], contractCount: 3, providerCount: 2, providers: [ 'provider_one', 'provider_two' ] }
+  it('should show no contracts currently in the jackal database', function (done) {
+    const expected = { apiCount: 0, consumerCount: 0, consumers: [], contractCount: 0, providerCount: 0, providers: [] }
 
     stats(`http://localhost:${port}`, {}, (err, res, body) => {
-      expect(err).to.not.exist
-      expect(res.statusCode).to.equal(200)
-      expect(body).to.eql(expected)
-      done()
-    })
-  })
-
-  it('should run the passing provider successfully and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
-
-    run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
-      expect(err).to.not.exist
-      expect(res.statusCode).to.equal(200)
-      expect(body).to.eql(expected)
-      done()
-    })
-  })
-
-  it('should run the failing provider and return the response', function (done) {
-    const expected = [
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
-    ]
-
-    run(`http://localhost:${port}`, 'provider_two', {}, (err, res, body) => {
       expect(err).to.not.exist
       expect(res.statusCode).to.equal(200)
       expect(body).to.eql(expected)
@@ -191,6 +164,59 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should run the second passing provider successfully and return the response', function (done) {
+    const expected = [
+      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+    ]
+
+    run(`http://localhost:${port}`, 'provider_two', {}, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(200)
+      expect(body).to.eql(expected)
+      done()
+    })
+  })
+
+  it('should send valid, failing contracts from the first consumer to jackal and return the response', function (done) {
+    const expected = [
+      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+    ]
+
+    send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(418)
+      expect(body).to.eql(expected)
+      done()
+    })
+  })
+
+  it('should still show three contracts currently in the jackal database', function (done) {
+    const expected = { apiCount: 3, consumerCount: 1, consumers: [ 'consumer' ], contractCount: 3, providerCount: 2, providers: [ 'provider_one', 'provider_two' ] }
+
+    stats(`http://localhost:${port}`, {}, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(200)
+      expect(body).to.eql(expected)
+      done()
+    })
+  })
+
+  it('should run the still passing first provider successfully and return the response', function (done) {
+    const expected = [
+      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+    ]
+
+    run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
+      expect(err).to.not.exist
+      expect(res.statusCode).to.equal(200)
+      expect(body).to.eql(expected)
+      done()
+    })
+  })
+
+  it('should run the still passing second provider successfully and return the response', function (done) {
     const expected = [
       { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
     ]

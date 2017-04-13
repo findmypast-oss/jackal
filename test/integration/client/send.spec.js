@@ -80,7 +80,7 @@ describe('Client.Send Integration Test', function () {
     it('should return a list of contract results for the consumer suite', function (done) {
       send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
         expect(err).to.not.exist
-        expect(res.statusCode).to.equal(201)
+        expect(res.statusCode).to.equal(418)
 
         const expected = [
           { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },

@@ -173,7 +173,7 @@ describe('CLI.Send Integration Test', function () {
           const parsed = JSON.parse(stdout)
           const parsedBody = JSON.parse(parsed.body)
 
-          expect(parsed.statusCode).to.equal(201)
+          expect(parsed.statusCode).to.equal(418)
           expect(parsedBody).to.eql(expected)
           expect(stderr).to.equal('')
 
