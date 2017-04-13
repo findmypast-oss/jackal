@@ -13,6 +13,7 @@ const validateMalformedContract = (req, res, next) => {
   if (malformedContracts.length > 0) {
     const malformedResponse = {
       message: 'One or more contracts are invalid',
+      status: 'INVALID',
       validations: malformedContracts.map(mapMalformed)
     }
 

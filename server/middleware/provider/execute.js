@@ -14,7 +14,16 @@ const createExecuteProvider = (db, grapher) => (req, res, next) => {
   const parsedContracts = parseContracts(contracts, testUrl)
 
   execute(parsedContracts, (err, results) => {
-    res.status(200).send(results.map(mapResult))
+    const mappedResults = results.map(mapResult)
+    const allContractsPassed = allPassed(mappedResults)
+
+    const body = {
+      message: allContractsPassed ? 'All Passed' : 'Failures Exist',
+      status: allContractsPassed ? 'PASSED' : 'FAILED',
+      results: mappedResults
+    }
+
+    res.status(200).send(body)
 
     next()
   })
@@ -29,4 +38,8 @@ const parseContracts = (contracts, testUrl) => {
   })
 
   return flattenDeep(nestedContracts)
+}
+
+const allPassed = (results) => {
+  return results.every(result => result.status === 'Pass')
 }

@@ -5,7 +5,13 @@ const createValidateNoProviderContracts = (db) => (req, res, next) => {
   const contracts = db.retrieveCollection(provider).map(dbo => dbo.contract)
 
   if (contracts.length === 0) {
-    res.status(200).send(buildMessage(provider))
+    const body = {
+      message: buildMessage(provider),
+      status: 'NO_CONTRACTS',
+      results: []
+    }
+
+    res.status(200).send(body)
   } else {
     next()
   }

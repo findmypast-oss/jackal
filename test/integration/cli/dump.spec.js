@@ -63,12 +63,8 @@ describe('CLI.Dump Integration Test', function () {
 
     it('should get an up to date copy of the database serialised as JSON', function (done) {
       exec(`node index dump -r json http://localhost:${port}`, {}, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.be.an('object')
+        expect(JSON.parse(stdout)).to.be.an('object')
         expect(stderr).to.equal('')
         done()
       })

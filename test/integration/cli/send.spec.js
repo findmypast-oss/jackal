@@ -878,9 +878,11 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        const expected = '{"message":"Skipping no contracts, file not found: test/contracts/missing-contracts-file.json","status":"SKIPPED","results":[]}\n'
+
         exec(`node index send -r json http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal('"Skipping no contracts, file not found: test/contracts/missing-contracts-file.json"\n')
+          expect(stdout).to.equal(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -948,9 +950,11 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        const expected = '{"message":"Skipping no contracts, file not found: test/contracts/missing-contracts-file.json","status":"SKIPPED","results":[]}\n'
+
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json\n')
+          expect(stdout).to.equal(expected)
           expect(stderr).to.equal('')
 
           done()

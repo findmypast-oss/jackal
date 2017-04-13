@@ -60,10 +60,16 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should exit gracefully trying to send non existent contracts from the first consumer to jackal with the skip flag set', function (done) {
+    const expected = {
+      message: 'Skipping no contracts, file not found: test/contracts/missing-contracts-file.json',
+      status: 'SKIPPED',
+      results: []
+    }
+
     send(`http://localhost:${port}`, 'test/contracts/missing-contracts-file.json', { skipMissingContract: true }, (err, res, body) => {
       expect(err).to.not.exist
-      expect(res).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json')
-      expect(body).to.not.exist
+      expect(res).to.not.exist
+      expect(body).to.eql(expected)
       done()
     })
   })

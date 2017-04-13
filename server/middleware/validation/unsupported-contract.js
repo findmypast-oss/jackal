@@ -13,6 +13,7 @@ const validateUnsupportedContract = (req, res, next) => {
   if (unsupportedContracts.length > 0) {
     const unsupportedResponse = {
       message: 'One or more contracts are invalid',
+      status: 'INVALID',
       validations: unsupportedContracts.map(mapUnsupported)
     }
 
