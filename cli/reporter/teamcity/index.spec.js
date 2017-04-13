@@ -1,6 +1,6 @@
 'use strict'
 
-const teamcity = require('./teamcity')
+const teamcity = require('.')
 
 const testData = [
   {

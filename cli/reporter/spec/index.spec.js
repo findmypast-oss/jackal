@@ -1,6 +1,6 @@
 'use strict'
 
-const spec = require('./spec')
+const spec = require('.')
 
 const testData = [
   {
