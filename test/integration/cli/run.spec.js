@@ -81,83 +81,85 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the specified provider', function (done) {
-        const expected = [
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
+          ]
+        }
 
         exec(`node index run -r json http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
-        const expected = [
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
+          ]
+        }
 
         exec(`node index run -r json -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a list of contract results for the second specified provider', function (done) {
-        const expected = [
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+          ]
+        }
 
         exec(`node index run -r json http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a list of contract results for the second specified provider using the specified provider url', function (done) {
-        const expected = [
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+          ]
+        }
 
         exec(`node index run -r json -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a no contracts found message for an unknown provider', function (done) {
-        exec(`node index run -r json http://localhost:${port} provider_three`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
+        const expected = {
+          message: 'No contracts exist for provider: provider_three',
+          status: 'NO_CONTRACTS',
+          results: []
+        }
 
+        exec(`node index run -r json http://localhost:${port} provider_three`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql({ message: 'No contracts exist for provider: provider_three' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
@@ -208,52 +210,60 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for an unknown provider', function (done) {
-        exec(`node index run -r json http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
+        const expected = {
+          message: 'No contracts exist for provider: provider_one',
+          status: 'NO_CONTRACTS',
+          results: []
+        }
 
+        exec(`node index run -r json http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql({ message: 'No contracts exist for provider: provider_one' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a no contracts found message for an unknown provider using the specified provider url', function (done) {
-        exec(`node index run -r json -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
+        const expected = {
+          message: 'No contracts exist for provider: provider_one',
+          status: 'NO_CONTRACTS',
+          results: []
+        }
 
+        exec(`node index run -r json -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql({ message: 'No contracts exist for provider: provider_one' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a no contracts found message for a second unknown provider', function (done) {
-        exec(`node index run -r json http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
+        const expected = {
+          message: 'No contracts exist for provider: provider_two',
+          status: 'NO_CONTRACTS',
+          results: []
+        }
 
+        exec(`node index run -r json http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql({ message: 'No contracts exist for provider: provider_two' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
       })
 
       it('should get a no contracts found message for a second unknown provider using the specified provider url', function (done) {
-        exec(`node index run -r json -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
+        const expected = {
+          message: 'No contracts exist for provider: provider_two',
+          status: 'NO_CONTRACTS',
+          results: []
+        }
 
+        exec(`node index run -r json -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql({ message: 'No contracts exist for provider: provider_two' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
           done()
         })
@@ -539,7 +549,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for an unknown provider', function (done) {
-        const expected = '{"message":"No contracts exist for provider: provider_three"}\n'
+        const expected = 'No contracts exist for provider: provider_three\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_three`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -594,7 +604,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for an unknown provider', function (done) {
-        const expected = '{"message":"No contracts exist for provider: provider_one"}\n'
+        const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -605,7 +615,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for an unknown provider using the specified provider url', function (done) {
-        const expected = '{"message":"No contracts exist for provider: provider_one"}\n'
+        const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r teamcity -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -616,7 +626,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for a second unknown provider', function (done) {
-        const expected = '{"message":"No contracts exist for provider: provider_two"}\n'
+        const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -627,7 +637,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a no contracts found message for a second unknown provider using the specified provider url', function (done) {
-        const expected = '{"message":"No contracts exist for provider: provider_two"}\n'
+        const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r teamcity -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
