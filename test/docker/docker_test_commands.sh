@@ -62,6 +62,8 @@ echo $OUTPUT
 echo $OUTPUT | grep -q "No contracts exist for provider: missing_provider"
 check_exit_code
 
+# Stats command
+
 OUTPUT=`node index stats http://jackal:25863`
 echo $OUTPUT
 echo $OUTPUT | grep -Pq "consumerCount: \d.*consumers: - itunes_search_app providerCount: \d.*providers: - itunes apiCount: \d.* contractCount: \d"

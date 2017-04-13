@@ -106,7 +106,7 @@ describe('Happy Path Sequence Test', function () {
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
-      expect(res.statusCode).to.equal(418)
+      expect(res.statusCode).to.equal(200)
       expect(body).to.eql(expected)
       done()
     })
@@ -185,7 +185,7 @@ describe('Happy Path Sequence Test', function () {
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
-      expect(res.statusCode).to.equal(418)
+      expect(res.statusCode).to.equal(200)
       expect(body).to.eql(expected)
       done()
     })

@@ -6,7 +6,7 @@ const mapResult = require('../../../lib/map-result')
 const execute = require('../../../lib/contract/executor')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
-const createExecuteProvider = (db) => (req, res, next) => {
+const createExecuteProvider = (db, grapher) => (req, res, next) => {
   const provider = req.params.provider
   const testUrl = req.query.testUrl
 
@@ -18,6 +18,7 @@ const createExecuteProvider = (db) => (req, res, next) => {
 
     next()
   })
+  grapher.increment()
 }
 
 module.exports = createExecuteProvider
