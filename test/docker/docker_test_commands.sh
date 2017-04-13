@@ -54,7 +54,7 @@ check_exit_code
 node index send http://jackal:25863 ./test/docker/failing_endpoint.json 1>/dev/null 2>/dev/null
 OUTPUT=`node index run http://jackal:25863 failing_itunes 2>&1`
 echo $OUTPUT
-echo $OUTPUT | grep -q "Failure - not all contracts passed.*Error: Request failed: getaddrinfo ENOTFOUND failing.endpoint failing.endpoint:443"
+echo $OUTPUT | grep -q "No contracts exist for provider: failing_itunes"
 check_exit_code
 
 OUTPUT=`node index run http://jackal:25863 missing_provider 2>&1`
@@ -64,5 +64,5 @@ check_exit_code
 
 OUTPUT=`node index stats http://jackal:25863`
 echo $OUTPUT
-echo $OUTPUT | grep -Pq "consumerCount: \d.*consumers: - itunes_search_app providerCount: \d.*providers: - failing_itunes apiCount: \d.* contractCount: \d"
+echo $OUTPUT | grep -Pq "consumerCount: \d.*consumers: - itunes_search_app providerCount: \d.*providers: - itunes apiCount: \d.* contractCount: \d"
 check_exit_code
