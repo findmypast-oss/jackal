@@ -3,8 +3,8 @@
 const fs = require('fs')
 const exec = require('child_process').exec
 const request = require('request')
-const jackal = require('../helpers/jackal')
-const Provider = require('../helpers/provider')
+const jackal = require('../../helpers/jackal')
+const Provider = require('../../helpers/provider')
 
 describe('CLI.Run Integration Test', function () {
   let providerOne, providerTwo, providerThree, providerFour
@@ -61,7 +61,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -188,7 +188,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,
@@ -287,7 +287,7 @@ describe('CLI.Run Integration Test', function () {
     })
 
     before(function (done) {
-      const buf = fs.readFileSync('test/integration/contracts/provider.json')
+      const buf = fs.readFileSync('test/contracts/provider.json')
 
       const req = {
         url: `http://localhost:${port}/api/contracts`,

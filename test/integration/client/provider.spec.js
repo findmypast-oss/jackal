@@ -2,8 +2,8 @@
 
 const fs = require('fs')
 const request = require('request')
-const jackal = require('../helpers/jackal')
-const Provider = require('../helpers/provider')
+const jackal = require('../../helpers/jackal')
+const Provider = require('../../helpers/provider')
 const run = require('../../../client/run')
 
 describe('Client.Run Integration Test', function () {
@@ -42,7 +42,7 @@ describe('Client.Run Integration Test', function () {
   })
 
   before(function (done) {
-    const buf = fs.readFileSync('test/integration/contracts/provider.json')
+    const buf = fs.readFileSync('test/contracts/provider.json')
 
     const req = {
       url: `http://localhost:${port}/api/contracts`,

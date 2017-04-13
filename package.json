@@ -8,7 +8,7 @@
   },
   "scripts": {
     "pretest": "eslint .",
-    "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.spec.js'",
+    "test": "nyc mocha --opts mocha.opts './{cli,client,lib,server,test}/**/*.{spec,sequence}.js'",
     "inspect": "jsinspect",
     "depcheck": "depcheck",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",

@@ -33,16 +33,12 @@ jackal start
 Alternatively, to specify a custom configuration file:
 
 ```
-// to use a custom configuration file
 jackal start -c /path/to/custom/config.json
 ```
 
-Make sure to define a custom configuration file:
+Make sure to define a custom configuration file, both json and yaml formats are supported:
 
 ```yaml
-jackal:
-  baseUrl: 'http://localhost'
-  port: 25863
 logger:
   environment: development
 statsD:
@@ -51,10 +47,7 @@ statsD:
   prefix: jackal
 db:
   path: db.json
-reporters:
-  pretty: true
-  teamcity: false
-quiet: false
+
 ```
 
 Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`

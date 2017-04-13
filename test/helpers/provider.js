@@ -30,7 +30,7 @@ Provider.prototype.start = function (options, done) {
     res.status(200).json(products)
   })
 
-  this.server = app.listen(options.port, (err) => { if (err) { done(err) } done() })
+  this.server = app.listen(options.port, done)
 }
 
 Provider.prototype.stop = function (done) {
