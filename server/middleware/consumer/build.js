@@ -1,6 +1,6 @@
 'use strict'
 
-const buildConsumerMiddleware = (db, json) => {
+const buildConsumerMiddleware = (db, json, grapher) => {
   return [
     json,
     require('../validation/single-consumer'),
@@ -8,7 +8,7 @@ const buildConsumerMiddleware = (db, json) => {
     require('../validation/malformed-contract'),
     require('../validation/unsupported-contract'),
     require('../db/insert')(db),
-    require('./execute')(db)
+    require('./execute')(db, grapher)
   ]
 }
 

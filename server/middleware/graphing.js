@@ -7,7 +7,6 @@ const hotShotsGrapher = (grapher) => {
   return graphingMiddleware
 
   function onResFinished () {
-    console.error('GRAPHING!');
 
     this.removeListener('finish', onResFinished)
     this.removeListener('error', onResFinished)

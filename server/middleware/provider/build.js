@@ -1,10 +1,10 @@
 'use strict'
 
-const buildProviderMiddleware = (db, json) => {
+const buildProviderMiddleware = (db, json, grapher) => {
   return [
     json,
     require('../validation/no-provider-contracts')(db),
-    require('./execute')(db)
+    require('./execute')(db, grapher)
   ]
 }
 

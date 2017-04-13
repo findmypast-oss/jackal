@@ -26,15 +26,16 @@ const startServer = (options, done) => {
   db = new DB(config.db)
 
   const logger = createLogger(config.logger)
+  const grapher = createGrapher(config.statsD)
 
   if (!config.quiet) {
     app.use(logging(logger))
-    app.use(graphing(createGrapher(config.statsD)))
+    app.use(graphing(grapher))
   }
 
   const dumpMiddleware = buildDumpMiddleware(db, json)
-  const consumerMiddleware = buildConsumerMiddleware(db, json)
-  const providerMiddleware = buildProviderMiddleware(db, json)
+  const consumerMiddleware = buildConsumerMiddleware(db, json, grapher)
+  const providerMiddleware = buildProviderMiddleware(db, json, grapher)
   const statsMiddleware = buildStatsMiddleware(db, json)
 
   app.use(bodyParser.json())
