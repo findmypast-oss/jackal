@@ -7,8 +7,8 @@ const buildConsumerMiddleware = (db, json, grapher) => {
     require('../validation/contracts'),
     require('../validation/malformed-contract'),
     require('../validation/unsupported-contract'),
-    require('../db/insert')(db),
-    require('./execute')(db, grapher)
+    require('./execute')(grapher),
+    require('../db/insert')(db)
   ]
 }
 

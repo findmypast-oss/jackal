@@ -105,7 +105,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
 
       request(req, (err, res, body) => {
         expect(err).to.not.exist
-        expect(res.statusCode).to.equal(201)
+        expect(res.statusCode).to.equal(200)
 
         const bodyObj = JSON.parse(body)
         const expected = [
@@ -324,7 +324,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         done()
       })
     })
-    
+
     after(function (done) {
       fs.stat(dbPath, (err, stats) => {
         if (stats) { fs.unlink(dbPath, done) }

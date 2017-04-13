@@ -173,7 +173,7 @@ describe('CLI.Send Integration Test', function () {
           const parsed = JSON.parse(stdout)
           const parsedBody = JSON.parse(parsed.body)
 
-          expect(parsed.statusCode).to.equal(201)
+          expect(parsed.statusCode).to.equal(200)
           expect(parsedBody).to.eql(expected)
           expect(stderr).to.equal('')
 
@@ -821,6 +821,44 @@ describe('CLI.Send Integration Test', function () {
 
       after(jackal.stop)
     })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return an error advising the contracts file is missing', function (done) {
+        const errMessage = 'Command failed: node index send -r teamcity http://localhost:8378 test/contracts/missing-contracts-file.json\nMissing contract file test/contracts/missing-contracts-file.json\n'
+
+        exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
+          expect(err.message).to.equal(errMessage)
+          expect(err.code).to.equal(1)
+          expect(stdout).to.equal('')
+          expect(stderr).to.equal('Missing contract file test/contracts/missing-contracts-file.json\n')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
   })
 
   context('with missing contracts with skip missing contracts flag set', function () {
@@ -876,6 +914,41 @@ describe('CLI.Send Integration Test', function () {
 
       it('should return a response advising contracts were skipped as the file could not be found', function (done) {
         exec(`node index send -r spec http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
+          expect(err).to.not.exist
+          expect(stdout).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json\n')
+          expect(stderr).to.equal('')
+
+          done()
+        })
+      })
+
+      after(function (done) {
+        fs.stat(dbPath, (err, stats) => {
+          if (stats) { fs.unlink(dbPath, done) }
+          else { done() }
+        })
+      })
+
+      after(jackal.stop)
+    })
+
+    context('using the teamcity reporter', function () {
+      let port, dbPath, options
+
+      before(function (done) {
+        port = 8378
+        dbPath = 'test/integration/api/consumer.json'
+        options = {
+          port: port,
+          quiet: true,
+          db: { path: dbPath }
+        }
+
+        jackal.start(options, done)
+      })
+
+      it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
           expect(stdout).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json\n')
           expect(stderr).to.equal('')
