@@ -14,7 +14,7 @@ const validateMalformedContract = (req, res, next) => {
     const malformedResponse = {
       message: 'One or more contracts are invalid',
       status: 'INVALID',
-      validations: malformedContracts.map(mapMalformed)
+      results: malformedContracts.map(mapMalformed)
     }
 
     res.status(400).send(malformedResponse)

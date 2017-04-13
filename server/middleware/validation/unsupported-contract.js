@@ -14,7 +14,7 @@ const validateUnsupportedContract = (req, res, next) => {
     const unsupportedResponse = {
       message: 'One or more contracts are invalid',
       status: 'INVALID',
-      validations: unsupportedContracts.map(mapUnsupported)
+      results: unsupportedContracts.map(mapUnsupported)
     }
 
     res.status(400).send(unsupportedResponse)
