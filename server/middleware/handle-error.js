@@ -10,7 +10,7 @@ const handleError = (logger) => (err, req, res, next) => {
       results: []
     }
 
-    res.status(500).send()
+    res.status(500).send(body)
   } else {
     next()
   }

@@ -8,7 +8,7 @@ const dump = require('../../client/dump')
 const jackal = require('../helpers/jackal')
 const Provider = require('../helpers/provider')
 
-describe('Happy Path Sequence Test', function () {
+describe.only('Happy Path Sequence Test', function () {
   let port, dbPath, options, providerOne, providerTwo
 
   before(function (done) {
@@ -77,7 +77,8 @@ describe('Happy Path Sequence Test', function () {
   it('should send invalid contracts from the first consumer to jackal and return the response', function (done) {
     const expected = {
       message: 'One or more contracts are invalid',
-      validations: [
+      status: 'INVALID',
+      results: [
         { contract: 'provider_one/user_api/OK <- consumer', valid: true, errors: null },
         { contract: 'provider_one/receipt_api/OK <- consumer', valid: true, errors: null },
         { contract: 'provider_two/product_api/OK <- consumer', valid: false, errors: [ { name: 'ContractValidationError', message: '"request" is required' } ] }
@@ -104,11 +105,15 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should send valid, failing contracts from the first consumer to jackal and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
-    ]
+    const expected = {
+      message: 'Failures Exist',
+      status: 'FAILED',
+      results: [
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+      ]
+    }
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -130,11 +135,15 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should send valid, passing contracts from the first consumer to jackal and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+      ]
+    }
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-passing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -156,10 +165,14 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should run the passing provider successfully and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+      ]
+    }
 
     run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -170,9 +183,13 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should run the second passing provider successfully and return the response', function (done) {
-    const expected = [
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+      ]
+    }
 
     run(`http://localhost:${port}`, 'provider_two', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -183,11 +200,15 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should send valid, failing contracts from the first consumer to jackal and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
-    ]
+    const expected = {
+      message: 'Failures Exist',
+      status: 'FAILED',
+      results: [
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+      ]
+    }
 
     send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -209,10 +230,14 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should run the still passing first provider successfully and return the response', function (done) {
-    const expected = [
-      { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-      { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+      ]
+    }
 
     run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
       expect(err).to.not.exist
@@ -223,9 +248,13 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should run the still passing second provider successfully and return the response', function (done) {
-    const expected = [
-      { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-    ]
+    const expected = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: [
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+      ]
+    }
 
     run(`http://localhost:${port}`, 'provider_two', {}, (err, res, body) => {
       expect(err).to.not.exist
