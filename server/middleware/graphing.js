@@ -13,21 +13,21 @@ const hotShotsGrapher = (grapher) => {
     const graph = this.graph
 
     const responseTime = Date.now() - this.startTime
-    graph['timing']('.response_time', responseTime)
+    graph.timing('.response_time', responseTime)
 
     if (this.statusCode > 199 && this.statusCode < 300) {
-      graph['increment']('.hits.2XX')
+      graph.increment('.hits.2XX')
     }
 
     if (this.statusCode > 399 && this.statusCode < 500) {
-      graph['increment']('.errors.4XX')
+      graph.increment('.errors.4XX')
     }
 
     if (this.statusCode > 499 && this.statusCode < 600) {
-      graph['increment']('.errors.5XX')
+      graph.increment('.errors.5XX')
     }
 
-    graph['close']
+    graph.close()
   }
 
   function onReqAborted () {
