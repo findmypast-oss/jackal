@@ -8,7 +8,7 @@ const dump = require('../../client/dump')
 const jackal = require('../helpers/jackal')
 const Provider = require('../helpers/provider')
 
-describe.only('Happy Path Sequence Test', function () {
+describe('Happy Path Sequence Test', function () {
   let port, dbPath, options, providerOne, providerTwo
 
   before(function (done) {
