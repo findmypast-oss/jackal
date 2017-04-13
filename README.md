@@ -33,11 +33,10 @@ jackal start
 Alternatively, to specify a custom configuration file:
 
 ```
-// to use a custom configuration file
 jackal start -c /path/to/custom/config.json
 ```
 
-Make sure to define a custom configuration file:
+Make sure to define a custom configuration file, both json and yaml formats are supported:
 
 ```yaml
 jackal:
