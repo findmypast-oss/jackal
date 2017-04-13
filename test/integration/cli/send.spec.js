@@ -39,20 +39,19 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error :null },
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error :null }
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error :null },
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error :null }
+          ]
+        }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-valid-passing.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(201)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -161,20 +160,19 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
-        ]
+        const expected = {
+          message: 'Failures Exist',
+          status: 'FAILED',
+          results: [
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+          ]
+        }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(200)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -207,7 +205,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = 'Failure - not all contracts passed\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✖ Test product_api-OK failed for consumer against provider_one\n    Error: Contract failed: "description" must be a number\n'
+        const expected = 'Failures Exist\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✖ Test product_api-OK failed for consumer against provider_one\n    Error: Contract failed: "description" must be a number\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -283,14 +281,15 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a message advising a single consumer is required', function (done) {
+        const expected = {
+          message: 'Contract object must contain a single consumer',
+          status: 'INVALID',
+          results: []
+        }
+
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(400)
-          expect(parsedBody).to.eql({ message: 'Contract object must contain a single consumer' })
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -360,7 +359,7 @@ describe('CLI.Send Integration Test', function () {
       it('should return a message advising a single consumer is required', function (done) {
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.eql('{"message":"Contract object must contain a single consumer"}\n')
+          expect(stdout).to.eql('Contract object must contain a single consumer\n[]\n')
           expect(stderr).to.equal('')
 
           done()
@@ -397,7 +396,8 @@ describe('CLI.Send Integration Test', function () {
       it('should return a list of contract validations for the consumer suite', function (done) {
         const expected = {
           message: 'One or more contracts are invalid',
-          validations: [
+          status: 'INVALID',
+          results: [
             { contract: 'provider_one/user_api/OK <- consumer', errors: null, valid: true },
             { contract: 'provider_one/receipt_api/OK <- consumer', errors: null, valid: true },
             { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: '"request" is required', name: "ContractValidationError" } ], valid: false }
@@ -406,12 +406,7 @@ describe('CLI.Send Integration Test', function () {
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(400)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -481,7 +476,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract validations for the consumer suite', function (done) {
-        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_one/user_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_one/receipt_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"ContractValidationError","message":"\\"request\\" is required"}]}]}\n'
+        const expected = 'One or more contracts are invalid\n[{"contract":"provider_one/user_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_one/receipt_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"ContractValidationError","message":"\\"request\\" is required"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -522,17 +517,13 @@ describe('CLI.Send Integration Test', function () {
       it('should return a list of contract validations for the consumer suite', function (done) {
         const expected = {
           message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
+          status: 'INVALID',
+          results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(400)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -602,7 +593,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract validations for the consumer suite', function (done) {
-        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi string not well formed"}]}]}\n'
+        const expected = 'One or more contracts are invalid\n[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi string not well formed"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -643,17 +634,13 @@ describe('CLI.Send Integration Test', function () {
       it('should return a list of contract validations for the consumer suite', function (done) {
         const expected = {
           message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
+          status: 'INVALID',
+          results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-
-          const parsed = JSON.parse(stdout)
-          const parsedBody = JSON.parse(parsed.body)
-
-          expect(parsed.statusCode).to.equal(400)
-          expect(parsedBody).to.eql(expected)
+          expect(JSON.parse(stdout)).to.eql(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -723,7 +710,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract validations for the consumer suite', function (done) {
-        const expected = '{"message":"One or more contracts are invalid","validations":[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi type not supported"}]}]}\n'
+        const expected = 'One or more contracts are invalid\n[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi type not supported"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -878,9 +865,11 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        const expected = '{"message":"Skipping no contracts, file not found: test/contracts/missing-contracts-file.json","status":"SKIPPED","results":[]}\n'
+
         exec(`node index send -r json http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal('"Skipping no contracts, file not found: test/contracts/missing-contracts-file.json"\n')
+          expect(stdout).to.equal(expected)
           expect(stderr).to.equal('')
 
           done()
@@ -948,9 +937,11 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a response advising contracts were skipped as the file could not be found', function (done) {
+        const expected = 'Skipping no contracts, file not found: test/contracts/missing-contracts-file.json\n'
+
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json --skip-missing-contract`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json\n')
+          expect(stdout).to.equal(expected)
           expect(stderr).to.equal('')
 
           done()

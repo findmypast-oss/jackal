@@ -16,7 +16,13 @@ const createExecuteConsumer = (grapher) => (req, res, next) => {
     const mappedResults = results.map(mapResult)
 
     if (mappedResults.some(result => result.status === 'Fail')) {
-      res.status(200).send(mappedResults)
+      const body = {
+        message: 'Failures Exist',
+        status: 'FAILED',
+        results: mappedResults
+      }
+
+      res.status(200).send(body)
     } else {
       req.contractResults = mappedResults
       next()

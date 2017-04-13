@@ -79,12 +79,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -100,12 +96,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -c consumer http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -121,12 +113,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -c invalid http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -143,12 +131,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -165,12 +149,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -p invalid http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -186,12 +166,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -c consumer -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -207,12 +183,8 @@ describe('CLI.Stats Integration Test', function () {
       }
 
       exec(`node index stats -r json -c invalid -p invalid_too http://localhost:${port}`, (err, stdout, stderr) => {
-        const parsed = JSON.parse(stdout)
-        const parsedBody = JSON.parse(parsed.body)
-
         expect(err).to.not.exist
-        expect(parsed.statusCode).to.equal(200)
-        expect(parsedBody).to.eql(expected)
+        expect(JSON.parse(stdout)).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })

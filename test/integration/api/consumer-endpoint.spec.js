@@ -49,18 +49,20 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
-      request(req, (err, res, body) => {
-        expect(err).to.not.exist
-        expect(res.statusCode).to.equal(201)
-
-        const bodyObj = JSON.parse(body)
-        const expected = [
+      const expected = {
+        message: 'All Passed',
+        status: 'PASSED',
+        results: [
           { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
         ]
+      }
 
-        expect(bodyObj).to.eql(expected)
+      request(req, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res.statusCode).to.equal(201)
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
@@ -103,18 +105,20 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
-      request(req, (err, res, body) => {
-        expect(err).to.not.exist
-        expect(res.statusCode).to.equal(200)
-
-        const bodyObj = JSON.parse(body)
-        const expected = [
+      const expected = {
+        message: 'Failures Exist',
+        status: 'FAILED',
+        results: [
           { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
         ]
+      }
 
-        expect(bodyObj).to.eql(expected)
+      request(req, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res.statusCode).to.equal(200)
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
@@ -157,10 +161,16 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
+      const expected = {
+        message: 'Contract object must contain a single consumer',
+        status: 'INVALID',
+        results: []
+      }
+
       request(req, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-        expect(JSON.parse(body)).to.eql({ message: 'Contract object must contain a single consumer' })
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
@@ -203,19 +213,19 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [
+          { contract: 'provider_one/user_api/OK <- consumer', errors: null, valid: true },
+          { contract: 'provider_one/receipt_api/OK <- consumer', errors: null, valid: true },
+          { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: '"request" is required', name: "ContractValidationError" } ], valid: false }
+        ]
+      }
+
       request(req, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [
-            { contract: 'provider_one/user_api/OK <- consumer', errors: null, valid: true },
-            { contract: 'provider_one/receipt_api/OK <- consumer', errors: null, valid: true },
-            { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: '"request" is required', name: "ContractValidationError" } ], valid: false }
-          ]
-        }
-
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })
@@ -259,15 +269,15 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
+      }
+
       request(req, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
-        }
-
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })
@@ -311,15 +321,15 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         body: buf
       }
 
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
+      }
+
       request(req, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
-        }
-
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })

@@ -41,11 +41,15 @@ describe('Client.Send Integration Test', function () {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(201)
 
-        const expected = [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-        ]
+        const expected = {
+          message: 'All Passed',
+          status: 'PASSED',
+          results: [
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+          ]
+        }
 
         expect(body).to.eql(expected)
         done()
@@ -82,11 +86,15 @@ describe('Client.Send Integration Test', function () {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
 
-        const expected = [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
-        ]
+        const expected = {
+          message: 'Failures Exist',
+          status: 'FAILED',
+          results: [
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+          ]
+        }
 
         expect(body).to.eql(expected)
         done()
@@ -119,10 +127,16 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a message advising a single consumer is required', function (done) {
+      const expected = {
+        message: 'Contract object must contain a single consumer',
+        status: 'INVALID',
+        results: []
+      }
+
       send(`http://localhost:${port}`, 'test/contracts/consumer-invalid-multi-consumer.json', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-        expect(body).to.eql({ message: 'Contract object must contain a single consumer' })
+        expect(body).to.eql(body)
         done()
       })
     })
@@ -153,19 +167,19 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [
+          { contract: 'provider_one/user_api/OK <- consumer', errors: null, valid: true },
+          { contract: 'provider_one/receipt_api/OK <- consumer', errors: null, valid: true },
+          { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: '"request" is required', name: "ContractValidationError" } ], valid: false }
+        ]
+      }
+
       send(`http://localhost:${port}`, 'test/contracts/consumer-invalid-missing-field.json', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [
-            { contract: 'provider_one/user_api/OK <- consumer', errors: null, valid: true },
-            { contract: 'provider_one/receipt_api/OK <- consumer', errors: null, valid: true },
-            { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: '"request" is required', name: "ContractValidationError" } ], valid: false }
-          ]
-        }
-
         expect(body).to.eql(expected)
         done()
       })
@@ -197,15 +211,15 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
+      }
+
       send(`http://localhost:${port}`, 'test/contracts/consumer-invalid-malformed-joi.json', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi string not well formed', name: 'JoiError' } ], valid: false } ]
-        }
-
         expect(body).to.eql(expected)
         done()
       })
@@ -237,15 +251,15 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a list of contract validations for the consumer suite', function (done) {
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
+      }
+
       send(`http://localhost:${port}`, 'test/contracts/consumer-invalid-unsupported-joi.json', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
-
-        const expected = {
-          message: 'One or more contracts are invalid',
-          validations: [ { contract: 'provider_two/product_api/OK <- consumer', errors: [ { message: 'Joi type not supported', name: 'JoiError' } ], valid: false } ]
-        }
-
         expect(body).to.eql(expected)
         done()
       })
@@ -312,10 +326,16 @@ describe('Client.Send Integration Test', function () {
 
     it('should return a response advising contracts were skipped as the file could not be found', function (done) {
       const opts = { skipMissingContract: true }
+      const expected = {
+        message: 'Skipping no contracts, file not found: test/contracts/missing-contracts-file.json',
+        status: 'SKIPPED',
+        results: []
+      }
+
       send(`http://localhost:${port}`, 'test/contracts/missing-contracts-file.json', opts, (err, res, body) => {
         expect(err).to.not.exist
-        expect(res).to.equal('Skipping no contracts, file not found: test/contracts/missing-contracts-file.json')
-        expect(body).to.not.exist
+        expect(res).to.not.exist
+        expect(body).to.eql(expected)
         done()
       })
     })

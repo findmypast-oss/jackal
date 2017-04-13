@@ -20,7 +20,7 @@ check_exit_code
 
 OUTPUT=`node index send http://jackal:25863 ./test/docker/failing_endpoint.json 2>&1`
 echo $OUTPUT
-echo $OUTPUT | grep -Pq "Failure - not all contracts passed.*Error: Request failed: getaddrinfo ENOTFOUND failing.endpoint failing.endpoint:443"
+echo $OUTPUT | grep -Pq "Failures Exist.*Error: Request failed: getaddrinfo ENOTFOUND failing.endpoint failing.endpoint:443"
 check_exit_code
 
 OUTPUT=`node index send http://jackal:25863 ./test/docker/multiple_endpoint.json`

@@ -19,7 +19,8 @@ module.exports = validateContracts
 const buildValidationsResponse = validations => {
   return {
     message: 'One or more contracts are invalid',
-    validations: buildValidations(validations)
+    status: 'INVALID',
+    results: buildValidations(validations)
   }
 }
 

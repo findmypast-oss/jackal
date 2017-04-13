@@ -8,9 +8,21 @@ const createDbInsert = (db) => (req, res) => {
   const hash = hashData(json)
 
   if (db.insert('contracts', hash, contracts)) {
-    res.status(201).send(req.contractResults)
+    const body = {
+      message: 'All Passed',
+      status: 'PASSED',
+      results: req.contractResults
+    }
+
+    res.status(201).send(body)
   } else {
-    res.status(500).send({ message: 'Cache failed on contracts insertion' })
+    const body = {
+      message: 'Cache failed on contracts insertion',
+      status: 'ERROR',
+      results: []
+    }
+
+    res.status(500).send(body)
   }
 }
 

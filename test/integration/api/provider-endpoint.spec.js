@@ -70,19 +70,31 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
     after(jackal.stop)
 
     it('should get a no contracts found message for an unknown provider', function (done) {
+      const expected = {
+        message: 'No contracts exist for provider: provider_one',
+        status: 'NO_CONTRACTS',
+        results: []
+      }
+
       request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
-        expect(JSON.parse(body)).to.eql({ message: 'No contracts exist for provider: provider_one' })
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
 
     it('should get a no contracts found message for a second unknown provider', function (done) {
+      const expected = {
+        message: 'No contracts exist for provider: provider_two',
+        status: 'NO_CONTRACTS',
+        results: []
+      }
+
       request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
-        expect(JSON.parse(body)).to.eql({ message: 'No contracts exist for provider: provider_two' })
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
@@ -125,45 +137,51 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test', fu
     after(jackal.stop)
 
     it('should get a list of contract results for the specified provider', function (done) {
-      request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
-        expect(err).to.not.exist
-        expect(res.statusCode).to.equal(200)
-
-        const bodyObj = JSON.parse(body)
-        const expected = [
+      const expected = {
+        message: 'All Passed',
+        status: 'PASSED',
+        results: [
           { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
         ]
+      }
 
-        expect(bodyObj).to.eql(expected)
+      request(`http://localhost:${port}/api/contracts/provider_one`, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res.statusCode).to.equal(200)
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
 
     it('should get a list of contract results including failures for the specified provider', function (done) {
+      const expected = {
+        message: 'All Passed',
+        status: 'PASSED',
+        results: [
+          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+        ]
+      }
+
       request(`http://localhost:${port}/api/contracts/provider_two`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
-
-        const bodyObj = JSON.parse(body)
-        const expected = [
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Pass', error: null }
-        ]
-
-        expect(bodyObj).to.eql(expected)
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
 
     it('should get a no contracts found message for an unknown provider', function (done) {
+      const expected = {
+        message: 'No contracts exist for provider: provider_three',
+        status: 'NO_CONTRACTS',
+        results: []
+      }
+
       request(`http://localhost:${port}/api/contracts/provider_three`, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
-
-        const bodyObj = JSON.parse(body)
-        const expected = { message: 'No contracts exist for provider: provider_three' }
-
-        expect(bodyObj).to.eql(expected)
+        expect(JSON.parse(body)).to.eql(expected)
         done()
       })
     })
