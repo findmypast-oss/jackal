@@ -2,10 +2,4 @@
 
 const prettyjson = require('prettyjson')
 
-module.exports = (err, response, body) => {
-  if (body) {
-    return [ prettyjson.render(body) ]
-  }
-
-  return []
-}
+module.exports = (err, res, body) => body ? [ prettyjson.render(body) ] : []
