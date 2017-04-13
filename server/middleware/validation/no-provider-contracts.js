@@ -6,7 +6,7 @@ const createValidateNoProviderContracts = (db) => (req, res, next) => {
 
   if (contracts.length === 0) {
     const body = {
-      message: buildMessage(provider),
+      message: `No contracts exist for provider: ${provider}`,
       status: 'NO_CONTRACTS',
       results: []
     }
@@ -18,7 +18,3 @@ const createValidateNoProviderContracts = (db) => (req, res, next) => {
 }
 
 module.exports = createValidateNoProviderContracts
-
-const buildMessage = (provider) => {
-  return { message: `No contracts exist for provider: ${provider}` }
-}
