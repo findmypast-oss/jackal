@@ -22,7 +22,7 @@ module.exports = (jackalUrl, contractsPath, options, done) => {
     return done(`Missing contract file ${contractsPath}`)
   }
 
-  const bodyBuffer = readContract.readContents(contractsPath)
+  const jsonContents = readContract.readContents(contractsPath)
 
   const req = {
     url: jackal,
@@ -31,7 +31,7 @@ module.exports = (jackalUrl, contractsPath, options, done) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: bodyBuffer
+    body: JSON.stringify(jsonContents)
   }
 
   request(req, handleResponse(done))

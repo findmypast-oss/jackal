@@ -21,7 +21,7 @@ describe('Client.Send Integration Test', function () {
   after(function (done) { providerOne.stop(done) })
   after(function (done) { providerTwo.stop(done) })
 
-  context.skip('with valid, passing contracts', function () {
+  context('with valid, passing contracts', function () {
     let port, dbPath, options
 
     before(function (done) {

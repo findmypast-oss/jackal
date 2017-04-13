@@ -3,21 +3,41 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
 
-const exitOnMissingContract = (contractsPath, skipMissingContractFlag) => skipMissingContractFlag && !fs.existsSync(contractsPath)
+const exitOnMissingContract = (contractsPath, skipMissingContractFlag) => {
+  return skipMissingContractFlag && !fs.existsSync(contractsPath)
+}
 
 const contractExists = contractsPath => !fs.existsSync(contractsPath)
 
-const readContents = contractsPath => {
-  const fileBuffer = fs.readFileSync(contractsPath)
+const readFile = filePath => {
+  const fileBuffer = fs.readFileSync(filePath)
 
-  if (contractsPath.endsWith('json')) {
-    return fileBuffer
+  if (filePath.endsWith('json')) {
+    return JSON.parse(fileBuffer.toString())
   }
 
-  const contracts = yaml.safeLoad(fileBuffer.toString())
-  const json = JSON.stringify(contracts)
-  return Buffer.from(json)
+  return yaml.safeLoad(fileBuffer.toString())
+}
 
+const readContents = contractsPath => {
+  if(fs.lstatSync(contractsPath).isDirectory()){
+    return fs.readdirSync(contractsPath)
+      .reduce((acc, file) => {
+        const contractObject = readFile(`${contractsPath}/${file}`)
+
+        if (!Object.keys(acc).length) {
+          return contractObject
+        }
+
+        const consumer = Object.keys(acc)[0]
+        const newAcc = {}
+        newAcc[consumer] = Object.assign(acc[consumer], contractObject[consumer])
+
+        return newAcc
+      }, {})
+  }
+
+  return readFile(contractsPath)
 }
 
 module.exports = {
