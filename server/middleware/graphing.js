@@ -7,6 +7,8 @@ const hotShotsGrapher = (grapher) => {
   return graphingMiddleware
 
   function onResFinished () {
+    console.error('GRAPHING!');
+
     this.removeListener('finish', onResFinished)
     this.removeListener('error', onResFinished)
 
@@ -27,7 +29,6 @@ const hotShotsGrapher = (grapher) => {
       graph.increment('.errors.5XX')
     }
 
-    graph.close()
   }
 
   function onReqAborted () {
