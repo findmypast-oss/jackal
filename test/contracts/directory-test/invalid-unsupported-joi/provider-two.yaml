@@ -1,0 +1,13 @@
+consumer:
+  provider_two:
+    product_api:
+      OK:
+        request:
+          baseUrl: "http://localhost:8379"
+          path: "/api/product"
+        response:
+          statusCode: 200
+          body:
+            - id: "Joi.number().integer()"
+              name: "Joi.string()"
+              description: "Joi.string().lazy()"

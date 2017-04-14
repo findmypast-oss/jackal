@@ -37,7 +37,7 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      send(`http://localhost:${port}`, 'test/contracts/directory-test', {}, (err, res, body) => {
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/valid-passing', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(201)
 
@@ -66,7 +66,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with valid, failing contracts', function () {
+  context('with valid, failing contracts', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -82,7 +82,7 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return a list of contract results for the consumer suite', function (done) {
-      send(`http://localhost:${port}`, 'test/contracts/consumer-valid-failing.json', {}, (err, res, body) => {
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/valid-failing', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
 
@@ -111,7 +111,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with invalid contracts - multiple consumers', function () {
+  context('with invalid contracts - multiple consumers', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -133,7 +133,7 @@ describe('Client.Send Integration Test', function () {
         results: []
       }
 
-      send(`http://localhost:${port}`, 'test/contracts/consumer-invalid-multi-consumer.json', {}, (err, res, body) => {
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/invalid-multi-consumer', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(400)
         expect(body).to.eql(body)
@@ -151,7 +151,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with invalid contracts - missing field(s)', function () {
+  context('with invalid contracts - missing field(s)', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -195,7 +195,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with invalid contracts - malformed joi', function () {
+  context('with invalid contracts - malformed joi', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -235,7 +235,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with invalid contracts - unsupported joi', function () {
+  context('with invalid contracts - unsupported joi', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -275,7 +275,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with missing contracts', function () {
+  context('with missing contracts', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -291,8 +291,8 @@ describe('Client.Send Integration Test', function () {
     })
 
     it('should return an error advising the contracts file is missing', function (done) {
-      send(`http://localhost:${port}`, 'test/contracts/missing-contracts-file.json', {}, (err, res, body) => {
-        expect(err).to.equal('Missing contract file test/contracts/missing-contracts-file.json')
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/missing-contracts', {}, (err, res, body) => {
+        expect(err).to.equal('Missing contract file test/contracts/directory-test/missing-contracts')
         expect(res).to.not.exist
         expect(body).to.not.exist
         done()
@@ -309,7 +309,7 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
-  context.skip('with missing contracts with skip missing contracts flag set', function () {
+  context('with missing contracts with skip missing contracts flag set', function () {
     let port, dbPath, options
 
     before(function (done) {
@@ -327,12 +327,12 @@ describe('Client.Send Integration Test', function () {
     it('should return a response advising contracts were skipped as the file could not be found', function (done) {
       const opts = { skipMissingContract: true }
       const expected = {
-        message: 'Skipping no contracts, file not found: test/contracts/missing-contracts-file.json',
+        message: 'Skipping no contracts, file not found: test/contracts/directory-test/missing-contracts',
         status: 'SKIPPED',
         results: []
       }
 
-      send(`http://localhost:${port}`, 'test/contracts/missing-contracts-file.json', opts, (err, res, body) => {
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/missing-contracts', opts, (err, res, body) => {
         expect(err).to.not.exist
         expect(res).to.not.exist
         expect(body).to.eql(expected)
