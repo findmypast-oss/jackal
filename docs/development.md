@@ -4,7 +4,9 @@
 
 Jackal uses [Mocha](https://mochajs.org/) and [Chai](http://chaijs.com/) for tests, [ESLint](http://eslint.org/) for linting and [NYC](https://github.com/istanbuljs/nyc) for coverage reports.
 
-Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors should be fixed prior to pushing changes. HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
+Tests can be run using the `npm test` command. ESLint will run prior to the tests being run, _all_ linting errors should be fixed prior to pushing changes. Linting warnings should also be fixed, or at least surrounded with `eslint-disable` and `eslint-enable` comments if a good reason exists for not modifying the code.
+
+HTML coverage reports will be generated and can be viewed by opening `/path/to/jackal/coverage/lcov-report/index.html` in a browser, a text summary will be printed after the tests have executed.
 
 ## Contributing
 
@@ -12,7 +14,7 @@ If you would like to contribute to Jackal, we welcome pull requests and will aim
 
 ## Releasing
 
-For developers with contributor status, every push results in an updated `latest` image in [Dockerhub](https://hub.docker.com/r/findmypast/jackal/). Once you decided to create a new release based on [semver](http://semver.org/) run the following to create a tag and bump the `package.json` version:
+For developers with contributor status, every push results in an updated `latest` image in [Dockerhub](https://hub.docker.com/r/findmypast/jackal/). Once you decide to create a new release based on [semver](http://semver.org/) run the following to create a tag and bump the `package.json` version:
 
 ```
 npm version [ patch | minor | major ]

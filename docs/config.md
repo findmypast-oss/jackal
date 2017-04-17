@@ -1,52 +1,46 @@
-# Jackal Validation Guide
+# Jackal Configuration Guide
 
-__NOTE:__ Jackal is currently in alpha and so the API is not yet considered fully stable. Currently we anticipate at least one major API change prior to reaching a 1.0.0 release, and this document will be updated to reflect any API changes we make.
+__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
 
-Jackal can be configured using a JSON file or a YAML file containing a single config object.
+---------------
 
-In JSON, the config object should have the following format:
+A Jackal Server can optionally be started with a configuration file in either JSON or YAML format. This can be used to override settings concerning the database, logging and graphing.
+
+## JSON
+
+If specified in JSON, the configuration file should follow the below format:
+
 ```
 {
   db: {
-    path:         STRING    // OPTIONAL, DEFAULT: db.json
-  }
-  jackal: {
-    baseUrl:      STRING    // OPTIONAL, DEFAULT: http://localhost
-    port:         INTEGER   // OPTIONAL, DEFAULT: 25863
-  }
-  logger:   {
-    environment:  STRING    // OPTIONAL, DEFAULT: "development"
-  }
-  quiet:          BOOLEAN   // OPTIONAL, DEFAULT: false
-  reporters: {
-    pretty:       BOOLEAN   // OPTIONAL, DEFAULT: true
-    teamcity:     BOOLEAN   // OPTIONAL, DEFAULT: false
-  }
+    path:         STRING,   DEFAULT: db.json
+  },
+  logger: {
+    environment:  STRING,   DEFAULT: development
+  },
   statsD: {
-    host:         STRING    // OPTIONAL, DEFAULT: localhost
-    port:         INTEGER   // OPTIONAL, DEFAULT: 8125
-    prefix:       STRING    // OPTIONAL, DEFAULT: jackal
+    host:         STRING,   DEFAULT: localhost
+    port:         INTEGER,  DEFAULT: 8125
+    prefix:       STRING,   DEFAULT: jackal
   }
 }
 ```
 
-In YAML, the config object should have the following format:
+## YAML
+
 ```
 db:
-  path:         STRING      // OPTIONAL, DEFAULT: db.json
-jackal:
-  baseUrl:      STRING      // OPTIONAL, DEFAULT: http://localhost
-  port:         INTEGER     // OPTIONAL, DEFAULT: 25863
+  path:           STRING,   DEFAULT: db.json
 logger:
-  environment:  STRING      // OPTIONAL, DEFAULT: "development"
-quiet:          BOOLEAN     // OPTIONAL, DEFAULT: false
-reporters:
-  pretty:       BOOLEAN     // OPTIONAL, DEFAULT: true
-  teamcity:     BOOLEAN     // OPTIONAL, DEFAULT: false
+  environment:    STRING,   DEFAULT: development
 statsD:
-  host:         STRING      // OPTIONAL, DEFAULT: localhost
-  port:         INTEGER     // OPTIONAL, DEFAULT: 8125
-  prefix:       STRING      // OPTIONAL, DEFAULT: jackal
+  host:           STRING,   DEFAULT: localhost
+  port:           INTEGER,  DEFAULT: 8125
+  prefix:         STRING,   DEFAULT: jackal
 ```
 
-__Note:__ All config object properties (including nested) are optional, where they are not specified the defaults listed above will be used
+## Guidelines
+
+- The `db/path` string is the location in which the Jackal Database will save a JSON serialised copy of the current state to every minute
+- The `logger` object contains an `environment` field by default, additional fields specified here will be logged out with each request received by the Jackal Server
+- The `statsD` object should be used to specify basic settings to handle graphing of data using a `StatsD` server
