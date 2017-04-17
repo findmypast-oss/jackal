@@ -118,7 +118,7 @@ $ jackal send http://localhost:25863 /path/to/contracts.yaml
 
 The client also supports JSON contracts
 ```bash
-$ jackal send http://localhost:25863 /path/to/contracts.yaml
+$ jackal send http://localhost:25863 /path/to/contracts.json
 ```
 
 You can also send JSON contracts file using curl
