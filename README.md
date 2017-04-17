@@ -78,6 +78,10 @@ itunes_search_app:                # consumer name
           path: '/search'
           query: '?term=mclusky&country=gb'
           method: GET
+          headers: 
+            Header-Name: headerValue
+            Another-Header-Name: headerValue
+          timeout: 1000
         response:
           statusCode: 200
           body:                   # body uses Joi type definitions (https://github.com/hapijs/joi)
@@ -85,7 +89,6 @@ itunes_search_app:                # consumer name
             results:
               - trackName: Joi.string()
                 collectionName: Joi.string()
-
 ```
 
 The file is also accepted in the equivalent JSON format, make sure to specify either a `.yml` or `.json` extension.
