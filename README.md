@@ -64,6 +64,8 @@ Jackal should now be available at `http://localhost:25863`, a health endpoint is
 
 ### Testing Contracts as a Consumer
 
+#### Contract file
+
 Make sure to define a contracts file, e.g:
 
 ```yaml
@@ -85,6 +87,14 @@ itunes_search_app:                # consumer name
                 collectionName: Joi.string()
 
 ```
+
+The file is also accepted in the equivalent JSON format, make sure to specify either a `.yml` or `.json` extension.
+
+#### Contract file directory
+
+If you want to split the contract file, you can do so by specifying a directory instead of a contract file. The directory must include JSON or YAML contracts with the same consumer, these files will be mereged at consumer level while overwriting any duplicate providers.
+
+#### Sending the contract
 
 To test the contracts as a consumer you can `POST` them to the running server, e.g:
 
