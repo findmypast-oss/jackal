@@ -96,24 +96,32 @@ If you want to split the contract file, you can do so by specifying a directory 
 
 #### Sending the contract
 
+Usage for the send command:
+```bash
+  Usage: send [options] <jackalUrl> <contractsPath>
+
+  Send the consumer's contracts in the specified file to the Jackal service
+
+  Options:
+
+    -h, --help                 output usage information
+    -r, --reporter [reporter]  Reporter for output [json|spec|teamcity]
+    --skip-missing-contract    Do not execute tests if the contracts file is missing
+```
+
 To test the contracts as a consumer you can `POST` them to the running server, e.g:
 
 To send a YAML contracts file using the client
 ```bash
-$ jackal send /path/to/contracts.yaml
-```
-
-You can also specify the host url and port to run against
-```bash
-$ jackal send /path/to/contracts.yaml -b http://jackal-server -p 1234
+$ jackal send http://localhost:25863 /path/to/contracts.yaml
 ```
 
 The client also supports JSON contracts
 ```bash
-$ jackal send /path/to/contracts.json
+$ jackal send http://localhost:25863 /path/to/contracts.yaml
 ```
 
-To send a JSON contracts file using curl
+You can also send JSON contracts file using curl
 ```bash
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
