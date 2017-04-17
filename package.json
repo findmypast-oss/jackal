@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "0.24.1",
+  "version": "0.24.2",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {
@@ -67,6 +67,7 @@
     "joi": "^10.2.2",
     "js-yaml": "^3.8.3",
     "lodash.every": "^4.6.0",
+    "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.merge": "^4.6.0",
     "lodash.uniq": "^4.5.0",
