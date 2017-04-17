@@ -126,37 +126,56 @@ You can also send JSON contracts file using curl
 $ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
 
-You should then receive a JSON array in response:
+You should then receive a JSON object in response, for example:
 ```json
-[
-  {
-    "name": "itunes/search_by_term_and_country",
-    "consumer": "itunes_search_app",
-    "status": "Pass",
-    "error": null
-  }
-]
+{
+  "message": "All Passed",
+  "status": "PASSED",
+  "results": [
+    {
+      "name": "itunes/search_by_term_and_country/OK",
+      "consumer": "itunes_search_app",
+      "status": "Pass",
+      "error": null
+    }
+  ]
+}
 ```
 
 ### Testing Contracts as a Provider
 
-To test the contracts as a provider you can do a `GET` request to the running server, eg:
-
-To run contracts for a provider using the client
+Usage for the run command:
 ```bash
-$ jackal run <provider_name>
+  Usage: run [options] <jackalUrl> <providerName>
+
+  Runs the provider's contracts stored in the database of the Jackal service
+
+  Options:
+
+    -h, --help                        output usage information
+    -r, --reporter [reporter]         Reporter for output [json|spec|teamcity]
+    -p, --provider-url [providerUrl]  Base url of the provider, defaults to the original URL specified by the consumer contract
 ```
 
-You should then receive a JSON array in response:
+To test the contracts as a provider you can do a `GET` request to the running server, eg:
+```bash
+$ curl -X GET --silent http://localhost:25863/api/contracts/PROVIDER_NAME -H 'Content-Type: application/json'
+```
+
+You should then receive a JSON object in response, for example:
 ```json
-[
-  {
-    "name": "itunes/search_by_term_and_country",
-    "consumer": "itunes_search_app",
-    "status": "Pass",
-    "error": null
-  }
-]
+{
+  "message": "All Passed",
+  "status": "PASSED",
+  "results": [
+    {
+      "name": "itunes/search_by_term_and_country/OK",
+      "consumer": "itunes_search_app",
+      "status": "Pass",
+      "error": null
+    }
+  ]
+}
 ```
 
 ### Sequence of Testing
