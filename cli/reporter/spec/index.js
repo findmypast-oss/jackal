@@ -19,9 +19,6 @@ const handleConsumerLogs = (body) => {
   const providerGroups = groupBy(body.results, result => result.name.split('/')[0])
   const consumerLogs = map(providerGroups, (providerGroup, providerName) => processConsumerLogs(providerGroup, providerName))
   return consumerLogs
-
-  // const provider = body.results[0].name.split('/')[0]
-  // return processConsumerLogs(body.results, provider)
 }
 
 module.exports = (err, response, body) => {
