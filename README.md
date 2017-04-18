@@ -157,7 +157,7 @@ You should then receive a JSON object in response, for example:
 Provider contracts stored on a Jackal server can be run using the Jackal client by specifying the URL of the Jackal server and the name of the provider for which contracts should be run:
 
 ```
-jackal send <jackalUrl> <providerName>
+jackal run <jackalUrl> <providerName>
 ```
 
 By default, the results of running provider contracts on a Jackal server using the client are displayed in `spec` format, for information on how to specify alternatives, please consult the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md).
