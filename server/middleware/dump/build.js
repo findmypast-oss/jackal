@@ -1,8 +1,9 @@
 'use strict'
 
-const buildDumpMiddleware = (db, json) => {
+const buildDumpMiddleware = (db, json, gzip) => {
   return [
     json,
+    gzip,
     require('./dump')(db)
   ]
 }

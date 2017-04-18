@@ -1,8 +1,9 @@
 'use strict'
 
-const buildConsumerMiddleware = (db, json, grapher) => {
+const buildConsumerMiddleware = (db, json, gzip, grapher) => {
   return [
     json,
+    gzip,
     require('../validation/single-consumer'),
     require('../validation/contracts'),
     require('../validation/malformed-contract'),
