@@ -1,9 +1,5 @@
 # Jackal Configuration Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
 A Jackal Server can optionally be started with a configuration file in either JSON or YAML format. This can be used to override settings concerning the database, logging and graphing.
 
 ## JSON

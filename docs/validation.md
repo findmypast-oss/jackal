@@ -1,9 +1,5 @@
 # Jackal Validation Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
 The Jackal Consumer Endpoint can return an array of validations serialised as JSON when the shape or content of submitted contracts is invalid. Each validation object within the validation array has the following format:
 
 ```

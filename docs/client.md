@@ -1,11 +1,5 @@
 # Jackal Client Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
-## Overview
-
 Each command supported by the Jackal client can be run using the following syntax:
 
 ```

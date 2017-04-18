@@ -1,9 +1,5 @@
 # Jackal API Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
 The Jackal server provides five API routes which act as an interface to the service.
 
 ## Health Endpoint
