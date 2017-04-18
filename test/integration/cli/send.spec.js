@@ -733,6 +733,8 @@ describe('CLI.Send Integration Test', function () {
   })
 
   context('with missing contracts', function () {
+    const stderrOutput = '  \u001b[0m\u001b[97m\u001b[41mError\u001b[0m\u001b[90m:\u001b[0m\u001b[37m \u001b[0m\u001b[97mMissing contract file test/contracts/missing-contracts-file.json\u001b[0m\n\u001b[0m\n'
+
     context('using the JSON reporter', function () {
       let port, dbPath, options
 
@@ -749,13 +751,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = 'Command failed: node index send -r json http://localhost:8378 test/contracts/missing-contracts-file.json\nMissing contract file test/contracts/missing-contracts-file.json\n'
+        const errMessage = 'Command failed: node index send -r json http://localhost:8378 test/contracts/missing-contracts-file.json\n  \u001b[0m\u001b[97m\u001b[41mError\u001b[0m\u001b[90m:\u001b[0m\u001b[37m \u001b[0m\u001b[97mMissing contract file test/contracts/missing-contracts-file.json\u001b[0m\n\u001b[0m\n'
 
         exec(`node index send -r json http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
           expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.equal('Missing contract file test/contracts/missing-contracts-file.json\n')
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })
@@ -787,13 +789,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = 'Command failed: node index send -r spec http://localhost:8378 test/contracts/missing-contracts-file.json\nMissing contract file test/contracts/missing-contracts-file.json\n'
+        const errMessage = 'Command failed: node index send -r spec http://localhost:8378 test/contracts/missing-contracts-file.json\n  \u001b[0m\u001b[97m\u001b[41mError\u001b[0m\u001b[90m:\u001b[0m\u001b[37m \u001b[0m\u001b[97mMissing contract file test/contracts/missing-contracts-file.json\u001b[0m\n\u001b[0m\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
           expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.equal('Missing contract file test/contracts/missing-contracts-file.json\n')
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })
@@ -825,13 +827,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = 'Command failed: node index send -r teamcity http://localhost:8378 test/contracts/missing-contracts-file.json\nMissing contract file test/contracts/missing-contracts-file.json\n'
+        const errMessage = 'Command failed: node index send -r teamcity http://localhost:8378 test/contracts/missing-contracts-file.json\n  \u001b[0m\u001b[97m\u001b[41mError\u001b[0m\u001b[90m:\u001b[0m\u001b[37m \u001b[0m\u001b[97mMissing contract file test/contracts/missing-contracts-file.json\u001b[0m\n\u001b[0m\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
           expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.equal('Missing contract file test/contracts/missing-contracts-file.json\n')
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })

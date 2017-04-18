@@ -75,6 +75,7 @@
     "lokijs": "^1.4.3",
     "normalize-url": "^1.9.1",
     "pino": "^4.0.1",
+    "pretty-error": "^2.1.0",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0"
   }
