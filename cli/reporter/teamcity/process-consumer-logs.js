@@ -20,10 +20,10 @@ module.exports = (results, provider) => {
     const name = `${consumer}-contracts-executed-against-${provider}`
     logs.push(`##teamcity[testSuiteStarted name='${name}']`)
     logs.push(processConsumerResults(consumerResults))
-    logs.push(`##teamcity[testSuiteEnded name='${name}']`)
+    logs.push(`##teamcity[testSuiteFinished name='${name}']`)
   })
 
-  logs.push(`##teamcity[testSuiteEnded name='${provider}-contracts']`)
+  logs.push(`##teamcity[testSuiteFinished name='${provider}-contracts']`)
 
   return logs
 }

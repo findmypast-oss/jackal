@@ -505,7 +505,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the specified provider', function (done) {
-        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteEnded name=\'provider_one-contracts\']\n'
+        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteFinished name=\'provider_one-contracts\']\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -516,7 +516,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
-        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteEnded name=\'provider_one-contracts\']\n'
+        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteFinished name=\'provider_one-contracts\']\n'
 
         exec(`node index run -r teamcity -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -527,7 +527,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the second specified provider', function (done) {
-        const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteEnded name=\'provider_two-contracts\']\n'
+        const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteFinished name=\'provider_two-contracts\']\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -538,7 +538,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the second specified provider using the specified provider url', function (done) {
-        const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteEnded name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteEnded name=\'provider_two-contracts\']\n'
+        const expected = '##teamcity[testSuiteStarted name=\'provider_two-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_two\']\n##teamcity[testSuiteFinished name=\'provider_two-contracts\']\n'
 
         exec(`node index run -r teamcity -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
