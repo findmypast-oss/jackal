@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "0.24.2",
+  "version": "1.0.2",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {
@@ -59,6 +59,7 @@
   "dependencies": {
     "body-parser": "^1.16.1",
     "commander": "^2.9.0",
+    "compression": "^1.6.2",
     "consumer-contracts": "^1.5.0",
     "express": "^4.14.1",
     "express-pino-logger": "^2.0.0",
@@ -74,6 +75,7 @@
     "lokijs": "^1.4.3",
     "normalize-url": "^1.9.1",
     "pino": "^4.0.1",
+    "pretty-error": "^2.1.0",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0"
   }

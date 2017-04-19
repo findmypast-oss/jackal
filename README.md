@@ -8,11 +8,22 @@
 [![Contributors](https://img.shields.io/github/contributors/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/graphs/contributors)
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
 
-__NOTE:__ Jackal is currently in alpha and under active development, as such the API should not yet be considered stable. Currently we anticipate at least one major API change prior to reaching a 1.0.0 release, and this document will be updated to reflect any API changes we make.
-
----------------------------
-
 Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
+
+## Documentation
+
+In order to help with using or contributing to Jackal a selection of documentation can be found in this repository:
+
+- [API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
+- [Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
+- [Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
+- [Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
+- [Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
+- [Result Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/result.md)
+- [Statistics Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/statistics.md)
+- [Validation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/validation.md)
+
+The remainder of the README is a quick start guide aimed at allowing users to start a Jackal server and test contracts for both a consumer and provider. A diagram illustrating our expected use case is also included at the bottom of this file.
 
 ## Quickstart Guide
 
@@ -24,7 +35,7 @@ To install Jackal
 npm i -g jackal
 ```
 
-To start a local instance of Jackal with the [default config](./examples/config.json):
+To start a local instance of the Jackal server with the default configuration using the Jackal client:
 
 ```
 jackal start
@@ -33,38 +44,42 @@ jackal start
 Alternatively, to specify a custom configuration file:
 
 ```
+// Using a JSON configuration file
 jackal start -c /path/to/custom/config.json
+
+// Using a YAML configuration file
+jackal start -c /path/to/custom/config.yaml
 ```
 
-Make sure to define a custom configuration file, both json and yaml formats are supported:
+Make sure to define a custom configuration file, both JSON and YAML formats are supported, the default configuration is as follows:
 
 ```yaml
+db:
+  path: db.json
 logger:
   environment: development
 statsD:
   host: localhost
   port: 8125
   prefix: jackal
-db:
-  path: db.json
 
 ```
 
-Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
+Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/api/health`.
 
 ### Docker
 
-To start a dockerised instance of Jackal with the [default config](./examples/config.json):
+To start a dockerised instance of Jackal with the default configuration:
 
 ```
 docker run -p 25863:25863 findmypast/jackal
 ```
 
-Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/health`
+Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/api/health`
 
 ### Testing Contracts as a Consumer
 
-#### Contract file
+#### Contracts file
 
 Make sure to define a contracts file, e.g:
 
@@ -78,7 +93,7 @@ itunes_search_app:                # consumer name
           path: '/search'
           query: '?term=mclusky&country=gb'
           method: GET
-          headers: 
+          headers:
             Header-Name: headerValue
             Another-Header-Name: headerValue
           timeout: 1000
@@ -91,42 +106,32 @@ itunes_search_app:                # consumer name
                 collectionName: Joi.string()
 ```
 
-The file is also accepted in the equivalent JSON format, make sure to specify either a `.yml` or `.json` extension.
+The file is also accepted in the equivalent JSON format, make sure to specify either a `.yaml`, `.yml` or `.json` extension.
 
-#### Contract file directory
+#### Contracts Directory
 
-If you want to split the contract file, you can do so by specifying a directory instead of a contract file. The directory must include JSON or YAML contracts with the same consumer, these files will be mereged at consumer level while overwriting any duplicate providers.
+In order to prevent large, unwieldy contracts files becoming a necessity, it is possible to specify contracts for a single consumer across multiple files. This behaviour is only possible when using the Jackal client to communicate with the Jackal server - it is __not__ possible to upload many files to the server in a single request.
 
-#### Sending the contract
+Each file must follow the format illustrated above and must share a common consumer at the top level. Currently, these files are merged at consumer level, so if a provider is defined in multiple files then contracts defined for the same provider in a later file may overwrite those in an earlier one.
 
-Usage for the send command:
-```bash
-  Usage: send [options] <jackalUrl> <contractsPath>
+#### Sending the Contracts
 
-  Send the consumer's contracts in the specified file to the Jackal service
+##### Using the Jackal Client
 
-  Options:
+Contracts can be sent to a Jackal server using the Jackal client by specifying the URL of the Jackal server and the path to the contracts file or directory:
 
-    -h, --help                 output usage information
-    -r, --reporter [reporter]  Reporter for output [json|spec|teamcity]
-    --skip-missing-contract    Do not execute tests if the contracts file is missing
+```
+jackal send <jackalUrl> <contractsPath>
 ```
 
-To test the contracts as a consumer you can `POST` them to the running server, e.g:
+By default, the results of sending contracts to a Jackal server using the client are displayed in `spec` format, for information on how to specify alternatives, please consult the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md).
 
-To send a YAML contracts file using the client
-```bash
-$ jackal send http://localhost:25863 /path/to/contracts.yaml
-```
+##### Using Curl
 
-The client also supports JSON contracts
-```bash
-$ jackal send http://localhost:25863 /path/to/contracts.json
-```
+Contracts can also be sent to a Jackal server using curl (or similar), however only a single contracts file can be sent, sending a directory of files is __not__ possible:
 
-You can also send JSON contracts file using curl
 ```bash
-$ curl -X POST --silent http://localhost:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
+curl -X POST --silent http://jackal.url:25863/api/contracts -H 'Content-Type: application/json' -d @contracts.json
 ```
 
 You should then receive a JSON object in response, for example:
@@ -147,22 +152,22 @@ You should then receive a JSON object in response, for example:
 
 ### Testing Contracts as a Provider
 
-Usage for the run command:
-```bash
-  Usage: run [options] <jackalUrl> <providerName>
+##### Using the Jackal Client
 
-  Runs the provider's contracts stored in the database of the Jackal service
+Provider contracts stored on a Jackal server can be run using the Jackal client by specifying the URL of the Jackal server and the name of the provider for which contracts should be run:
 
-  Options:
-
-    -h, --help                        output usage information
-    -r, --reporter [reporter]         Reporter for output [json|spec|teamcity]
-    -p, --provider-url [providerUrl]  Base url of the provider, defaults to the original URL specified by the consumer contract
+```
+jackal run <jackalUrl> <providerName>
 ```
 
-To test the contracts as a provider you can do a `GET` request to the running server, eg:
+By default, the results of running provider contracts on a Jackal server using the client are displayed in `spec` format, for information on how to specify alternatives, please consult the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md).
+
+##### Using Curl
+
+Provider contracts stored on a Jackal server can also be run using curl (or similar):
+
 ```bash
-$ curl -X GET --silent http://localhost:25863/api/contracts/PROVIDER_NAME -H 'Content-Type: application/json'
+curl -X GET --silent http://localhost:25863/api/contracts/PROVIDER_NAME -H 'Content-Type: application/json'
 ```
 
 You should then receive a JSON object in response, for example:
@@ -183,19 +188,3 @@ You should then receive a JSON object in response, for example:
 
 ### Sequence of Testing
 ![](./docs/sequence.png)
-
-## Development
-
-Please see the [Jackal Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
-
-## API
-
-Please see the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
-
-## Client
-
-Please see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
-
-## Configuration
-
-Please see the [Jackal Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)

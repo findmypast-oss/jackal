@@ -1,22 +1,22 @@
 sudo: required
 
 services:
-  - docker
+- docker
 
 language: node_js
 node_js:
 - '6'
 
 before_install:
-  - docker-compose build
+- docker-compose build
 
 script:
-  - npm test
-  - docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
+- npm test
+- docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
 
 after_success:
-  - npm run coveralls
-  - "curl -H \"Content-Type: application/json\" --data '{\"build\": true}' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/"
+- npm run coveralls
+- 'curl -H "Content-Type: application/json" --data ''{"build": true}'' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/'
 
 deploy:
   provider: npm
@@ -26,3 +26,10 @@ deploy:
   on:
     tags: true
     repo: findmypast-oss/jackal
+
+notifications:
+  slack:
+    on_success: always
+    on_failure: always
+    rooms:
+      secure: cTuJYnheMrE8LN3wtG9OPJo93W+aJeQqikCDoDleqanbtsYCqh+miN1OHSI/sWhkNNbLTU0oEEXeFlrxbgAzdBOhX+0tsYix/HIsRCCjqUkonhXmW6qsSnYq/XKbvAHORUhaeGN0AZeXqi3mJJiAp25TsD+xqXkEbP8ka4ayQigfkTiDgeFOfDBC64QhgHV4PImoa6bBH/TzSu0f3IHB+/s9JfJRcw32+DlHpLgBuWj5hvdf6DGA9nfK4GsdmPpV4GwewSTp2uwUF+Ucr6QkLeZuQEuKHCLpcUk3c4Lanbnu1WGd2ARCfdZYuybYvgw39OmYlNEI/7f9TCyrZJcHJUUNAy9BOktD4L5UslYvrmM9563GZFXtXooBf+OR+7lPA3qjxZNA5CrKDZ7SwEOgAR5o8FIclRKoHd32NJ4E5ZCGpmTQrFKdE58cJkKlydCNs5O+YrLLLCq/2BcZ77wNFZ3+YhLmXQ7wVT0tZDsfmlv2Sa16zFp8x2hq/7AxNwtMRlkT6o5K9dH2T/YzNiJlMPL88tPYHWEKXSNtjsB26VEpKha0OYTZjarUzsgM3oUQvy/+pexGjWhCfXADV8ygSyv1v/lAcxHUmIymcsMUeD2OLZutv/wHI/cG2Bjy1sgnehRvLG5FLBCDfV3q6E0aLg1xikISt6y07CdUgzwEeuU=

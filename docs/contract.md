@@ -1,9 +1,5 @@
 # Jackal Contract Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
 Consumers should define a Consumer Contracts Object in JSON or YAML. The YAML format may only be used if interacting with a Jackal service via the Jackal Client, the Jackal Client will convert the JSON to YAML prior to sending the Contract(s) to the running Jackal server.
 
 The Jackal Client also allows a set of Consumer Contracts to be defined over multiple files, see the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md) for more information.

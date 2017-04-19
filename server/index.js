@@ -6,11 +6,13 @@ const express = require('express')
 const createLogger = require('../lib/create-logger')
 const createGrapher = require('../lib/create-grapher')
 
+const gzip = require('./middleware/gzip')
 const json = require('./middleware/json')
 const logging = require('./middleware/logging')
 const graphing = require('./middleware/graphing')
 const bodyParser = require('body-parser')
 const handleError = require('./middleware/handle-error')
+const compression = require('compression')
 
 const buildDumpMiddleware = require('./middleware/dump/build')
 const buildConsumerMiddleware = require('./middleware/consumer/build')
@@ -33,12 +35,13 @@ const startServer = (options, done) => {
     app.use(graphing(grapher))
   }
 
-  const dumpMiddleware = buildDumpMiddleware(db, json)
-  const consumerMiddleware = buildConsumerMiddleware(db, json, grapher)
-  const providerMiddleware = buildProviderMiddleware(db, json, grapher)
-  const statsMiddleware = buildStatsMiddleware(db, json)
+  const dumpMiddleware = buildDumpMiddleware(db, json, gzip)
+  const consumerMiddleware = buildConsumerMiddleware(db, json, gzip, grapher)
+  const providerMiddleware = buildProviderMiddleware(db, json, gzip, grapher)
+  const statsMiddleware = buildStatsMiddleware(db, json, gzip)
 
   app.use(bodyParser.json())
+  app.use(compression())
 
   app.get('/api/health', (req, res) => { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)

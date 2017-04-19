@@ -1,9 +1,5 @@
 # Jackal Statistics Guide
 
-__Note:__ Jackal is currently under development, while the API is not likely to change ahead of the 1.0.0 release nor should it be considered fully stable. If the API is updated this guide will be updated to reflect any change.
-
----------------
-
 ## Default Statistics
 
 The below statistics are returned when neither the consumer nor the provider are specified using the query string parameter detailed in the [Jackal API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md).
