@@ -19,11 +19,13 @@
     "url": "git+https://github.com/findmypast-oss/jackal.git"
   },
   "keywords": [
-    "Consumer",
-    "Driven",
-    "Contracts",
-    "Microservice",
-    "Jackal"
+    "consumer",
+    "driven",
+    "contracts",
+    "testing",
+    "microservice",
+    "jackal",
+    "findmypast"
   ],
   "author": "Donald Robertson <drobertson@findmypast.com>",
   "contributors": [
