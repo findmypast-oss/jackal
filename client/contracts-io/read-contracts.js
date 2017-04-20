@@ -7,6 +7,7 @@ const readContractsDir = require('./read-contracts-dir')
 const actions = {
   JSON: (contractsPath) => readContractFile(contractsPath),
   YAML: (contractsPath) => readContractFile(contractsPath),
+  YML: (contractsPath) => readContractFile(contractsPath),
   DIR:  (contractsPath) => readContractsDir(contractsPath)
 }
 
