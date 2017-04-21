@@ -16,18 +16,22 @@ If specifying the Contracts Object in JSON, the following format should be used:
     provider: {
       api: {
         scenario: {
-          before: {
-            url:        STRING                    // REQUIRED
-            method:     STRING                    // OPTIONAL, DEFAULT: GET
-            body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
-            timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
-          },
-          after: {
-            url:        STRING                    // REQUIRED
-            method:     STRING                    // OPTIONAL, DEFAULT: GET
-            body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
-            timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
-          },
+          before: [
+            {
+              url:        STRING                    // REQUIRED
+              method:     STRING                    // OPTIONAL, DEFAULT: GET
+              body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
+              timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+            },
+          ],
+          after: [
+            {
+              url:        STRING                    // REQUIRED
+              method:     STRING                    // OPTIONAL, DEFAULT: GET
+              body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
+              timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+            },
+          ],
           request: {
             baseUrl:    STRING                    // REQUIRED
             path:       STRING                    // OPTIONAL, DEFAULT: undefined
