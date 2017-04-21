@@ -14,14 +14,14 @@ Jackal is a consumer-driven contracts microservice designed to prevent breaking 
 
 In order to help with using or contributing to Jackal a selection of documentation can be found in this repository:
 
-- [API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
-- [Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
-- [Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
-- [Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
-- [Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
-- [Result Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/result.md)
-- [Statistics Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/statistics.md)
-- [Validation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/validation.md)
+- [API Guide](docs/api.md)
+- [Client Guide](docs/client.md)
+- [Config Guide](docs/config.md)
+- [Contract Guide](docs/contract.md)
+- [Development Guide](docs/development.md)
+- [Result Guide](docs/result.md)
+- [Statistics Guide](docs/statistics.md)
+- [Validation Guide](docs/validation.md)
 
 The remainder of the README is a quick start guide aimed at allowing users to start a Jackal server and test contracts for both a consumer and provider. A diagram illustrating our expected use case is also included at the bottom of this file.
 
