@@ -22,6 +22,7 @@ If specifying the Contracts Object in JSON, the following format should be used:
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+              headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
             },
           ],
           after: [
@@ -30,6 +31,7 @@ If specifying the Contracts Object in JSON, the following format should be used:
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
+              headers:    OBJECT                    // OPTIONAL, DEFAULT: undefined
             },
           ],
           request: {
