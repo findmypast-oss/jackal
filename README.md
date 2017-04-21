@@ -12,18 +12,17 @@ A microservice for consumer-driven contract testing.
 
 Findmypast uses Jackal to prevent breaking API changes being released by either consumers or providers of APIs.
 
-In order to help with using or contributing to Jackal a selection of documentation can be found in this repository:
+## Docs
 
-- [API Guide](docs/api.md)
-- [Client Guide](docs/client.md)
-- [Config Guide](docs/config.md)
-- [Contract Guide](docs/contract.md)
-- [Development Guide](docs/development.md)
-- [Result Guide](docs/result.md)
-- [Statistics Guide](docs/statistics.md)
-- [Validation Guide](docs/validation.md)
+- [API](docs/api.md)
+- [Client](docs/client.md)
+- [Config](docs/config.md)
+- [Contract](docs/contract.md)
+- [Development](docs/development.md)
+- [Result](docs/result.md)
+- [Statistics](docs/statistics.md)
+- [Validation](docs/validation.md)
 
-The remainder of the README is a quick start guide aimed at allowing users to start a Jackal server and test contracts for both a consumer and provider. A diagram illustrating our expected use case is also included at the bottom of this file.
 
 ## Quickstart Guide
 
@@ -187,4 +186,7 @@ You should then receive a JSON object in response, for example:
 ```
 
 ### Sequence of Testing
+
+This diagram illustrates the flow of our expected use case.
+
 ![](./docs/sequence.png)
