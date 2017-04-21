@@ -8,9 +8,9 @@
 [![Contributors](https://img.shields.io/github/contributors/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/graphs/contributors)
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
 
-Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
+A microservice for consumer-driven contract testing.
 
-## Documentation
+Findmypast uses Jackal to prevent breaking API changes being released by either consumers or providers of APIs.
 
 In order to help with using or contributing to Jackal a selection of documentation can be found in this repository:
 
