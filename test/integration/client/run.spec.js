@@ -58,6 +58,9 @@ describe('Client.Run Integration Test', function () {
     before(function (done) {
       port = 8378
       dbPath = 'test/integration/api/provider.json'
+      if(fs.existsSync(dbPath)){
+        fs.unlinkSync(dbPath)
+      }
       options = {
         port: port,
         quiet: true,
