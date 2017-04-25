@@ -3,3 +3,4 @@
 --reporter spec
 --require test/globals
 --ui bdd
+--timeout 5000

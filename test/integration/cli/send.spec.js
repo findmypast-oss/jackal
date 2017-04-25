@@ -171,9 +171,9 @@ describe('CLI.Send Integration Test', function () {
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -208,9 +208,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'Failures Exist\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\nprovider_two contracts executed\n  consumer contracts executed against provider_two\n    ✖ Test product_api-OK failed for consumer against provider_two\n    Error: Contract failed: "description" must be a number\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -245,9 +245,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Error: Contract failed: "description" must be a number\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteFinished name=\'provider_one-contracts\']\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -288,9 +288,9 @@ describe('CLI.Send Integration Test', function () {
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -323,9 +323,9 @@ describe('CLI.Send Integration Test', function () {
 
       it('should return a message advising a single consumer is required', function (done) {
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql('Contract object must contain a single consumer\n')
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -358,9 +358,9 @@ describe('CLI.Send Integration Test', function () {
 
       it('should return a message advising a single consumer is required', function (done) {
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-multi-consumer.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql('Contract object must contain a single consumer\n[]\n')
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -405,9 +405,9 @@ describe('CLI.Send Integration Test', function () {
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -442,9 +442,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n    ✔ provider_one/user_api/OK <- consumer is valid\n    ✔ provider_one/receipt_api/OK <- consumer is valid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - ContractValidationError: "request" is required\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -479,9 +479,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n[{"contract":"provider_one/user_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_one/receipt_api/OK <- consumer","valid":true,"errors":null},{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"ContractValidationError","message":"\\"request\\" is required"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-missing-field.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -522,9 +522,9 @@ describe('CLI.Send Integration Test', function () {
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -559,9 +559,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - JoiError: Joi string not well formed\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -596,9 +596,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi string not well formed"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-malformed-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -639,9 +639,9 @@ describe('CLI.Send Integration Test', function () {
         }
 
         exec(`node index send -r json http://localhost:${port} test/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -676,9 +676,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n    ✖ provider_two/product_api/OK <- consumer is invalid: \n        - JoiError: Joi type not supported\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })
@@ -713,9 +713,9 @@ describe('CLI.Send Integration Test', function () {
         const expected = 'One or more contracts are invalid\n[{"contract":"provider_two/product_api/OK <- consumer","valid":false,"errors":[{"name":"JoiError","message":"Joi type not supported"}]}]\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-invalid-unsupported-joi.json`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
 
           done()
         })

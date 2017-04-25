@@ -158,9 +158,9 @@ describe('CLI.Run Integration Test', function () {
         }
 
         exec(`node index run -r json http://localhost:${port} provider_three`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -217,9 +217,9 @@ describe('CLI.Run Integration Test', function () {
         }
 
         exec(`node index run -r json http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -232,9 +232,9 @@ describe('CLI.Run Integration Test', function () {
         }
 
         exec(`node index run -r json -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -247,9 +247,9 @@ describe('CLI.Run Integration Test', function () {
         }
 
         exec(`node index run -r json http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -262,9 +262,9 @@ describe('CLI.Run Integration Test', function () {
         }
 
         exec(`node index run -r json -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(JSON.parse(stdout)).to.eql(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -363,9 +363,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_three\n'
 
         exec(`node index run -r spec http://localhost:${port} provider_three`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -418,9 +418,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r spec http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -429,9 +429,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r spec -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -440,9 +440,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r spec http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -451,9 +451,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r spec -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -552,9 +552,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_three\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_three`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -607,9 +607,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -618,9 +618,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_one\n'
 
         exec(`node index run -r teamcity -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -629,9 +629,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r teamcity http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
@@ -640,9 +640,9 @@ describe('CLI.Run Integration Test', function () {
         const expected = 'No contracts exist for provider: provider_two\n'
 
         exec(`node index run -r teamcity -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
-          expect(err).to.not.exist
+          expect(err).to.exist
           expect(stdout).to.equal(expected)
-          expect(stderr).to.equal('')
+          expect(stderr).not.to.equal('')
           done()
         })
       })
