@@ -12,7 +12,7 @@ const loggers = {
 const statusErrorMap = {
   SKIPPED:      null,
   ERROR:        'Aborting',
-  NO_CONTRACTS: 'No contracts found',
+  NO_CONTRACTS: null,
   INVALID:      'Invalid contracts',
   FAILED:       'Tests failed',
   PASSED:       null
