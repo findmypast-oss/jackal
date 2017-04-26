@@ -1,4 +1,4 @@
-docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+docker login -u $DOCKER_USER -p $DOCKER_PASS
 TAG=$(git describe --exact-match HEAD)
 VALIDTAG="v([0-9]*)\.([0-9]*)\.([0-9]*)"
 
