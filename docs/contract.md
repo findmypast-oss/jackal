@@ -18,7 +18,9 @@ If specifying the Contracts Object in JSON, the following format should be used:
         scenario: {
           before: [
             {
-              url:        STRING                    // REQUIRED, WILL BE DEPRECATED IN FUTURE VERSION, SEE BELOW
+              baseUrl:    STRING                    // REQUIRED
+              path:       STRING                    // OPTIONAL, DEFAULT: undefined
+              query:      STRING                    // OPTIONAL, DEFAULT: undefined
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
@@ -27,7 +29,9 @@ If specifying the Contracts Object in JSON, the following format should be used:
           ],
           after: [
             {
-              url:        STRING                    // REQUIRED, WILL BE DEPRECATED IN FUTURE VERSION, SEE BELOW
+              baseUrl:    STRING                    // REQUIRED
+              path:       STRING                    // OPTIONAL, DEFAULT: undefined
+              query:      STRING                    // OPTIONAL, DEFAULT: undefined
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
