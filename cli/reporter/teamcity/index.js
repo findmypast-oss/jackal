@@ -1,6 +1,6 @@
 'use strict'
 
-const flattenDeep = require('lodash/flattenDeep')
+const _ = require('lodash')
 const processConsumerLogs = require('./process-consumer-logs')
 
 const actions = {
@@ -21,5 +21,5 @@ const handleConsumerLogs = (body) => {
 module.exports = (err, response, body) => {
   const logs = actions[body.status](body)
 
-  return flattenDeep(logs)
+  return _.flattenDeep(logs)
 }

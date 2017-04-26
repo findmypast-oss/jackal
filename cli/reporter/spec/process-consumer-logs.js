@@ -1,6 +1,6 @@
 'use strict'
 
-const forEach = require('lodash/forEach')
+const _ = require('lodash')
 const processTestOutput = require('./process-test-output')
 const mapResultsToConsumer = require('../lib/map-results-to-consumer')
 
@@ -16,7 +16,7 @@ module.exports = (allResults, provider) => {
 
   logs.push(`${provider} contracts executed`)
 
-  forEach(resultsByConsumer, (results, consumer) => {
+  _.forEach(resultsByConsumer, (results, consumer) => {
     logs.push(`  ${consumer} contracts executed against ${provider}`)
     logs.push(processConsumerResults(results, consumer, provider))
   })
