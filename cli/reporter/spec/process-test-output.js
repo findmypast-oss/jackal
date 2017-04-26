@@ -19,7 +19,7 @@ const testFail = (provider, consumer, name, error) => {
 }
 
 module.exports = (provider, consumer, test) => {
-  const testName = test.name.split('/').slice(1).join('-')
+  const testName = test.name.split('/').slice(1).join(' ')
 
   return test.status === 'Fail'
     ? testFail(provider, consumer, testName, test.error)

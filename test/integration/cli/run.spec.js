@@ -316,7 +316,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the specified provider', function (done) {
-        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n'
+        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test receipt_api OK passed for consumer against provider_one\n    ✔ Test user_api OK passed for consumer against provider_one\n'
 
         exec(`node index run -r spec http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -327,7 +327,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results for the specified provider using the specified provider url', function (done) {
-        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test receipt_api-OK passed for consumer against provider_one\n    ✔ Test user_api-OK passed for consumer against provider_one\n'
+        const expected = 'provider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test receipt_api OK passed for consumer against provider_one\n    ✔ Test user_api OK passed for consumer against provider_one\n'
 
         exec(`node index run -r spec -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -338,7 +338,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results including failures for the specified provider', function (done) {
-        const expected = 'provider_two contracts executed\n  consumer contracts executed against provider_two\n    ✔ Test product_api-OK passed for consumer against provider_two\n'
+        const expected = 'provider_two contracts executed\n  consumer contracts executed against provider_two\n    ✔ Test product_api OK passed for consumer against provider_two\n'
 
         exec(`node index run -r spec http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
@@ -349,7 +349,7 @@ describe('CLI.Run Integration Test', function () {
       })
 
       it('should get a list of contract results including failures for the specified provider using the specified provider url', function (done) {
-        const expected = 'provider_two contracts executed\n  consumer contracts executed against provider_two\n    ✔ Test product_api-OK passed for consumer against provider_two\n'
+        const expected = 'provider_two contracts executed\n  consumer contracts executed against provider_two\n    ✔ Test product_api OK passed for consumer against provider_two\n'
 
         exec(`node index run -r spec -p http://localhost:8382 http://localhost:${port} provider_two`, (err, stdout, stderr) => {
           expect(err).to.not.exist
