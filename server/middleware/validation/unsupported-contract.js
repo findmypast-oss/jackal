@@ -1,7 +1,7 @@
 'use strict'
 
 const mapContractObjectToArray = require('../../../lib/map-contract-object-to-array')
-const parseContract = require('../../../lib/parse-contract')
+const parseContract = require('../../../lib/contract/parse')
 const isUnsupported = require('../../../lib/errors/is-unsupported')
 
 const validateUnsupportedContract = (req, res, next) => {

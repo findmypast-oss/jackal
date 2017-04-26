@@ -2,7 +2,7 @@
 
 const graphResults = require('../../../lib/graph-results')
 const mapResult = require('../../../lib/map-result')
-const execute = require('../../../lib/contract/executor')
+const execute = require('../../../lib/contract/execute')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteConsumer = (grapher) => (req, res, next) => {

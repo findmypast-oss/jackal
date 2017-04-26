@@ -4,7 +4,7 @@ const graphResults = require('../../../lib/graph-results')
 const map = require('lodash.map')
 const flattenDeep = require('lodash/flattenDeep')
 const mapResult = require('../../../lib/map-result')
-const execute = require('../../../lib/contract/executor')
+const execute = require('../../../lib/contract/execute')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteProvider = (db, grapher) => (req, res, next) => {
@@ -17,7 +17,7 @@ const createExecuteProvider = (db, grapher) => (req, res, next) => {
   const startTime = Date.now()
   execute(parsedContracts, (err, results) => {
     graphResults(results, grapher, startTime)
-    
+
     const mappedResults = results.map(mapResult)
     const allContractsPassed = allPassed(mappedResults)
 
