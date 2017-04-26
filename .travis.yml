@@ -16,7 +16,7 @@ script:
 
 after_success:
 - npm run coveralls
-- ./docker_publish.sh"
+- bash ./docker_publish.sh"
 
 deploy:
   provider: npm
