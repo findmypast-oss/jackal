@@ -18,7 +18,7 @@ If specifying the Contracts Object in JSON, the following format should be used:
         scenario: {
           before: [
             {
-              url:        STRING                    // REQUIRED
+              url:        STRING                    // REQUIRED, WILL BE DEPRECATED IN FUTURE VERSION, SEE BELOW
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
@@ -27,7 +27,7 @@ If specifying the Contracts Object in JSON, the following format should be used:
           ],
           after: [
             {
-              url:        STRING                    // REQUIRED
+              url:        STRING                    // REQUIRED, WILL BE DEPRECATED IN FUTURE VERSION, SEE BELOW
               method:     STRING                    // OPTIONAL, DEFAULT: GET
               body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
               timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
@@ -65,12 +65,16 @@ consumer:
     api:
       scenario:
         before:
-          - url:        STRING                    // REQUIRED
+          - baseUrl:    STRING                    // REQUIRED
+            path:       STRING                    // OPTIONAL, DEFAULT: undefined
+            query:      STRING                    // OPTIONAL, DEFAULT: undefined
             method:     STRING                    // OPTIONAL, DEFAULT: GET
             body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
             timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
         after:
-          - url:        STRING                    // REQUIRED
+          - baseUrl:    STRING                    // REQUIRED
+            path:       STRING                    // OPTIONAL, DEFAULT: undefined
+            query:      STRING                    // OPTIONAL, DEFAULT: undefined
             method:     STRING                    // OPTIONAL, DEFAULT: GET
             body:       OBJECT / ARRAY / STRING   // OPTIONAL, DEFAULT: undefined
             timeout:    INTEGER                   // OPTIONAL, DEFAULT: OS Dependent
@@ -97,18 +101,25 @@ consumer:
 - Each Scenario object __must__ define a request field and a response field, each of which should be an object
 - Each Scenario object may define a before field and an after field, each of which should be an array of objects
 
+#### URLs
+
+- Urls in `before`, `after` and `request` objects are comprised of the `baseUrl`, `path` and `query` fields
+- The `baseUrl` is required in each object, and must be a valid url _including_ any non-standard port
+- The `path` and `query` fields are not validated so please ensure they are specified correctly
+- Leading and trailing `/` and `?` characters are _not_ required, however Jackal will handle these if included and add them if they are not
+
 #### Before & After Arrays
 
 - The `before` and `after` fields in each Scenario are optional
 - Data from a `before` action cannot be stored and used in the contract being executed, nor in the `after` action
-- If defined, the objects in the `before` and `after` arrays should contain only the fields illustrated in the examples above. The values of these fields should match the data types listed.
-- The `timeout` field is specified in milliseconds.
+- If defined, the objects in the `before` and `after` arrays should contain only the fields illustrated in the examples above. The values of these fields should match the data types listed
+- The `timeout` field is specified in milliseconds
+- The `url` field will be deprecated in favour of the `baseUrl`, `path` and `query` fields similar to the structure of the `request` object
+- Currently, the `url` field will only be used if the `baseUrl` is _not_ specified, please ensure all contracts are updated to use the `baseUrl` field in conjunction with the `path` and `query` fields as necessary
 
 #### Request Object
 
 - `request/baseUrl` must be a valid url
-- `request/path` must begin with a `/`
-- `request/query` must begin with a `?`
 - `request/method` must be one of: `CONNECT`, `DELETE`, `GET`, `HEAD`, `OPTIONS`, `PATCH`, `POST`, `PUT`, `TRACE`
 - `request/timeout` is specified in milliseconds
 
