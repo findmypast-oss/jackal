@@ -53,7 +53,7 @@ const errorWrapper = (fn) => function () {
 const exitCodeHandler = (err) => {
   if (err) {
     /* eslint-disable no-console  */
-    console.error(prettyError.render(err))
+    console.error(prettyError.withoutColors().render(err))
     /* eslint-enble no-console  */
     process.exit(1)
   }
