@@ -1,23 +1,12 @@
-# docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
+docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+TAG=$(git describe --exact-match HEAD)
+VALIDTAG="v([0-9]*)\.([0-9]*)\.([0-9]*)"
 
-if [ "$BRANCH" != "master" ]; then
-  JACKAL_VERSION=v$(node -e "console.log(require('./package.json').version);")
+if [[ "$TAG" =~ $VALIDTAG ]]; then
+  echo "Publishing tagged branch $TAG"
 
-  echo "Publishing tagged branch"
-  echo JACKAL_VERSION
-
-  docker tag local/jackal findmypast/jackal:$JACKAL_VERSION
-  docker push findmypast/jackal:$JACKAL_VERSION
+  docker tag local/jackal findmypast/jackal:$TAG
+  docker push findmypast/jackal:$TAG
   docker tag local/jackal findmypast/jackal:latest
   docker push findmypast/jackal:latest
-  exit 0
-fi
-
-if [ "$BRANCH" == "master" ]; then
-  echo "Publishing master branch"
-
-  docker tag local/jackal findmypast/jackal:latest
-  docker push findmypast/jackal:latest
-  exit 0
 fi
