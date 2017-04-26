@@ -16,12 +16,7 @@ script:
 
 after_success:
 - npm run coveralls
-- export JACKAL_VERSION=$(node -e "console.log(require('./package.json').version);")
-- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-- docker tag jackal:latest findmypast/jackal:$JACKAL_VERSION
-- docker tag jackal:latest findmypast/jackal:latest
-- docker push findmypast/jackal:$JACKAL_VERSION
-- docker push findmypast/jackal:latest
+- ./docker_publish.sh"
 
 deploy:
   provider: npm
