@@ -7,6 +7,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/findmypast-oss/jackal/badge.svg)](https://snyk.io/test/github/findmypast-oss/jackal)
 [![Contributors](https://img.shields.io/github/contributors/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/graphs/contributors)
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
+[![Docker Pulls](https://img.shields.io/docker/pulls/findmypast/jackal.svg)](https://hub.docker.com/r/findmypast/jackal/)
 
 A microservice for consumer-driven contract testing.
 
@@ -56,7 +57,7 @@ jackal start -c /path/to/custom/config.yaml
 ```
 
 We recommend defining a custom configuration file.
-Both JSON and YAML formats are supported.  
+Both JSON and YAML formats are supported.
 The default configuration is as follows:
 
 ```yaml
