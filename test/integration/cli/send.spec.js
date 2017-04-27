@@ -166,7 +166,7 @@ describe('CLI.Send Integration Test', function () {
           results: [
             { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
             { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+            { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Contract failed: "description" must be a number\nresponse.statusCode: 200\nresponse.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]' }
           ]
         }
 
@@ -205,7 +205,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = 'Failures Exist\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api OK passed for consumer against provider_one\n    ✔ Test receipt_api OK passed for consumer against provider_one\nprovider_two contracts executed\n  consumer contracts executed against provider_two\n    ✖ Test product_api OK failed for consumer against provider_two\n    Error: Contract failed: "description" must be a number\n'
+        const expected = 'Failures Exist\nprovider_one contracts executed\n  consumer contracts executed against provider_one\n    ✔ Test user_api OK passed for consumer against provider_one\n    ✔ Test receipt_api OK passed for consumer against provider_one\nprovider_two contracts executed\n  consumer contracts executed against provider_two\n    ✖ Test product_api OK failed for consumer against provider_two\n    Contract failed: "description" must be a number\n        response.statusCode: 200\n        response.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]\n'
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
           expect(err).to.exist
@@ -242,7 +242,7 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return a list of contract results for the consumer suite', function (done) {
-        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Error: Contract failed: "description" must be a number\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteFinished name=\'provider_one-contracts\']\n'
+        const expected = '##teamcity[testSuiteStarted name=\'provider_one-contracts\']\n##teamcity[testSuiteStarted name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testStarted name=\'consumer.user_api.OK\']\n##teamcity[testFinished name=\'consumer.user_api.OK\']\n##teamcity[testStarted name=\'consumer.receipt_api.OK\']\n##teamcity[testFinished name=\'consumer.receipt_api.OK\']\n##teamcity[testStarted name=\'consumer.product_api.OK\']\n##teamcity[testFailed name=\'consumer.product_api.OK\' message=\'Test failed for consumer\' details=\'Contract failed: "description" must be a number\nresponse.statusCode: 200\nresponse.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]\']\n##teamcity[testFinished name=\'consumer.product_api.OK\']\n##teamcity[testSuiteFinished name=\'consumer-contracts-executed-against-provider_one\']\n##teamcity[testSuiteFinished name=\'provider_one-contracts\']\n'
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/consumer-valid-failing.json`, (err, stdout, stderr) => {
           expect(err).to.exist

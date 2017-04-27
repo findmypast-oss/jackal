@@ -111,7 +111,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
         results: [
           { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
           { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+          { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Contract failed: "description" must be a number\nresponse.statusCode: 200\nresponse.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]' }
         ]
       }
 
