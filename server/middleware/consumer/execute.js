@@ -1,8 +1,8 @@
 'use strict'
 
-const graphResults = require('../../../lib/graph-results')
 const mapResult = require('../../../lib/map-result')
-const execute = require('../../../lib/contract/execute')
+const graphResults = require('../../../lib/graph-results')
+const executeContracts = require('../../../lib/execute-contracts')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteConsumer = (grapher) => (req, res, next) => {
@@ -10,7 +10,7 @@ const createExecuteConsumer = (grapher) => (req, res, next) => {
   const parsedContracts = mapContractObjectToContractArray(contracts)
 
   const startTime = Date.now()
-  execute(parsedContracts, (err, results) => {
+  executeContracts(parsedContracts, (err, results) => {
     if (err) { return next(err) }
 
     graphResults(results, grapher, startTime)
