@@ -114,7 +114,7 @@ itunes_search_app:                # consumer name
 ```
 
 The file is also accepted in the equivalent JSON format.
-Supported file extensions are `.yaml`, `.yml`, and `.json`.
+Supported file extensions are `.yaml`, `.yml`, and `.json`. You can also add `.skipped` to the contract file to skip executing it.
 
 #### Contracts Directory
 
