@@ -8,6 +8,7 @@ const actions = {
   JSON: (contractsPath) => readContractFile(contractsPath),
   YAML: (contractsPath) => readContractFile(contractsPath),
   YML: (contractsPath) => readContractFile(contractsPath),
+  SKIPPED: () => [],
   DIR:  (contractsPath) => readContractsDir(contractsPath)
 }
 
