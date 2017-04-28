@@ -1,0 +1,28 @@
+{
+  "consumer": {
+    "provider_one": {
+      "user_api": {
+        "OK": {
+          "request": {
+            "baseUrl": "http://localhost:8379",
+            "path": "/api/user",
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "email": "<%= hyperid %>@test.com"
+            }
+          },
+          "response": {
+            "statusCode": 201,
+            "body": {
+              "id": "Joi.number().integer()",
+              "email": "Joi.string().email()"
+            }
+          }
+        }
+      }
+    }
+  }
+}
