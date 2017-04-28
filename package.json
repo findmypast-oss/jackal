@@ -1,6 +1,6 @@
 {
   "name": "jackal",
-  "version": "1.1.2",
+  "version": "1.2.3",
   "description": "Consumer Driven Contracts Service",
   "main": "index.js",
   "bin": {

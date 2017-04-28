@@ -11,6 +11,8 @@ const createExecuteConsumer = (grapher) => (req, res, next) => {
 
   const startTime = Date.now()
   execute(parsedContracts, (err, results) => {
+    if (err) { return next(err) }
+
     graphResults(results, grapher, startTime)
 
     const mappedResults = results.map(mapResult)
