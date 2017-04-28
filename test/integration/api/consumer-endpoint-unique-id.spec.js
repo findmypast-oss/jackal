@@ -6,20 +6,14 @@ const jackal = require('../../helpers/jackal')
 const Provider = require('../../helpers/provider')
 
 describe('Consumer Endpoint (POST /api/contracts) Integration Test - Unique Id Replacement', function () {
-  let providerOne, providerTwo
+  let providerOne
 
   before(function (done) {
     providerOne = new Provider()
     providerOne.start({ port: 8379 }, done)
   })
 
-  before(function (done) {
-    providerTwo = new Provider()
-    providerTwo.start({ port: 8380 }, done)
-  })
-
   after(function (done) { providerOne.stop(done) })
-  after(function (done) { providerTwo.stop(done) })
 
   context('with valid, passing contracts', function () {
     let port, dbPath, options

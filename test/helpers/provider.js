@@ -27,6 +27,14 @@ Provider.prototype.start = function (options, done) {
     }
   })
 
+  app.get('/api/user/:id', (req, res) => {
+    if (req.params.id !== 1) {
+      res.status(404).send('Not Found')
+    } else {
+      res.status(201).send({ id: 1, name: 'John Doe' })
+    }
+  })
+
   app.get('/api/receipt/:id', (req, res) => {
     const receipt = { id: req.params.id, item: 'item', amount: '1.99' }
     res.status(200).json(receipt)

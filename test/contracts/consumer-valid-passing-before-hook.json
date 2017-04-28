@@ -1,0 +1,37 @@
+{
+  "consumer": {
+    "provider_one": {
+      "user_api": {
+        "OK": {
+          "before": [{
+            "request": {
+              "baseUrl": "http://localhost:8379",
+              "path": "/api/user/<%= id %>",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "email": "<%= hyperid %>@test.com"
+              }
+            },
+            "variables": {
+              "id": "$.body.id"
+            }
+          }],
+          "request": {
+            "baseUrl": "http://localhost:8379",
+            "path": "/api/user/<%= id %>"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "id": "Joi.number().integer()",
+              "name": "Joi.string()"
+            }
+          }
+        }
+      }
+    }
+  }
+}
