@@ -20,7 +20,7 @@ Provider.prototype.start = function (options, done) {
   })
 
   app.post('/api/user', (req, res) => {
-    if (req.body.email.startsWith('<%= hyperid %>')) {
+    if (req.body.email.startsWith('<%= unique_id %>')) {
       res.status(400).send({ message: 'Email Address In Use' })
     } else {
       res.status(201).send({ id: 1, email: req.body.email })
