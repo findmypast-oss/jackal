@@ -52,10 +52,7 @@
     "coveralls": "^2.13.0",
     "eslint": "^3.19.0",
     "mocha": "^3.2.0",
-    "mockery": "^2.0.0",
-    "nyc": "^10.2.0",
-    "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0"
+    "nyc": "^10.2.0"
   },
   "dependencies": {
     "async": "^2.3.0",
