@@ -5,7 +5,7 @@ const request = require('request')
 const jackal = require('../../helpers/jackal')
 const Provider = require('../../helpers/provider')
 
-describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
+describe('Consumer Endpoint (POST /api/contracts) Integration Test - Before Hook', function () {
   let providerOne
 
   before(function (done) {
@@ -54,6 +54,60 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test', function ()
       request(req, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(201)
+        expect(JSON.parse(body)).to.eql(expected)
+        done()
+      })
+    })
+
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
+      })
+    })
+
+    after(jackal.stop)
+  })
+
+  context('with valid contracts and a broken before hook', function () {
+    let port, dbPath, options
+
+    before(function (done) {
+      port = 8378
+      dbPath = 'test/integration/api/consumer.json'
+      options = {
+        port: port,
+        quiet: true,
+        db: { path: dbPath }
+      }
+
+      jackal.start(options, done)
+    })
+
+    it('should return a list of contract results for the consumer suite', function (done) {
+      const buf = fs.readFileSync('test/contracts/consumer-valid-broken-before-hook.json')
+
+      const req = {
+        url: `http://localhost:${port}/api/contracts`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: buf
+      }
+
+      const expected = {
+        message: 'Failures Exist',
+        status: 'FAILED',
+        results: [
+          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Fail', error: 'Create User before hook failed. Expected response status: 200, got: 201' }
+        ]
+      }
+
+      request(req, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res.statusCode).to.equal(200)
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })

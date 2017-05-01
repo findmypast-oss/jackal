@@ -17,7 +17,7 @@
               }
             },
             "response": {
-              "statusCode": 201
+              "statusCode": 200
             },
             "variables": {
               "id": "$.body.id"

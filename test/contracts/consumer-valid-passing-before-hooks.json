@@ -4,6 +4,7 @@
       "user_api": {
         "OK": {
           "before": [{
+            "name": "Create User",
             "request": {
               "baseUrl": "http://localhost:8379",
               "path": "/api/user",
@@ -15,13 +16,20 @@
                 "email": "<%= hyperid %>@test.com"
               }
             },
+            "response": {
+              "statusCode": 201
+            },
             "variables": {
               "id": "$.body.id"
             }
           }, {
+            "name": "Delete User",
             "request": {
               "baseUrl": "http://localhost:8379",
               "path": "/api/user/<%= id %>/delete"
+            },
+            "response": {
+              "statusCode": 200
             }
           }],
           "request": {

@@ -23,6 +23,16 @@
               "id": "$.body.id"
             }
           }],
+          "after": [{
+            "name": "Delete User",
+            "request": {
+              "baseUrl": "http://localhost:8379",
+              "path": "/api/user/<%= id %>/delete"
+            },
+            "response": {
+              "statusCode": 200
+            }
+          }],
           "request": {
             "baseUrl": "http://localhost:8379",
             "path": "/api/user/<%= id %>"
