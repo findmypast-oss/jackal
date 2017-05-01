@@ -10,7 +10,12 @@ HTML coverage reports will be generated and can be viewed by opening `/path/to/j
 
 ## Contributing
 
-If you would like to contribute to Jackal, we welcome pull requests and will aim to review them as fast as we can.
+Jackal is now in a state which meets our needs for Contract testing and it is unlikely we will add any new features in the short term, if you would like to contribute to Jackal then some features we would like to see added include:
+
+- an API interface to remove specific contracts from the running database by consumer, provider or both
+- a UI to display the current state of the Jackal instance, including usage statistics
+
+If you would like to contribute the above or any other features to Jackal, we welcome pull requests and will aim to review them as fast as we can.
 
 ## Releasing
 

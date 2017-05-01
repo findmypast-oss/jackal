@@ -1,0 +1,41 @@
+{
+  "consumer": {
+    "provider_one": {
+      "user_api": {
+        "OK": {
+          "before": [{
+            "name": "Create User",
+            "request": {
+              "baseUrl": "http://localhost:8379",
+              "path": "/api/user",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json"
+              },
+              "body": {
+                "email": "<%= unique_id %>@test.com"
+              }
+            },
+            "response": {
+              "statusCode": 200
+            },
+            "variables": {
+              "id": "$.body.id"
+            }
+          }],
+          "request": {
+            "baseUrl": "http://localhost:8379",
+            "path": "/api/user/<%= id %>"
+          },
+          "response": {
+            "statusCode": 200,
+            "body": {
+              "id": "Joi.number().integer()",
+              "name": "Joi.string()"
+            }
+          }
+        }
+      }
+    }
+  }
+}

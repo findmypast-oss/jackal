@@ -2,11 +2,11 @@
 
 The Jackal Consumer Endpoint can return an array of validations serialised as JSON when the shape or content of submitted contracts is invalid. Each validation object within the validation array has the following format:
 
-```
+```json
 {
-  contract: STRING
-  valid:    BOOLEAN
-  errors:   NULL | ARRAY
+  "contract": "STRING",
+  "valid":    "BOOLEAN",
+  "errors":   "NULL | ARRAY"
 }
 ```
 
@@ -16,9 +16,9 @@ The following applies:
 - The `valid` field is a boolean and indicate whether the contract is valid
 - The `errors` field is `null` if the contract is valid, if it is invalid, the `errors` field is an array of objects with the following shape:
 
-```
+```json
 {
-  name:     STRING
-  message:  STRING
+  "name":     "STRING",
+  "message":  "STRING"
 }
 ```

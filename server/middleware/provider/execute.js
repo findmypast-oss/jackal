@@ -1,9 +1,9 @@
 'use strict'
 
-const graphResults = require('../../../lib/graph-results')
 const _ = require('lodash')
 const mapResult = require('../../../lib/map-result')
-const execute = require('../../../lib/contract/execute')
+const executeContracts = require('../../../lib/execute-contracts')
+const graphResults = require('../../../lib/graph-results')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteProvider = (db, grapher) => (req, res, next) => {
@@ -14,7 +14,7 @@ const createExecuteProvider = (db, grapher) => (req, res, next) => {
   const parsedContracts = parseContracts(contracts, testUrl)
 
   const startTime = Date.now()
-  execute(parsedContracts, (err, results) => {
+  executeContracts(parsedContracts, (err, results) => {
     graphResults(results, grapher, startTime)
 
     const mappedResults = results.map(mapResult)
