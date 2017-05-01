@@ -79,3 +79,4 @@ variables:        OBJECT  // OPTIONAL, DEFAULT: undefined
 - The `variables` object allow for data from earlier hooks to be stored and passed through to subsequent hooks _and_ the contract under test
 - Each field on the `variables` object should be a valid [jsonpath](https://github.com/dchester/jsonpath) query where the root object is the response
 - Overwriting the key `hookArrayType` in the variables object will likely lead to incorrect or garbled error messages in the event of the hook failing
+- See the [Jackal Interpolation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/interpolation.md) for more information on how to use Variables and Unique Identifiers
