@@ -5,7 +5,7 @@ const request = require('request')
 const jackal = require('../../helpers/jackal')
 const Provider = require('../../helpers/provider')
 
-describe.only('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
+describe('Consumer Endpoint (POST /api/contracts) Integration Test', function () {
   let providerOne
 
   before(function (done) {
@@ -53,7 +53,7 @@ describe.only('Consumer Endpoint (POST /api/contracts) Integration Test', functi
 
       request(req, (err, res, body) => {
         expect(err).to.not.exist
-        expect(res.statusCode).to.equal(200)
+        expect(res.statusCode).to.equal(201)
         expect(JSON.parse(body)).to.eql(expected)
         done()
       })

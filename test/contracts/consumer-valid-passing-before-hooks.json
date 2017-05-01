@@ -18,10 +18,15 @@
             "variables": {
               "id": "$.body.id"
             }
+          }, {
+            "request": {
+              "baseUrl": "http://localhost:8379",
+              "path": "/api/user/<%= id %>/delete"
+            }
           }],
           "request": {
             "baseUrl": "http://localhost:8379",
-            "path": "/api/user/<%= id %>"
+            "path": "/api/user/<%= id %>/restore"
           },
           "response": {
             "statusCode": 200,

@@ -28,10 +28,26 @@ Provider.prototype.start = function (options, done) {
   })
 
   app.get('/api/user/:id', (req, res) => {
-    if (req.params.id !== 1) {
-      res.status(404).send('Not Found')
+    if (req.params.id === '1') {
+      res.status(200).send({ id: 1, name: 'John Doe' })
     } else {
-      res.status(201).send({ id: 1, name: 'John Doe' })
+      res.status(404).send('Not Found')
+    }
+  })
+
+  app.get('/api/user/:id/delete', (req, res) => {
+    if (req.params.id === '1') {
+      res.status(200).end()
+    } else {
+      res.status(404).send('Not Found')
+    }
+  })
+
+  app.get('/api/user/:id/restore', (req, res) => {
+    if (req.params.id === '1') {
+      res.status(200).send({ id: 1, name: 'John Doe' })
+    } else {
+      res.status(404).send('Not Found')
     }
   })
 
