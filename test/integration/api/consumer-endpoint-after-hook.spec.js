@@ -101,7 +101,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - After Hook'
         message: 'Failures Exist',
         status: 'FAILED',
         results: [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Fail', error: 'Delete User after hook failed. Expected response status: 201, got: 200' }
+          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Fail', error: 'Delete User after hook failed.\nExpected response status: 201, got: 200\n' }
         ]
       }
 

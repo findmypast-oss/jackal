@@ -101,7 +101,7 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Before Hook
         message: 'Failures Exist',
         status: 'FAILED',
         results: [
-          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Fail', error: 'Create User before hook failed. Expected response status: 200, got: 201' }
+          { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Fail', error: 'Create User before hook failed.\nExpected response status: 200, got: 201\n{"id":1,"email":"test@test.com"}' }
         ]
       }
 
