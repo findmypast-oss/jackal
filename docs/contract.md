@@ -81,6 +81,7 @@ consumer:
   - `request/path`
   - `request/query`
   - `request/headers`
+  - `request/body`
 - See the [Jackal Interpolation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/interpolation.md) for more information on how to use Variables and Unique Identifiers
 
 #### Before & After Arrays

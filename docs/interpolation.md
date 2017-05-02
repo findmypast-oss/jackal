@@ -4,7 +4,7 @@ Jackal can interpolate data into requests to facilitate idempotent contract test
 
 Unique identifiers can be interpolated into the body of any `before` and `after` hook requests and the main contract request.
 
-Variables can be interpolated into the url and headers of any `before` and `after` hook requests and the main contract request. Variables are extracted from the response received in reply to a hook request - they can _not_ be extracted from the response received in reply to the main contract request.
+Variables can be interpolated into the URL, headers and body of any `before` and `after` hook requests and the main contract request. Variables are extracted from the response received in reply to a hook request - they can _not_ be extracted from the response received in reply to the main contract request.
 
 ## Unique Identifiers
 
@@ -86,6 +86,5 @@ Following on from the above example, the mapped variables object would be passed
 
 ### Guidelines
 
-- Request bodies can _not_ be modified other than through the interpolation of unique identifiers
 - Variables can be extracted from responses to Hook Requests, they can _not_ be extracted from responses to the main Contract Request
-- Variables can be used to modify the URL or headers of subsequent Hook Requests _and_ the main Contract Request
+- Variables can be used to modify the URL, headers or body of subsequent Hook Requests _and_ the main Contract Request
