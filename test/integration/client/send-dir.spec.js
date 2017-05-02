@@ -309,6 +309,40 @@ describe('Client.Send Integration Test', function () {
     after(jackal.stop)
   })
 
+  context('with all skipped contracts', function () {
+    let port, dbPath, options
+
+    before(function (done) {
+      port = 8378
+      dbPath = 'test/integration/api/consumer.json'
+      options = {
+        port: port,
+        quiet: true,
+        db: { path: dbPath }
+      }
+
+      jackal.start(options, done)
+    })
+
+    it('should return an error advising unskipped contracts files could not be found', function (done) {
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/all-skipped', {}, (err, res, body) => {
+        expect(err).to.equal('All contract files skipped: test/contracts/directory-test/all-skipped')
+        expect(res).to.not.exist
+        expect(body).to.not.exist
+        done()
+      })
+    })
+
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
+      })
+    })
+
+    after(jackal.stop)
+  })
+
   context('with missing contracts with skip missing contracts flag set', function () {
     let port, dbPath, options
 
@@ -333,6 +367,47 @@ describe('Client.Send Integration Test', function () {
       }
 
       send(`http://localhost:${port}`, 'test/contracts/directory-test/missing-contracts', opts, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res).to.not.exist
+        expect(body).to.eql(expected)
+        done()
+      })
+    })
+
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
+      })
+    })
+
+    after(jackal.stop)
+  })
+
+  context('with all skipped contracts and skip missing contracts flag set', function () {
+    let port, dbPath, options
+
+    before(function (done) {
+      port = 8378
+      dbPath = 'test/integration/api/consumer.json'
+      options = {
+        port: port,
+        quiet: true,
+        db: { path: dbPath }
+      }
+
+      jackal.start(options, done)
+    })
+
+    it('should return a response advising contracts were skipped as the no unskipped files could be found', function (done) {
+      const opts = { skipMissingContract: true }
+      const expected = {
+        message: 'Skipping, all contract files skipped: test/contracts/directory-test/all-skipped',
+        status: 'SKIPPED',
+        results: []
+      }
+
+      send(`http://localhost:${port}`, 'test/contracts/directory-test/all-skipped', opts, (err, res, body) => {
         expect(err).to.not.exist
         expect(res).to.not.exist
         expect(body).to.eql(expected)
