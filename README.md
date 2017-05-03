@@ -9,9 +9,7 @@
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/findmypast/jackal.svg)](https://hub.docker.com/r/findmypast/jackal/)
 
-A microservice for consumer-driven contract testing.
-
-Findmypast uses Jackal to prevent breaking API changes being released by either consumers or providers of APIs.
+A microservice for consumer-driven contract testing. Read about Jackal on the [findmypast tech blog](http://tech.findmypast.com/jackal-consumer-driven-contract-testing/).
 
 ## Docs
 
@@ -20,6 +18,8 @@ Findmypast uses Jackal to prevent breaking API changes being released by either 
 - [Config](docs/config.md)
 - [Contract](docs/contract.md)
 - [Development](docs/development.md)
+- [Hook](docs/hook.md)
+- [Interpolation](docs/interpolation.md)
 - [Result](docs/result.md)
 - [Statistics](docs/statistics.md)
 - [Validation](docs/validation.md)
@@ -56,8 +56,7 @@ jackal start -c /path/to/custom/config.json
 jackal start -c /path/to/custom/config.yaml
 ```
 
-We recommend defining a custom configuration file.
-Both JSON and YAML formats are supported.
+We recommend defining a custom configuration file, both JSON and YAML formats are supported, see the [Jackal Configuration Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md) for more information.
 The default configuration is as follows:
 
 ```yaml

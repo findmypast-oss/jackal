@@ -9,3 +9,4 @@ coverage
 .npmignore
 .travis.yml
 README.md
+account.json

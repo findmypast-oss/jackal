@@ -20,3 +20,5 @@ docker-compose.yml
 Dockerfile
 mocha.opts
 README.md
+
+account.json

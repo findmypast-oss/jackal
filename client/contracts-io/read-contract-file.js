@@ -7,6 +7,10 @@ module.exports = (filePath) => {
   const fileBuffer = fs.readFileSync(filePath)
 
   if (filePath.endsWith('skipped')) {
+    /* eslint-disable no-console */
+    console.log(`Skipping file: ${filePath}`)
+    /* eslint-enable no-console */
+
     return {}
   }
 

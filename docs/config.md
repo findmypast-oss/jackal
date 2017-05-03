@@ -6,33 +6,33 @@ A Jackal Server can optionally be started with a configuration file in either JS
 
 If specified in JSON, the configuration file should follow the below format:
 
-```
+```json
 {
-  db: {
-    path:         STRING,   DEFAULT: db.json
+  "db": {
+    "path":         "STRING,   DEFAULT: db.json"
   },
-  logger: {
-    environment:  STRING,   DEFAULT: development
+  "logger": {
+    "environment":  "STRING,   DEFAULT: development"
   },
-  statsD: {
-    host:         STRING,   DEFAULT: localhost
-    port:         INTEGER,  DEFAULT: 8125
-    prefix:       STRING,   DEFAULT: jackal
+  "statsD": {
+    "host":         "STRING,   DEFAULT: localhost",
+    "port":         "INTEGER,  DEFAULT: 8125",
+    "prefix":       "STRING,   DEFAULT: jackal"
   }
 }
 ```
 
 ## YAML
 
-```
+```yaml
 db:
-  path:           STRING,   DEFAULT: db.json
+  path:             STRING,   DEFAULT: db.json
 logger:
-  environment:    STRING,   DEFAULT: development
+  environment:      STRING,   DEFAULT: development
 statsD:
-  host:           STRING,   DEFAULT: localhost
-  port:           INTEGER,  DEFAULT: 8125
-  prefix:         STRING,   DEFAULT: jackal
+  host:             STRING,   DEFAULT: localhost
+  port:             INTEGER,  DEFAULT: 8125
+  prefix:           STRING,   DEFAULT: jackal
 ```
 
 ## Guidelines
