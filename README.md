@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/findmypast/jackal.svg)](https://hub.docker.com/r/findmypast/jackal/)
 
-A microservice for consumer-driven contract testing.
+A microservice for consumer-driven contract testing. Read about Jackal on the [findmypast tech blog](http://tech.findmypast.com/jackal-consumer-driven-contract-testing/).
 
 ## Docs
 
