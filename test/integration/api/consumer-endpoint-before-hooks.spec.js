@@ -69,6 +69,60 @@ describe('Consumer Endpoint (POST /api/contracts) Integration Test - Before Hook
     after(jackal.stop)
   })
 
+  context('with valid contracts and an invalid before hook', function () {
+    let port, dbPath, options
+
+    before(function (done) {
+      port = 8378
+      dbPath = 'test/integration/api/consumer.json'
+      options = {
+        port: port,
+        quiet: true,
+        db: { path: dbPath }
+      }
+
+      jackal.start(options, done)
+    })
+
+    it('should return a list of contract results for the consumer suite', function (done) {
+      const buf = fs.readFileSync('test/contracts/consumer-valid-invalid-before-hooks.json')
+
+      const req = {
+        url: `http://localhost:${port}/api/contracts`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: buf
+      }
+
+      const expected = {
+        message: 'One or more contracts are invalid',
+        status: 'INVALID',
+        results: [
+          { contract: 'provider_one/user_api/OK <- consumer', errors: [ { message: '"response" is required', name: 'HookValidationError' }, { message: '"request" is required', name: 'HookValidationError' } ], valid: false }
+        ]
+      }
+
+      request(req, (err, res, body) => {
+        expect(err).to.not.exist
+        expect(res.statusCode).to.equal(400)
+        expect(JSON.parse(body)).to.eql(expected)
+        done()
+      })
+    })
+
+    after(function (done) {
+      fs.stat(dbPath, (err, stats) => {
+        if (stats) { fs.unlink(dbPath, done) }
+        else { done() }
+      })
+    })
+
+    after(jackal.stop)
+  })
+
   context('with valid contracts and a broken before hook', function () {
     let port, dbPath, options
 
