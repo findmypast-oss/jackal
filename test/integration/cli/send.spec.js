@@ -733,7 +733,7 @@ describe('CLI.Send Integration Test', function () {
   })
 
   context('with missing contracts', function () {
-    const stderrOutput = '.*Error:.*Missing contract file test/contracts/missing-contracts-file.json.*'
+    const stderrOutput = 'Missing contract file test/contracts/missing-contracts-file.json\n'
 
     context('using the JSON reporter', function () {
       let port, dbPath, options
@@ -751,13 +751,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = `Command failed: node index send -r json http://localhost:8378 test/contracts/missing-contracts-file.json\n  ${stderrOutput}`
+        const errMessage = `Command failed: node index send -r json http://localhost:8378 test/contracts/missing-contracts-file.json\n${stderrOutput}`
 
         exec(`node index send -r json http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
-          expect(err.message).to.match(new RegExp(errMessage))
+          expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.match(new RegExp(stderrOutput))
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })
@@ -789,13 +789,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = `Command failed: node index send -r spec http://localhost:8378 test/contracts/missing-contracts-file.json\n  ${stderrOutput}`
+        const errMessage = `Command failed: node index send -r spec http://localhost:8378 test/contracts/missing-contracts-file.json\n${stderrOutput}`
 
         exec(`node index send -r spec http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
-          expect(err.message).to.match(new RegExp(errMessage))
+          expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.match(new RegExp(stderrOutput))
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })
@@ -827,13 +827,13 @@ describe('CLI.Send Integration Test', function () {
       })
 
       it('should return an error advising the contracts file is missing', function (done) {
-        const errMessage = `Command failed: node index send -r teamcity http://localhost:8378 test/contracts/missing-contracts-file.json\n  ${stderrOutput}`
+        const errMessage = `Command failed: node index send -r teamcity http://localhost:8378 test/contracts/missing-contracts-file.json\n${stderrOutput}`
 
         exec(`node index send -r teamcity http://localhost:${port} test/contracts/missing-contracts-file.json`, (err, stdout, stderr) => {
-          expect(err.message).to.match(new RegExp(errMessage))
+          expect(err.message).to.equal(errMessage)
           expect(err.code).to.equal(1)
           expect(stdout).to.equal('')
-          expect(stderr).to.match(new RegExp(stderrOutput))
+          expect(stderr).to.equal(stderrOutput)
 
           done()
         })
