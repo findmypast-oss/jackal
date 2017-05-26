@@ -12,7 +12,9 @@
     "inspect": "jsinspect",
     "depcheck": "depcheck",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "uat": "node test/uat/index.js"
+    "uat": "node test/uat/index.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -74,6 +76,8 @@
     "pretty-error": "^2.1.0",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0",
-    "uuid": "^3.0.1"
-  }
+    "uuid": "^3.0.1",
+    "snyk": "^1.30.1"
+  },
+  "snyk": true
 }
