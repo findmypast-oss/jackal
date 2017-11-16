@@ -1,6 +1,7 @@
 'use strict'
 
 const fs = require('fs')
+const _ = require('lodash')
 const exec = require('child_process').exec
 const request = require('request')
 const jackal = require('../../helpers/jackal')
@@ -132,7 +133,10 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r json -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(JSON.parse(stdout)).to.eql(expected)
+        const parsed_stdout = JSON.parse(stdout)
+        parsed_stdout.apis.sort()
+        expected.apis.sort()
+        expect(parsed_stdout).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -167,7 +171,10 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r json -c consumer -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(JSON.parse(stdout)).to.eql(expected)
+        const parsed_stdout = JSON.parse(stdout)
+        parsed_stdout.apis.sort()
+        expected.apis.sort()
+        expect(parsed_stdout).to.eql(expected)
         expect(stderr).to.equal('')
         done()
       })
@@ -197,7 +204,8 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r pretty http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(stdout).to.equal(expected)
+        _.forEach(expected.split('\n'), (line) =>
+          expect(stdout.split('\n')).to.include(line))
         expect(stderr).to.equal('')
         done()
       })
@@ -208,7 +216,8 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r pretty -c consumer http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(stdout).to.equal(expected)
+        _.forEach(expected.split('\n'), (line) =>
+          expect(stdout.split('\n')).to.include(line))
         expect(stderr).to.equal('')
         done()
       })
@@ -219,7 +228,8 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r pretty -c invalid http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(stdout).to.equal(expected)
+        _.forEach(expected.split('\n'), (line) =>
+          expect(stdout.split('\n')).to.include(line))
         expect(stderr).to.equal('')
         done()
       })
@@ -230,7 +240,8 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r pretty -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(stdout).to.equal(expected)
+        _.forEach(expected.split('\n'), (line) =>
+          expect(stdout.split('\n')).to.include(line))
         expect(stderr).to.equal('')
         done()
       })
@@ -252,7 +263,8 @@ describe('CLI.Stats Integration Test', function () {
 
       exec(`node index stats -r pretty -c consumer -p provider_one http://localhost:${port}`, (err, stdout, stderr) => {
         expect(err).to.not.exist
-        expect(stdout).to.equal(expected)
+        _.forEach(expected.split('\n'), (line) =>
+          expect(stdout.split('\n')).to.include(line))
         expect(stderr).to.equal('')
         done()
       })
