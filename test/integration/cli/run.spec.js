@@ -1,12 +1,13 @@
 'use strict'
 
 const fs = require('fs')
+const _ = require('lodash')
 const exec = require('child_process').exec
 const request = require('request')
 const jackal = require('../../helpers/jackal')
 const Provider = require('../../helpers/provider')
 
-describe.only('CLI.Run Integration Test', function () {
+describe('CLI.Run Integration Test', function () {
   let providerOne, providerTwo, providerThree, providerFour
 
   before(function (done) {
@@ -320,7 +321,9 @@ describe.only('CLI.Run Integration Test', function () {
 
         exec(`node index run -r spec http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal(expected)
+
+          _.forEach(expected.split('\n'), (line) =>
+            expect(stdout.split('\n')).to.include(line))
           expect(stderr).to.equal('')
           done()
         })
@@ -331,7 +334,8 @@ describe.only('CLI.Run Integration Test', function () {
 
         exec(`node index run -r spec -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal(expected)
+          _.forEach(expected.split('\n'), (line) =>
+            expect(stdout.split('\n')).to.include(line))
           expect(stderr).to.equal('')
           done()
         })
@@ -509,7 +513,8 @@ describe.only('CLI.Run Integration Test', function () {
 
         exec(`node index run -r teamcity http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal(expected)
+          _.forEach(expected.split('\n'), (line) =>
+            expect(stdout.split('\n')).to.include(line))
           expect(stderr).to.equal('')
           done()
         })
@@ -520,7 +525,8 @@ describe.only('CLI.Run Integration Test', function () {
 
         exec(`node index run -r teamcity -p http://localhost:8381 http://localhost:${port} provider_one`, (err, stdout, stderr) => {
           expect(err).to.not.exist
-          expect(stdout).to.equal(expected)
+          _.forEach(expected.split('\n'), (line) =>
+            expect(stdout.split('\n')).to.include(line))
           expect(stderr).to.equal('')
           done()
         })
