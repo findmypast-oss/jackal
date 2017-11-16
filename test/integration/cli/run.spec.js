@@ -6,7 +6,7 @@ const request = require('request')
 const jackal = require('../../helpers/jackal')
 const Provider = require('../../helpers/provider')
 
-describe('CLI.Run Integration Test', function () {
+describe.only('CLI.Run Integration Test', function () {
   let providerOne, providerTwo, providerThree, providerFour
 
   before(function (done) {
@@ -85,8 +85,8 @@ describe('CLI.Run Integration Test', function () {
           message: 'All Passed',
           status: 'PASSED',
           results: [
-            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
-            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null},
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null}
           ]
         }
 
@@ -103,8 +103,8 @@ describe('CLI.Run Integration Test', function () {
           message: 'All Passed',
           status: 'PASSED',
           results: [
-            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null},
-            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null}
+            { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null},
+            { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null}
           ]
         }
 
