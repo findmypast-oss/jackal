@@ -12,7 +12,7 @@
     "inspect": "jsinspect",
     "depcheck": "depcheck",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "uat": "node test/uat/index.js",
+    "uat": "node test/uat/index.js"
   },
   "repository": {
     "type": "git",
