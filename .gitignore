@@ -42,3 +42,6 @@ contracts.json
 config.yml
 config.json
 db.json
+
+# VS Code
+/.vscode/
