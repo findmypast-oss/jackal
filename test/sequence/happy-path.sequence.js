@@ -111,7 +111,7 @@ describe('Happy Path Sequence Test', function () {
       results: [
         { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
         { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Contract failed: "description" must be a number\nresponse.statusCode: 200\nresponse.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]' }
       ]
     }
 
@@ -169,8 +169,8 @@ describe('Happy Path Sequence Test', function () {
       message: 'All Passed',
       status: 'PASSED',
       results: [
-        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null }
       ]
     }
 
@@ -206,7 +206,7 @@ describe('Happy Path Sequence Test', function () {
       results: [
         { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
         { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Error: Contract failed: "description" must be a number' }
+        { name: 'provider_two/product_api/OK', consumer: 'consumer', status: 'Fail', error: 'Contract failed: "description" must be a number\nresponse.statusCode: 200\nresponse.body: [{"id":1,"name":"Crutch","description":"Walking Aid"},{"id":2,"name":"Jackal","description":"Wild Animal"}]' }
       ]
     }
 
@@ -234,8 +234,8 @@ describe('Happy Path Sequence Test', function () {
       message: 'All Passed',
       status: 'PASSED',
       results: [
-        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null },
-        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null }
+        { name: 'provider_one/user_api/OK', consumer: 'consumer', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer', status: 'Pass', error: null }
       ]
     }
 
@@ -276,7 +276,7 @@ describe('Happy Path Sequence Test', function () {
   })
 
   it('should get stats for the first provider', function (done) {
-    const expected = { apiCount: 2, apis: [ 'receipt_api', 'user_api' ], consumerCount: 1, consumers: [ 'consumer' ], contractCount: 2, provider: 'provider_one' }
+    const expected = { apiCount: 2, apis: [ 'user_api', 'receipt_api' ], consumerCount: 1, consumers: [ 'consumer' ], contractCount: 2, provider: 'provider_one' }
 
     stats(`http://localhost:${port}`, { provider: 'provider_one' }, (err, res, body) => {
       expect(err).to.not.exist

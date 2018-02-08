@@ -1,10 +1,9 @@
 'use strict'
 
-const graphResults = require('../../../lib/graph-results')
-const map = require('lodash.map')
-const flattenDeep = require('lodash/flattenDeep')
+const _ = require('lodash')
 const mapResult = require('../../../lib/map-result')
-const execute = require('../../../lib/contract/executor')
+const executeContracts = require('../../../lib/execute-contracts')
+const graphResults = require('../../../lib/graph-results')
 const mapContractObjectToContractArray = require('../../../lib/map-contract-object-to-contract-array')
 
 const createExecuteProvider = (db, grapher) => (req, res, next) => {
@@ -15,9 +14,9 @@ const createExecuteProvider = (db, grapher) => (req, res, next) => {
   const parsedContracts = parseContracts(contracts, testUrl)
 
   const startTime = Date.now()
-  execute(parsedContracts, (err, results) => {
+  executeContracts(parsedContracts, (err, results) => {
     graphResults(results, grapher, startTime)
-    
+
     const mappedResults = results.map(mapResult)
     const allContractsPassed = allPassed(mappedResults)
 
@@ -36,11 +35,11 @@ const createExecuteProvider = (db, grapher) => (req, res, next) => {
 module.exports = createExecuteProvider
 
 const parseContracts = (contracts, testUrl) => {
-  const nestedContracts = map(contracts, (contract) => {
+  const nestedContracts = _.map(contracts, (contract) => {
     return mapContractObjectToContractArray(contract, testUrl)
   })
 
-  return flattenDeep(nestedContracts)
+  return _.flattenDeep(nestedContracts)
 }
 
 const allPassed = (results) => results.every(result => result.status === 'Pass')

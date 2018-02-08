@@ -63,8 +63,8 @@ describe('Provider Endpoint (GET /api/contracts/:provider) Integration Test - Mu
       message: 'All Passed',
       status: 'PASSED',
       results: [
-        { name: 'provider_one/receipt_api/OK', consumer: 'consumer_one', status: 'Pass', error: null },
-        { name: 'provider_one/user_api/OK', consumer: 'consumer_one', status: 'Pass', error: null }
+        { name: 'provider_one/user_api/OK', consumer: 'consumer_one', status: 'Pass', error: null },
+        { name: 'provider_one/receipt_api/OK', consumer: 'consumer_one', status: 'Pass', error: null }
       ]
     }
 

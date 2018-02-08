@@ -1,7 +1,7 @@
 'use strict'
 
 const fs = require('fs')
-const merge = require('lodash.merge')
+const _ = require('lodash')
 const readContractFile = require('./read-contract-file')
 
 const readContractsDir = (contractsPath) => {
@@ -9,7 +9,7 @@ const readContractsDir = (contractsPath) => {
     .map(filePath => readContractFile(`${contractsPath}/${filePath}`))
   const args = [ {} ].concat(contracts)
 
-  return merge.apply(null, args)
+  return _.merge.apply(null, args)
 }
 
 module.exports = readContractsDir

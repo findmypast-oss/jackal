@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const bodyParser = require('body-parser')
 
 var Provider = function () {
   this.server = null
@@ -8,6 +9,7 @@ var Provider = function () {
 
 Provider.prototype.start = function (options, done) {
   const app = express()
+  app.use(bodyParser.json())
 
   app.get('/api/user', (req, res) => {
     const users = [
@@ -15,6 +17,38 @@ Provider.prototype.start = function (options, done) {
       { id: 2, name: 'Jane Doe' }
     ]
     res.status(200).json(users)
+  })
+
+  app.post('/api/user', (req, res) => {
+    if (req.body.email.startsWith('<%= unique_id %>')) {
+      res.status(400).send({ message: 'Email Address In Use' })
+    } else {
+      res.status(201).send({ id: 1, email: req.body.email })
+    }
+  })
+
+  app.get('/api/user/:id', (req, res) => {
+    if (req.params.id === '1') {
+      res.status(200).send({ id: 1, name: 'John Doe' })
+    } else {
+      res.status(404).send('Not Found')
+    }
+  })
+
+  app.get('/api/user/:id/delete', (req, res) => {
+    if (req.params.id === '1') {
+      res.status(200).end()
+    } else {
+      res.status(404).send('Not Found')
+    }
+  })
+
+  app.get('/api/user/:id/restore', (req, res) => {
+    if (req.params.id === '1') {
+      res.status(200).send({ id: 1, name: 'John Doe' })
+    } else {
+      res.status(404).send('Not Found')
+    }
   })
 
   app.get('/api/receipt/:id', (req, res) => {

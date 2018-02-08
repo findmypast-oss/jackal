@@ -42,6 +42,7 @@ contracts.json
 config.yml
 config.json
 db.json
+account.json
 
 # VS Code
 /.vscode/

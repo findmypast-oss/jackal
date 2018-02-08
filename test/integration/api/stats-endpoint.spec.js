@@ -118,7 +118,7 @@ describe('Stats Endpoint Integration Test', function () {
         consumerCount: 1,
         consumers: [ 'consumer' ],
         apiCount: 2,
-        apis: [ 'receipt_api', 'user_api' ],
+        apis: [ 'user_api', 'receipt_api' ],
         contractCount: 2
       }
 
@@ -157,7 +157,7 @@ describe('Stats Endpoint Integration Test', function () {
         consumer: 'consumer',
         provider: 'provider_one',
         apiCount: 2,
-        apis: [ 'receipt_api', 'user_api' ],
+        apis: [ 'user_api', 'receipt_api' ],
         contractCount: 2
       }
 

@@ -16,7 +16,7 @@ script:
 
 after_success:
 - npm run coveralls
-- 'curl -H "Content-Type: application/json" --data ''{"build": true}'' -X POST https://registry.hub.docker.com/u/findmypast/jackal/trigger/d36f9366-be76-4b91-ab78-84079f214112/'
+- bash ./docker_publish.sh
 
 deploy:
   provider: npm

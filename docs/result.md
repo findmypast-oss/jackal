@@ -4,12 +4,12 @@ The Jackal API returns an array of results as part of the response body when Con
 
 The objects in the results array have the following shape:
 
-```
+```json
 {
-  name:       STRING
-  consumer:   STRING
-  status:     STRING
-  error:      STRING OR NULL
+  "name":       "STRING",
+  "consumer":   "STRING",
+  "status":     "STRING",
+  "error":      "STRING OR NULL"
 }
 ```
 

@@ -119,6 +119,8 @@ describe('Client.Stats Integration Test', function () {
         contractCount: 2
       }
 
+      body.apis.sort()
+      expected.apis.sort()
       expect(body).to.eql(expected)
       done()
     })
@@ -156,6 +158,8 @@ describe('Client.Stats Integration Test', function () {
         contractCount: 2
       }
 
+      body.apis.sort()
+      expected.apis.sort()
       expect(body).to.eql(expected)
       done()
     })

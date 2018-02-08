@@ -1,8 +1,8 @@
 'use strict'
 
 const mapContractObjectToArray = require('../../../lib/map-contract-object-to-array')
-const parseContract = require('../../../lib/parse-contract')
-const isMalformed = require('../../../lib/is-malformed')
+const parseContract = require('../../../lib/contract/parse')
+const isMalformed = require('../../../lib/errors/is-malformed')
 
 const validateMalformedContract = (req, res, next) => {
   const contracts = req.body

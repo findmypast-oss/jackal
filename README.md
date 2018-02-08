@@ -7,51 +7,57 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/findmypast-oss/jackal/badge.svg)](https://snyk.io/test/github/findmypast-oss/jackal)
 [![Contributors](https://img.shields.io/github/contributors/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/graphs/contributors)
 [![License](https://img.shields.io/github/license/findmypast-oss/jackal.svg)](https://github.com/findmypast-oss/jackal/blob/master/LICENSE)
+[![Docker Pulls](https://img.shields.io/docker/pulls/findmypast/jackal.svg)](https://hub.docker.com/r/findmypast/jackal/)
 
-Jackal is a consumer-driven contracts microservice designed to prevent breaking API changes being released by either consumers or providers of APIs.
+A microservice for consumer-driven contract testing. Read about Jackal on the [findmypast tech blog](http://tech.findmypast.com/jackal-consumer-driven-contract-testing/).
 
-## Documentation
+## Docs
 
-In order to help with using or contributing to Jackal a selection of documentation can be found in this repository:
+- [API](docs/api.md)
+- [Client](docs/client.md)
+- [Config](docs/config.md)
+- [Contract](docs/contract.md)
+- [Development](docs/development.md)
+- [Hook](docs/hook.md)
+- [Interpolation](docs/interpolation.md)
+- [Result](docs/result.md)
+- [Statistics](docs/statistics.md)
+- [Validation](docs/validation.md)
 
-- [API Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/api.md)
-- [Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md)
-- [Config Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md)
-- [Contract Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/contract.md)
-- [Development Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/development.md)
-- [Result Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/result.md)
-- [Statistics Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/statistics.md)
-- [Validation Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/validation.md)
+## Quick Start
 
-The remainder of the README is a quick start guide aimed at allowing users to start a Jackal server and test contracts for both a consumer and provider. A diagram illustrating our expected use case is also included at the bottom of this file.
+- [Running Locally](#running-locally)
+- [Running on Docker](#running-on-docker)
+- [Testing Contracts as a Consumer](#testing-contracts-as-a-consumer)
+- [Testing Contracts as a Provider](#testing-contracts-as-a-provider)
+- [Sequence of Testing](#sequence-of-testing)
 
-## Quickstart Guide
-
-### Local
+### Running Locally
 
 To install Jackal
 
-```
+```sh
 npm i -g jackal
 ```
 
-To start a local instance of the Jackal server with the default configuration using the Jackal client:
+To start a local instance of the Jackal server with the default configuration:
 
-```
+```sh
 jackal start
 ```
 
 Alternatively, to specify a custom configuration file:
 
-```
-// Using a JSON configuration file
+```sh
+# Using a JSON configuration file
 jackal start -c /path/to/custom/config.json
 
-// Using a YAML configuration file
+# Using a YAML configuration file
 jackal start -c /path/to/custom/config.yaml
 ```
 
-Make sure to define a custom configuration file, both JSON and YAML formats are supported, the default configuration is as follows:
+We recommend defining a custom configuration file, both JSON and YAML formats are supported, see the [Jackal Configuration Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/config.md) for more information.
+The default configuration is as follows:
 
 ```yaml
 db:
@@ -62,12 +68,12 @@ statsD:
   host: localhost
   port: 8125
   prefix: jackal
-
 ```
 
-Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/api/health`.
+Jackal should now be available at `http://localhost:25863`.
+A health endpoint is provided at `/api/health`.
 
-### Docker
+### Running on Docker
 
 To start a dockerised instance of Jackal with the default configuration:
 
@@ -75,11 +81,11 @@ To start a dockerised instance of Jackal with the default configuration:
 docker run -p 25863:25863 findmypast/jackal
 ```
 
-Jackal should now be available at `http://localhost:25863`, a health endpoint is provided at `/api/health`
+Jackal should now be available at `http://localhost:25863`. A health endpoint is provided at `/api/health`.
 
 ### Testing Contracts as a Consumer
 
-#### Contracts file
+#### Contracts File
 
 Make sure to define a contracts file, e.g:
 
@@ -100,13 +106,14 @@ itunes_search_app:                # consumer name
         response:
           statusCode: 200
           body:                   # body uses Joi type definitions (https://github.com/hapijs/joi)
-            resultCount: 'Joi.number().integer()'
+            resultCount: Joi.number().integer()
             results:
               - trackName: Joi.string()
                 collectionName: Joi.string()
 ```
 
-The file is also accepted in the equivalent JSON format, make sure to specify either a `.yaml`, `.yml` or `.json` extension.
+The file is also accepted in the equivalent JSON format.
+Supported file extensions are `.yaml`, `.yml`, and `.json`. You can also add `.skipped` to the contract file to skip executing it.
 
 #### Contracts Directory
 
@@ -157,7 +164,7 @@ You should then receive a JSON object in response, for example:
 Provider contracts stored on a Jackal server can be run using the Jackal client by specifying the URL of the Jackal server and the name of the provider for which contracts should be run:
 
 ```
-jackal send <jackalUrl> <providerName>
+jackal run <jackalUrl> <providerName>
 ```
 
 By default, the results of running provider contracts on a Jackal server using the client are displayed in `spec` format, for information on how to specify alternatives, please consult the [Jackal Client Guide](https://github.com/findmypast-oss/jackal/blob/master/docs/client.md).
@@ -187,4 +194,7 @@ You should then receive a JSON object in response, for example:
 ```
 
 ### Sequence of Testing
+
+This diagram illustrates the flow of our expected use case.
+
 ![](./docs/sequence.png)

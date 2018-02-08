@@ -4,7 +4,6 @@
 
 const client = require('../client')
 const reporter = require('./reporter')
-const prettyError = require('pretty-error').start()
 
 const dump = (jackalUrl, options) => {
   client.dump(
@@ -44,7 +43,7 @@ const errorWrapper = (fn) => function () {
     fn.apply(null, arguments)
   } catch (err) {
     /* eslint-disable no-console  */
-    console.error(prettyError.render(err))
+    console.error(err.toString())
     /* eslint-enble no-console  */
     process.exit(1)
   }
@@ -53,7 +52,7 @@ const errorWrapper = (fn) => function () {
 const exitCodeHandler = (err) => {
   if (err) {
     /* eslint-disable no-console  */
-    console.error(prettyError.render(err))
+    console.error(err.toString())
     /* eslint-enble no-console  */
     process.exit(1)
   }

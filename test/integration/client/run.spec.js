@@ -58,6 +58,9 @@ describe('Client.Run Integration Test', function () {
     before(function (done) {
       port = 8378
       dbPath = 'test/integration/api/provider.json'
+      if(fs.existsSync(dbPath)){
+        fs.unlinkSync(dbPath)
+      }
       options = {
         port: port,
         quiet: true,
@@ -198,6 +201,8 @@ describe('Client.Run Integration Test', function () {
       run(`http://localhost:${port}`, 'provider_one', {}, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
+        body.results.sort((a,b) => a.name > b.name)
+        expected.results.sort((a,b) => a.name > b.name)
         expect(body).to.eql(expected)
         done()
       })
@@ -216,6 +221,8 @@ describe('Client.Run Integration Test', function () {
       run(`http://localhost:${port}`, 'provider_one', { testUrl: 'http://localhost:8381' }, (err, res, body) => {
         expect(err).to.not.exist
         expect(res.statusCode).to.equal(200)
+        body.results.sort((a,b) => a.name > b.name)
+        expected.results.sort((a,b) => a.name > b.name)
         expect(body).to.eql(expected)
         done()
       })

@@ -13,6 +13,7 @@ const graphing = require('./middleware/graphing')
 const bodyParser = require('body-parser')
 const handleError = require('./middleware/handle-error')
 const compression = require('compression')
+const serverVersion = require('./middleware/version')
 
 const buildDumpMiddleware = require('./middleware/dump/build')
 const buildConsumerMiddleware = require('./middleware/consumer/build')
@@ -42,6 +43,7 @@ const startServer = (options, done) => {
 
   app.use(bodyParser.json())
   app.use(compression())
+  app.use(serverVersion)
 
   app.get('/api/health', (req, res) => { res.send('😊') })
   app.post('/api/contracts', consumerMiddleware)
@@ -52,12 +54,18 @@ const startServer = (options, done) => {
   app.use(handleError(logger))
 
   return app.listen(config.jackal.port, (err) => {
-    if(err) {
+    if (err) {
       logger.error(err)
-      if(done) return done(err)
+      if (done) { return done(err) }
     }
-    if (!config.quiet) logger.info(`Starting server on port ${config.jackal.port}`)
-    if(done) done()
+
+    if (!config.quiet) {
+      logger.info(`Starting server on port ${config.jackal.port}`)
+    }
+
+    if(done) {
+      done()
+    }
   })
 }
 

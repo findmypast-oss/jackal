@@ -3,6 +3,7 @@ version: '2'
 services:
   jackal:
     build: .
+    image: local/jackal
     ports:
       - "25863:25863"
 
