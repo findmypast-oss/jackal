@@ -64,7 +64,7 @@
     "express-pino-logger": "^2.0.0",
     "figures": "^2.0.0",
     "hot-shots": "^4.4.0",
-    "joi": "^10.4.1",
+    "joi": "^13.0.0",
     "js-yaml": "^3.8.3",
     "jsonpath": "^1.0.0",
     "lodash": "^4.17.4",
