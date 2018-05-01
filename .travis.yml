@@ -12,7 +12,7 @@ before_install:
 
 script:
 - npm test
-- docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
+# - docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
 
 after_success:
 - npm run coveralls
