@@ -73,8 +73,8 @@
     "pino": "^4.3.0",
     "pretty-error": "^2.1.0",
     "prettyjson": "^1.2.1",
-    "request": "^2.83.0",
-    "snyk": "^1.65.0",
+    "request": "^2.87.0",
+    "snyk": "^1.88.2",
     "uuid": "^3.0.1"
   },
   "snyk": true
