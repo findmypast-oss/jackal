@@ -49,10 +49,10 @@
   "homepage": "https://github.com/findmypast-oss/jackal#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.13.0",
+    "coveralls": "^3.0.2",
     "eslint": "^3.19.0",
-    "mocha": "^3.2.0",
-    "nyc": "^10.2.0"
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.0"
   },
   "dependencies": {
     "async": "^2.6.0",
