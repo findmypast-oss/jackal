@@ -1,22 +1,23 @@
 sudo: required
 
 services:
-- docker
+  - docker
 
 language: node_js
 node_js:
-- '6'
+  - 'node'
+  - '8'
 
 before_install:
-- docker-compose build
+  - docker-compose build
 
 script:
-- npm test
-# - docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
+  - npm test
+  # - docker-compose run --rm jackal_client sh -c "sleep 2 && ./test/docker/docker_test_commands.sh"
 
 after_success:
-- npm run coveralls
-- bash ./docker_publish.sh
+  - npm run coveralls
+  - bash ./docker_publish.sh
 
 deploy:
   provider: npm
